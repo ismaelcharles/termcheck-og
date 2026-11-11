@@ -5,9 +5,13 @@ src/termcheck (el mismo que se evalúa); esta página solo lo muestra.
 
 Del corpus del proyecto solo ofrece el conjunto de desarrollo: ver el resultado del verificador sobre la prueba
 antes de anotarla rompería la anotación a ciegas.
+
+En la demo pública (app/demo.py, TERMCHECK_DEMO=1) la página funciona sin login, usa el glosario v1 congelado si
+existe, no ofrece el corpus y tiene límites de tamaño, porque el servidor es compartido.
 """
 import csv
 import io
+import os
 import tempfile
 from collections import Counter
 from pathlib import Path
@@ -16,13 +20,16 @@ import streamlit as st
 
 import datos
 import vista
+from limites import MAX_LETRAS, MAX_SEGMENTOS, MAX_TERMINOS, aplicar
 from termcheck.checker import verificar
 from termcheck.consistency import inconsistencias
 from termcheck.glossary import ErrorDeGlosario, cargar, validar
+from termcheck import NOMBRE
 from termcheck.report import NOMBRES, a_csv_texto, a_html
 
 RAIZ = datos.RAIZ
 ORDEN = ["PROHIBIDO", "SIN_TRADUCIR", "NO_ENCONTRADO", "VARIANTE", "OK"]
+DEMO = os.environ.get("TERMCHECK_DEMO") == "1"
 
 st.html(vista.CSS + """<style>
 .vf-seg{border:1px solid #D8D0C2;border-radius:.6rem;padding:.7rem 1rem .5rem;margin:.6rem 0;background:#FFFEFB}
@@ -35,7 +42,10 @@ st.html(vista.CSS + """<style>
 .vf-cab{font:600 .78rem ui-monospace,monospace;color:#7A7266;margin-bottom:.2rem}
 .vf-resumen{display:flex;flex-wrap:wrap;gap:.4rem;margin:.3rem 0 .6rem}
 </style>""")
-st.title("Verificar")
+st.title(NOMBRE if DEMO else "Verificar")
+if DEMO:
+    st.caption("Demo pública. Verificador de terminología para traducción automática inglés → español en Oil & Gas "
+               "(español técnico de Argentina). Los textos que pegues o subas no se guardan.")
 st.markdown("Pegá un texto en inglés y su traducción automática. TermCheck busca cada término del glosario en el "
             "inglés y te dice cómo quedó en la traducción.")
 
@@ -47,7 +57,9 @@ def leer_tsv(ruta, marca):
 
 
 def glosario_proyecto():
-    return cargar(datos.GLOSARIO)
+    """El glosario del proyecto. La demo usa el v1 congelado (el que se evaluó), si ya existe."""
+    congelado = datos.GLOSARIO.parent / "glossary_v1.csv"
+    return cargar(congelado if DEMO and congelado.exists() else datos.GLOSARIO)
 
 
 # --- Glosario ---------------------------------------------------------------------------------------------------
@@ -70,6 +82,9 @@ if propio:
     if errores:
         st.warning(f"El glosario subido tiene {len(errores)} errores; el resultado puede fallar.  \n"
                    + "  \n".join(str(p) for p in errores[:5]))
+    if DEMO and len(terminos) > MAX_TERMINOS:
+        st.error(f"El glosario subido tiene {len(terminos)} términos. En la demo el máximo es {MAX_TERMINOS}.")
+        st.stop()
     st.sidebar.caption(f"Glosario subido: {len(terminos)} términos.")
 else:
     terminos = glosario_proyecto()
@@ -77,6 +92,8 @@ else:
 
 # --- Entrada ----------------------------------------------------------------------------------------------------
 MODOS = {"pegar": "Pegar texto", "tsv": "Subir archivo", "corpus": "Corpus (desarrollo)"}
+if DEMO:
+    del MODOS["corpus"]
 modo = st.segmented_control("Entrada", list(MODOS), format_func=MODOS.get, default="pegar", key="vf_modo",
                             label_visibility="collapsed") or "pegar"
 
@@ -93,8 +110,10 @@ if modo == "pegar":
     st.button("Cargar un ejemplo", on_click=cargar_ejemplo, type="tertiary", icon=":material/science:",
               help="Tres oraciones del corpus (desarrollo) traducidas con Opus-MT.")
     c1, c2 = st.columns(2)
-    en = c1.text_area("Inglés", key="vf_en", height=180, placeholder="Una oración por línea")
-    es = c2.text_area("Traducción", key="vf_es", height=180, placeholder="La traducción de cada línea, en el mismo orden")
+    tope = MAX_LETRAS if DEMO else None
+    en = c1.text_area("Inglés", key="vf_en", height=180, placeholder="Una oración por línea", max_chars=tope)
+    es = c2.text_area("Traducción", key="vf_es", height=180, max_chars=tope,
+                      placeholder="La traducción de cada línea, en el mismo orden")
     l_en = [x for x in en.splitlines() if x.strip()]
     l_es = [x for x in es.splitlines() if x.strip()]
     if l_en and l_es:
@@ -107,10 +126,18 @@ if modo == "pegar":
 
 elif modo == "tsv":
     st.caption("TSV o CSV con dos columnas: inglés y traducción (con encabezado `source_en` y `target_es`, o "
-               "sin encabezado). Una fila por segmento.")
+               "sin encabezado). Una fila por segmento."
+               + (f" En la demo: hasta 1 MB y {MAX_SEGMENTOS} segmentos." if DEMO else ""))
     archivo = st.file_uploader("Archivo", type=["tsv", "csv", "txt"], label_visibility="collapsed")
     if archivo:
-        texto = archivo.getvalue().decode("utf-8-sig")
+        try:
+            texto = archivo.getvalue().decode("utf-8-sig")
+        except UnicodeDecodeError:
+            st.warning("No pude leer el archivo. Tiene que ser texto en UTF-8.")
+            st.stop()
+        if not texto.strip():
+            st.warning("El archivo está vacío.")
+            st.stop()
         sep = "\t" if "\t" in texto.splitlines()[0] else ","
         filas = list(csv.reader(io.StringIO(texto), delimiter=sep))
         if filas and [c.strip().lower() for c in filas[0][:2]] == ["source_en", "target_es"]:
@@ -135,6 +162,13 @@ else:
 
 if not pares:
     st.stop()
+
+if DEMO:
+    pares, aviso, seguir = aplicar(pares)
+    if aviso:
+        st.warning(aviso)
+    if not seguir:
+        st.stop()
 
 # --- Verificación -----------------------------------------------------------------------------------------------
 with st.spinner("Verificando…"):

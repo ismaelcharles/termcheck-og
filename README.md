@@ -20,9 +20,14 @@ que se usan en un yacimiento argentino.
 
 ## 2. Demo
 
-La demo pública todavía no está publicada. Cuando lo esté, el enlace y una captura van acá.
+Se puede probar sin cuenta en **https://termcheck.aval.site/demo**
 
-Mientras tanto, la app se puede correr en la propia máquina (sección 7).
+Se pega el texto en inglés y su traducción, o se sube un archivo de dos columnas, y devuelve el reporte. El botón
+«Cargar un ejemplo» pone tres oraciones del corpus traducidas con Opus-MT. También acepta un glosario propio en
+CSV. Corre en un servidor compartido, así que tiene límites: archivos de hasta 1 MB, 200 segmentos y 20.000
+letras por lado. Los textos no se guardan.
+
+![La demo con el ejemplo cargado: el texto en inglés, la traducción y el reporte con los términos resaltados](docs/img/demo.png)
 
 ## 3. Cómo funciona
 
@@ -176,13 +181,19 @@ Verificar un par de archivos de texto, con una oración por línea y en el mismo
 Escribe `salida/mio.csv` y `salida/mio.html`. Con `--glossary` se usa otro glosario, con las mismas columnas que
 `data/glossary/glossary_en_es.csv`.
 
-La app web, sin inicio de sesión:
+La demo en la propia máquina (solo la página de verificación):
+
+```
+.venv/bin/streamlit run app/demo.py
+```
+
+La app completa, con el glosario, la anotación y los resultados, sin inicio de sesión:
 
 ```
 TERMCHECK_SIN_LOGIN=1 .venv/bin/streamlit run app/streamlit_app.py
 ```
 
-Queda en http://127.0.0.1:8501. La página Verificar acepta texto pegado o un archivo y deja bajar el reporte.
+Las dos quedan en http://127.0.0.1:8501.
 
 Las pruebas automáticas y la evaluación:
 
@@ -197,7 +208,7 @@ Qué hay en cada carpeta:
 |---|---|
 | `src/termcheck/` | El verificador: glosario, normalización, detección, clasificación, consistencia y reporte |
 | `scripts/` | Armado del corpus, traducción, división en conjuntos, verificación, baseline y evaluación |
-| `app/` | La app web (Streamlit): glosario, traducciones, anotación, verificación y resultados |
+| `app/` | La app web (Streamlit): glosario, traducciones, anotación, verificación y resultados; `demo.py` es la demo pública |
 | `data/` | Glosario, corpus, traducciones, división en conjuntos y anotación |
 | `tests/` | Pruebas automáticas, con un proyecto inventado que no toca los datos reales |
 | `docs/` | El plan del proyecto y la guía de anotación |
