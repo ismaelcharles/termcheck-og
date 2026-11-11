@@ -21,6 +21,7 @@ from termcheck.normalize import normalizar
 
 sys.path.insert(0, str(datos.RAIZ / "scripts"))
 import evaluate as ev  # noqa: E402
+import actualizar_readme as ar  # noqa: E402
 import publicar as pub  # noqa: E402
 
 CONGELADO = datos.GLOSARIO.parent / "glossary_v1.csv"
@@ -160,6 +161,24 @@ elif pestana == "dev":
     st.markdown(texto.split("\n", 2)[2])
 
 elif pestana == "pub":
+    st.subheader("1. Actualizar el README")
+    final = (ev.DATOS / "salida" / "eval_prueba.md").exists()
+    st.markdown("Copia las tablas de resultados al README. " + (
+        "Ya está la evaluación final: copia esas tablas." if final else
+        "Todavía no está la evaluación final: copia las de desarrollo, con el aviso de que son provisorias."))
+
+    def actualizar_readme():
+        ar.refrescar_desarrollo()
+        st.session_state.res_readme = ar.actualizar(datos.DATOS / "README.md", ev.DATOS / "salida")
+
+    st.button("Actualizar el README", on_click=actualizar_readme, icon=":material/description:")
+    if st.session_state.get("res_readme"):
+        bien, texto = st.session_state.res_readme
+        (st.success if bien else st.error)(texto)
+    st.caption("Los dos ejemplos de errores y los hallazgos no se escriben solos: están marcados como «Pendiente» "
+               "en el README y los completás vos.")
+
+    st.subheader("2. Publicar en GitHub")
     st.markdown("Guarda en GitHub lo que cambiaste: la anotación, el glosario (y el v1 congelado), el README y los "
                 "documentos del informe. No sube nada más.")
     cambios = pub.pendientes(datos.RAIZ)

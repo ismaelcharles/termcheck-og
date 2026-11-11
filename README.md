@@ -1,43 +1,220 @@
 # TermCheck O&G
 
-Verificador de terminología para traducción automática inglés → español en Oil & Gas upstream (variante técnica de Argentina).
+Verificador de terminología para traducción automática inglés → español en Oil & Gas upstream, con el español
+técnico de Argentina como variante. Está pensado para quien post-edita o revisa traducciones técnicas y hoy
+controla los términos a ojo, segmento por segmento.
 
-Estado: Fase 0 (arranque). El plan completo está en `docs/plan.md`.
+Recibe el texto en inglés, su traducción y un glosario bilingüe. Marca los términos del glosario que quedaron mal
+traducidos, sin traducir o con una forma que el glosario no conoce. No traduce ni corrige estilo.
 
-## Instalar (Linux)
+## 1. El problema
+
+La traducción automática produce frases fluidas y aun así falla en los términos del dominio. En un procedimiento
+de perforación o de seguridad, un término mal traducido es un error caro, y cuesta verlo porque la frase suena
+bien. Los glosarios generales tampoco alcanzan: muchas formas que se usan en España o en otros países no son las
+que se usan en un yacimiento argentino.
+
+<!-- HUECO: ejemplos -->
+> **Pendiente, lo completa el autor.** Dos ejemplos reales del corpus: la oración en inglés, lo que tradujo el
+> sistema y la forma que se usa en Argentina.
+
+## 2. Demo
+
+La demo pública todavía no está publicada. Cuando lo esté, el enlace y una captura van acá.
+
+Mientras tanto, la app se puede correr en la propia máquina (sección 7).
+
+## 3. Cómo funciona
 
 ```
-python3 -m venv --without-pip .venv
-python3 -m pip --python .venv/bin/python install pip
+ glosario.csv ─┐
+               ├─► [1] Normalizar ─► [2] Detectar términos ─► [3] Buscar traducción ─► [4] Clasificar ─► [5] Reporte
+ origen (EN) ──┤     (minúsculas,       en el inglés             en el español           (etiqueta por     (HTML y CSV)
+ destino (ES) ─┘      tildes, guiones)  (lemas y categoría)      (lemas y raíces)         aparición)
+```
+
+1. **Normalizar.** Se comparan los textos en minúsculas, sin tildes y con los guiones unificados. El reporte
+   muestra el texto original.
+2. **Detectar los términos en inglés.** Cada término del glosario se busca en la oración de origen por lema y
+   por forma, con spaCy. En los términos de una palabra se mira la categoría gramatical, para no confundir el
+   sustantivo «well» con «as well as». Si dos términos se pisan, gana el más largo.
+3. **Buscar la traducción.** Para cada término detectado se buscan en la traducción la forma preferida, las
+   formas válidas y las prohibidas. El español cambia en género y número, así que se compara por lema y, como
+   respaldo, por raíz (Snowball).
+4. **Clasificar** cada aparición con una etiqueta.
+5. **Reportar.** Un HTML con los términos resaltados por color y un CSV con una fila por aparición.
+
+| Etiqueta | Qué significa | Se marca para revisar |
+|---|---|---|
+| `OK` | Aparece la traducción preferida | No |
+| `VARIANTE` | Aparece una forma válida que no es la preferida | No, es informativa |
+| `PROHIBIDO` | Aparece una forma que el glosario da por incorrecta | Sí |
+| `SIN_TRADUCIR` | El término quedó en inglés y el glosario no lo acepta como préstamo | Sí |
+| `NO_ENCONTRADO` | El término está en el inglés y ninguna forma conocida aparece en la traducción | Sí |
+| `INCONSISTENTE` | En el mismo documento, el término se tradujo de más de una manera | Advertencia |
+
+Los casos difíciles (plural y género, tildes, «as well as», términos que se pisan, préstamos aceptados, siglas,
+variantes de escritura en inglés) están cubiertos con pruebas automáticas en `tests/test_hard_cases.py`.
+
+## 4. Resultados
+
+El verificador se mide contra una anotación humana hecha a ciegas: para cada término del glosario en cada
+traducción, el autor anotó si estaba bien o mal sin ver qué sistema la produjo ni qué decía el verificador. Se
+tradujeron 120 oraciones con tres sistemas (Opus-MT, Claude sin glosario y DeepL).
+
+- **Recall:** de los errores que anotó el autor, qué parte marca el verificador. Es la medida que más importa.
+- **Precisión:** de lo que marca el verificador, qué parte era un error.
+- **Baseline:** el método ingenuo, que busca la forma preferida como texto exacto. La diferencia con el
+  verificador es lo que aportan los lemas, las raíces y las formas válidas del glosario.
+
+<!-- resultados:inicio (lo escribe scripts/actualizar_readme.py; no editar a mano) -->
+> **Resultados provisorios.** Son del conjunto de desarrollo, que se usó para ajustar el código y el glosario. Sirven para ver que el verificador funciona, no para decir cuánto acierta. La evaluación final se calcula sobre el conjunto de prueba, que todavía no está anotado entero.
+
+33 términos anotados en 5 oraciones (10 errores según la anotación). El verificador no detectó 1 de ellos (cuentan como no marcados).
+
+### Verificador frente al baseline
+
+| Método | Términos | TP | FP | FN | TN | Precisión (IC 95 %) | Recall (IC 95 %) | F1 |
+|---|---:|---:|---:|---:|---:|---|---|---:|
+| Baseline (texto exacto) | 33 | 10 | 11 | 0 | 12 | 0,48 (0,28–0,68) | 1,00 (0,72–1,00) | 0,65 |
+| TermCheck | 33 | 10 | 3 | 0 | 20 | 0,77 (0,50–0,92) | 1,00 (0,72–1,00) | 0,87 |
+
+### Por sistema de traducción (TermCheck)
+
+| Sistema | Términos | TP | FP | FN | TN | Precisión (IC 95 %) | Recall (IC 95 %) | F1 |
+|---|---:|---:|---:|---:|---:|---|---|---:|
+| claude | 15 | 4 | 1 | 0 | 10 | 0,80 (0,38–0,96) | 1,00 (0,51–1,00) | 0,89 |
+| deepl | 9 | 2 | 2 | 0 | 5 | 0,50 (0,15–0,85) | 1,00 (0,34–1,00) | 0,67 |
+| opusmt | 9 | 4 | 0 | 0 | 5 | 1,00 (0,51–1,00) | 1,00 (0,51–1,00) | 1,00 |
+
+### Errores de terminología según la anotación, por sistema
+
+| Sistema | Términos | Errores | % | Error de término | Omisión | Sin traducir |
+|---|---:|---:|---:|---:|---:|---:|
+| claude | 15 | 4 | 26,67 | 4 | 0 | 0 |
+| deepl | 9 | 2 | 22,22 | 2 | 0 | 0 |
+| opusmt | 9 | 4 | 44,44 | 2 | 0 | 2 |
+
+### Recall por tipo de error (TermCheck)
+
+| Etiqueta del dueño | Casos | Detectados |
+|---|---:|---:|
+| ERROR_TERMINO | 8 | 8 |
+| OMISION | 0 | 0 |
+| SIN_TRADUCIR | 2 | 2 |
+
+### Qué etiqueta dio el verificador según la anotación
+
+| Anotación \ Verificador | OK | VARIANTE | PROHIBIDO | SIN_TRADUCIR | NO_ENCONTRADO | (no detectado) |
+|---|---:|---:|---:|---:|---:|---:|
+| CORRECTO | 12 | 7 | 0 | 0 | 3 | 1 |
+| ERROR_TERMINO | 0 | 0 | 0 | 0 | 8 | 0 |
+| OMISION | 0 | 0 | 0 | 0 | 0 | 0 |
+| SIN_TRADUCIR | 0 | 0 | 0 | 2 | 0 | 0 |
+
+IC 95 %: intervalo de Wilson. Con pocos casos es ancho: los números son orientativos.
+<!-- resultados:fin -->
+
+### Hallazgos
+
+<!-- HUECO: hallazgos -->
+> **Pendiente, lo completa el autor** cuando esté la evaluación final: qué sistema maneja mejor la terminología,
+> qué tipos de error aparecen más y por qué falla el verificador cuando falla.
+
+## 5. Validación
+
+No hubo entrevistas ni pruebas con traductores. El plan original preveía mostrarle la herramienta a entre 3 y 5
+personas; eso no se hizo. Hasta ahora el verificador se midió solo contra la anotación del autor y nadie más lo
+usó con textos propios.
+
+## 6. Limitaciones
+
+- **Pocos datos.** La prueba tiene 40 oraciones (el plan preveía 80) y el conjunto de desarrollo 15. Los
+  intervalos de confianza son anchos y los números son orientativos.
+- **Un solo anotador.** No hay segundo anotador ni medida de acuerdo. La anotación refleja el criterio de una
+  persona.
+- **«Correcto» por defecto.** La pantalla de anotación tiene un botón que pone «Correcto» en todo lo que falta
+  de una oración. Ahorra tiempo y puede hacer que algún error pase como correcto.
+- **Fuentes del glosario.** El respaldo escrito es sobre todo un glosario general de español sin variedad
+  regional. Parte de los apuntes de curso que se consultaron se generaron con herramientas de IA y no sirven
+  como prueba de uso argentino. Donde las fuentes no alcanzaban, la forma preferida es criterio de campo del
+  autor. El detalle está en `data/glossary/SOURCES.md`.
+- **Glosario chico y solo de sustantivos.** Son 99 términos. 20 de ellos no aparecen en ninguna oración del
+  corpus, así que no se evaluaron.
+- **El corpus son textos del gobierno de EE. UU.** (OSHA y reglamentos federales). Es inglés de normas y de
+  seguridad, no documentación operativa de una empresa.
+- **`NO_ENCONTRADO` no distingue causas.** Puede ser un error, una omisión o un sinónimo correcto que el
+  glosario no lista. Lo decide quien revisa.
+- **No hay alineación de palabras.** El verificador busca las formas dentro del segmento entero. Si un término
+  aparece dos veces y una sola está bien traducida, puede no verlo.
+- **Términos dentro de otros.** Si un término del glosario queda dentro de otro más largo, solo se evalúa el
+  largo.
+- **Una sola variante y un solo par de lenguas.** Inglés → español técnico de Argentina.
+- **Las traducciones no se pueden repetir igual.** Claude y DeepL pueden contestar distinto otro día. La fecha
+  y la versión de cada sistema están en `data/mt/versiones.csv`.
+
+## 7. Cómo usarlo
+
+Probado en Linux con Python 3.12.
+
+```
+python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 .venv/bin/python -m spacy download en_core_web_sm
 .venv/bin/python -m spacy download es_core_news_sm
 ```
 
-En Google Colab alcanza con `!pip install -r requirements.txt` y las dos líneas de `spacy download`.
+`requirements.txt` incluye `torch` y `transformers`, que solo hacen falta para volver a traducir con Opus-MT
+(`scripts/translate_opusmt.py`). Para verificar no se usan.
 
-## Probar que anda
-
-```
-.venv/bin/python scripts/hola_spacy.py
-```
-
-Las pruebas automáticas:
+Verificar un par de archivos de texto, con una oración por línea y en el mismo orden:
 
 ```
-.venv/bin/python -m pytest -v
+.venv/bin/python scripts/run_check.py --src origen.txt --tgt traduccion.txt --out salida/mio
 ```
 
-Revisar el glosario (errores y avisos):
+Escribe `salida/mio.csv` y `salida/mio.html`. Con `--glossary` se usa otro glosario, con las mismas columnas que
+`data/glossary/glossary_en_es.csv`.
+
+La app web, sin inicio de sesión:
 
 ```
-PYTHONPATH=src .venv/bin/python -m termcheck.glossary data/glossary/glossary_en_es.csv
+TERMCHECK_SIN_LOGIN=1 .venv/bin/streamlit run app/streamlit_app.py
 ```
 
-## App web (planilla del glosario)
+Queda en http://127.0.0.1:8501. La página Verificar acepta texto pegado o un archivo y deja bajar el reporte.
+
+Las pruebas automáticas y la evaluación:
 
 ```
-.venv/bin/streamlit run app/streamlit_app.py
+.venv/bin/python -m pytest -q
+.venv/bin/python scripts/evaluate.py
 ```
 
-Queda en http://127.0.0.1:8501 (para probar sin Google: `TERMCHECK_SIN_LOGIN=1` delante). En el servidor se publica en https://termcheck.aval.site con `sudo bash deploy/termcheck.sh`; se entra con Google y los correos permitidos van en `.streamlit/secrets.toml` (no va a git).
+Qué hay en cada carpeta:
+
+| Carpeta | Contenido |
+|---|---|
+| `src/termcheck/` | El verificador: glosario, normalización, detección, clasificación, consistencia y reporte |
+| `scripts/` | Armado del corpus, traducción, división en conjuntos, verificación, baseline y evaluación |
+| `app/` | La app web (Streamlit): glosario, traducciones, anotación, verificación y resultados |
+| `data/` | Glosario, corpus, traducciones, división en conjuntos y anotación |
+| `tests/` | Pruebas automáticas, con un proyecto inventado que no toca los datos reales |
+| `docs/` | El plan del proyecto y la guía de anotación |
+
+## 8. Datos y licencias
+
+- **Código:** MIT (archivo `LICENSE`).
+- **Corpus:** 120 oraciones en inglés de textos del gobierno federal de EE. UU., sin copyright. Cada una lleva
+  la dirección de su página de origen.
+- **Glosario, anotación y traducciones:** hechos para este proyecto. Su licencia todavía no está definida.
+
+Las fuentes de cada término, lo que se excluyó por copyright y el método de cada sistema de traducción están en
+[`data/glossary/SOURCES.md`](data/glossary/SOURCES.md) y en [`data/mt/README.md`](data/mt/README.md).
+
+## 9. Próximos pasos
+
+- Un segundo anotador sobre una parte de la prueba, para medir el acuerdo.
+- Más formas prohibidas en el glosario, cada una con un error real que la respalde.
+- Leer archivos XLIFF y TMX, que es como trabajan las herramientas de traducción.
+- Probar la herramienta con traductores que hagan post-edición técnica.
