@@ -21,6 +21,7 @@ from termcheck.normalize import normalizar
 
 sys.path.insert(0, str(datos.RAIZ / "scripts"))
 import evaluate as ev  # noqa: E402
+import publicar as pub  # noqa: E402
 
 CONGELADO = datos.GLOSARIO.parent / "glossary_v1.csv"
 REGISTRO = datos.GLOSARIO.parent / "glossary_v1.txt"
@@ -28,9 +29,9 @@ REGISTRO = datos.GLOSARIO.parent / "glossary_v1.txt"
 vista.estilos()
 st.title("Resultados")
 
-pestana = st.segmented_control("Vista", ["sug", "dev", "prueba"], key="res_vista", default="sug",
+pestana = st.segmented_control("Vista", ["sug", "dev", "prueba", "pub"], key="res_vista", default="sug",
                                format_func={"sug": "Sugerencias para el glosario", "dev": "Evaluación · desarrollo",
-                                            "prueba": "Evaluación · prueba"}.get,
+                                            "prueba": "Evaluación · prueba", "pub": "Publicar"}.get,
                                label_visibility="collapsed") or "sug"
 
 
@@ -157,6 +158,25 @@ elif pestana == "dev":
     st.caption("Desarrollo: con estas oraciones se ajustan el código y el glosario. Sirve para ver que todo funciona; "
                "el resultado que vale es el de la prueba.")
     st.markdown(texto.split("\n", 2)[2])
+
+elif pestana == "pub":
+    st.markdown("Guarda en GitHub lo que cambiaste: la anotación, el glosario (y el v1 congelado), el README y los "
+                "documentos del informe. No sube nada más.")
+    cambios = pub.pendientes(datos.RAIZ)
+    if cambios:
+        st.markdown("**Cambios sin publicar:**\n" + "\n".join(f"- `{c}`" for c in cambios))
+    else:
+        st.caption("No hay cambios sin publicar.")
+
+    def publicar():
+        st.session_state.res_publicado = pub.publicar(datos.RAIZ)
+
+    st.button("Publicar en GitHub", on_click=publicar, type="primary", icon=":material/cloud_upload:")
+    if st.session_state.get("res_publicado"):
+        bien, texto = st.session_state.res_publicado
+        (st.success if bien else st.error)(texto)
+    st.caption("La primera vez que publiques con el glosario congelado se pone la etiqueta `glossary-v1`, que deja "
+               "registrado con qué glosario se evaluó la prueba.")
 
 else:
     ids = an.ids_conjunto("prueba")

@@ -88,5 +88,5 @@ def test_la_evaluacion_final_usa_el_glosario_congelado(proyecto):
 
 def test_las_vistas_de_resultados_abren_sin_errores(proyecto):
     anotar(ANOTACION_DEV)
-    for vista in ("sug", "dev", "prueba"):
+    for vista in ("sug", "dev", "prueba", "pub"):
         abrir(vista)
