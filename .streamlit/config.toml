@@ -1,0 +1,53 @@
+# Configuración de la app web (Streamlit). Se lee porque la app se lanza desde la carpeta del proyecto.
+
+[server]
+# Solo escucha dentro del servidor: desde afuera se entra por Caddy (https + contraseña).
+address = "127.0.0.1"
+port = 8501
+headless = true
+# Sirve los archivos de app/static/ (las fuentes de aval) en /app/static/
+enableStaticServing = true
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+
+# Colores y letras de aval (los mismos de aval.site)
+[theme]
+base = "light"
+primaryColor = "#14120F"
+backgroundColor = "#F6F3ED"
+secondaryBackgroundColor = "#ECE6DB"
+textColor = "#14120F"
+borderColor = "#D8D0C2"
+linkColor = "#14120F"
+baseRadius = "0.4rem"
+font = "Inter, system-ui, sans-serif"
+headingFont = "Newsreader, Georgia, serif"
+codeFont = "ui-monospace, monospace"
+
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/inter-normal-latin.woff2"
+weight = "100 900"
+unicodeRange = "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD"
+
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/inter-normal-latin-ext.woff2"
+weight = "100 900"
+unicodeRange = "U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF"
+
+[[theme.fontFaces]]
+family = "Newsreader"
+url = "app/static/fonts/newsreader-normal-latin.woff2"
+weight = "200 800"
+unicodeRange = "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD"
+
+[[theme.fontFaces]]
+family = "Newsreader"
+url = "app/static/fonts/newsreader-normal-latin-ext.woff2"
+weight = "200 800"
+unicodeRange = "U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF"

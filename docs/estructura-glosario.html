@@ -1,0 +1,242 @@
+<!doctype html><html lang="es" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<style>@media print{pre{white-space:pre-wrap!important;overflow-wrap:anywhere} main,section,header,.csv{display:block!important} section>*,header>*{margin-bottom:.8rem!important} section{margin-bottom:2rem} ul{display:block!important} li{margin-bottom:.3rem} :root{--bg:#fff!important} .scroll{overflow:visible!important} main{max-width:none!important} body{padding-left:0!important;padding-right:0!important} button{display:none!important} h2{break-after:avoid} .ficha,tr{break-inside:avoid} body{padding-block:0!important}}</style>
+<title>Glosario de TermCheck O&amp;G</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: una columna de lectura, como una ficha técnica; tablas con scroll propio. Colores de la app TermCheck. */
+:root{
+  --bg:#F6F3ED; --panel:#FBF9F5; --soft:#ECE6DB; --line:#D8D0C2; --fg:#14120F; --muted:#6F675B;
+  --ok:#1F6B43; --ok-bg:#DCEFE2; --var:#24527D; --var-bg:#DDE8F3; --proh:#9C3324; --proh-bg:#F6DCD6;
+  --sin:#7A5300; --sin-bg:#F5E8C8; --no:#5E4682; --no-bg:#E8E0F1; --inc:#8D4510; --inc-bg:#F4E2D1;
+  --chip-en:#14120F; --chip-en-fg:#F6F3ED;
+  --f-display:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#171512; --panel:#1F1C18; --soft:#2A2621; --line:#3A352E; --fg:#EDE8DF; --muted:#A39A8C;
+  --ok:#7FCB9C; --ok-bg:#1E3527; --var:#8DB8E3; --var-bg:#1D2B3A; --proh:#EE9483; --proh-bg:#3D211C;
+  --sin:#E3BC63; --sin-bg:#3A2F15; --no:#BCA6E0; --no-bg:#2C2440; --inc:#E7A06A; --inc-bg:#3A2616;
+  --chip-en:#EDE8DF; --chip-en-fg:#171512; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#171512; --panel:#1F1C18; --soft:#2A2621; --line:#3A352E; --fg:#EDE8DF; --muted:#A39A8C;
+  --ok:#7FCB9C; --ok-bg:#1E3527; --var:#8DB8E3; --var-bg:#1D2B3A; --proh:#EE9483; --proh-bg:#3D211C;
+  --sin:#E3BC63; --sin-bg:#3A2F15; --no:#BCA6E0; --no-bg:#2C2440; --inc:#E7A06A; --inc-bg:#3A2616;
+  --chip-en:#EDE8DF; --chip-en-fg:#171512; color-scheme:dark}
+
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:2.5rem 4rem}
+main{max-width:52rem;margin:0 auto;display:grid;gap:2.75rem}
+section{display:grid;gap:.9rem;min-width:0}
+h1,h2{font-family:var(--f-display);font-weight:600;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,2.8rem)}
+h2{font-size:1.55rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+h3{font-size:1rem;font-weight:600;margin:.4rem 0 0}
+p{margin:0;max-width:65ch}
+.lead{font-size:1.08rem;color:var(--muted)}
+.eyebrow{font:600 .74rem var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+code,.mono{font-family:var(--f-mono);font-size:.86em}
+code{background:var(--soft);padding:.05rem .35rem;border-radius:.3rem}
+a{color:var(--var)}
+ul{margin:0;padding-left:1.2rem;display:grid;gap:.35rem;max-width:65ch}
+
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:.6rem;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;vertical-align:top;padding:.6rem .8rem;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{font:600 .74rem var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--soft)}
+td:first-child{white-space:nowrap}
+.req{font:600 .7rem var(--f-body);letter-spacing:.04em;color:var(--sin);background:var(--sin-bg);border-radius:.3rem;padding:.08rem .4rem;white-space:nowrap}
+.opt{font:500 .7rem var(--f-body);color:var(--muted);white-space:nowrap}
+
+.chip{display:inline-block;padding:.08rem .55rem;margin:.1rem .2rem .1rem 0;border-radius:999px;font-size:.86rem;background:var(--soft);color:var(--fg);white-space:nowrap}
+.chip.en{background:var(--chip-en);color:var(--chip-en-fg);font-weight:500}
+.tag{display:inline-block;font:600 .74rem var(--f-mono);padding:.12rem .45rem;border-radius:.3rem;white-space:nowrap}
+.ok{color:var(--ok);background:var(--ok-bg)} .var{color:var(--var);background:var(--var-bg)}
+.proh{color:var(--proh);background:var(--proh-bg)} .sin{color:var(--sin);background:var(--sin-bg)}
+.no{color:var(--no);background:var(--no-bg)} .inc{color:var(--inc);background:var(--inc-bg)}
+.tach{text-decoration:line-through}
+
+.flujo{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.paso{background:var(--panel);border:1px solid var(--line);border-radius:.5rem;padding:.4rem .75rem;font-size:.9rem}
+.flecha{color:var(--muted)}
+
+.ficha{background:var(--panel);border:1px solid var(--line);border-radius:.6rem;padding:1rem 1.1rem;display:grid;gap:.45rem;max-width:30rem}
+.ficha .cab{display:flex;justify-content:space-between;gap:.5rem;align-items:baseline}
+.ficha .id{font:500 .78rem var(--f-mono);color:var(--muted)}
+.ficha .meta{font-size:.8rem;color:var(--muted)}
+.ficha .nota{font-size:.85rem;font-style:italic}
+.ficha .fte{font-size:.76rem;color:var(--muted);overflow-wrap:anywhere}
+
+.csv{display:grid;gap:.5rem}
+pre{margin:0;padding:.9rem 1rem;background:var(--panel);border:1px solid var(--line);border-radius:.6rem;overflow-x:auto;font:400 .82rem/1.55 var(--f-mono)}
+button{font:500 .85rem var(--f-body);color:var(--fg);background:var(--soft);border:1px solid var(--line);border-radius:.45rem;padding:.4rem .8rem;cursor:pointer;justify-self:start}
+button:hover{border-color:var(--muted)}
+button:focus-visible{outline:2px solid var(--var);outline-offset:2px}
+.nota-al-pie{font-size:.86rem;color:var(--muted)}
+</style>
+
+<main>
+<header style="display:grid;gap:.6rem">
+  <span class="eyebrow">TermCheck O&amp;G · referencia</span>
+  <h1>Cómo está armado el glosario</h1>
+  <p class="lead">Un solo archivo, <code>data/glossary/glossary_en_es.csv</code>, con una fila por concepto. El verificador lo lee para decidir si cada término técnico quedó bien traducido. La app de <a href="https://termcheck.aval.site/glosario" target="_blank" rel="noopener">termcheck.aval.site</a> lo edita sin tocar el archivo a mano.</p>
+</header>
+
+<section>
+  <h2>Los nueve campos</h2>
+  <p>Las columnas van en este orden. Donde dice «varias», las formas se separan con una barra vertical <code>|</code>.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Campo</th><th>Qué guarda</th><th>Pregunta en la app</th><th></th></tr></thead>
+    <tbody>
+      <tr><td><code>id</code></td><td>Identificador único: T001, T002… Se pone solo al guardar.</td><td>—</td><td><span class="opt">automático</span></td></tr>
+      <tr><td><code>en</code></td><td>El término en inglés y sus formas de escritura. Varias: <span class="mono">wellhead|well-head|well head</span></td><td>¿Cómo aparece en inglés?</td><td><span class="req">necesario</span></td></tr>
+      <tr><td><code>pos</code></td><td>Categoría gramatical, con el código de spaCy (ver abajo).</td><td>¿Qué tipo de palabra es?</td><td><span class="req">necesario</span></td></tr>
+      <tr><td><code>es_preferred</code></td><td>La traducción que querés ver. Una sola. Si en campo se dice en inglés (casing, shale), va en inglés.</td><td>¿Cómo debería traducirse?</td><td><span class="req">necesario</span></td></tr>
+      <tr><td><code>es_allowed</code></td><td>Otras traducciones correctas que no son la preferida. Varias.</td><td>¿Qué otras traducciones también valen?</td><td><span class="opt">opcional</span></td></tr>
+      <tr><td><code>es_forbidden</code></td><td>Traducciones que son un error. Varias. Lo ideal es sacarlas de errores reales de traducción automática.</td><td>¿Qué traducciones son un error?</td><td><span class="opt">opcional</span></td></tr>
+      <tr><td><code>subdomain</code></td><td>El área técnica (ver abajo).</td><td>¿De qué área es?</td><td><span class="opt">opcional</span></td></tr>
+      <tr><td><code>note</code></td><td>Uso en Argentina, contexto, por qué algo es error.</td><td>¿Algo que aclarar?</td><td><span class="opt">opcional</span></td></tr>
+      <tr><td><code>source</code></td><td>De dónde sale la decisión: documento y página, una URL, o «criterio propio» explicado en <code>note</code>.</td><td>¿De dónde sale la decisión?</td><td><span class="req">necesario</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="nota-al-pie">«Necesario» quiere decir que la ficha muestra un aviso «Falta: …» hasta que se complete. La app igual deja guardar una fila incompleta.</p>
+</section>
+
+<section>
+  <h2>Tipo de palabra</h2>
+  <p>Sirve para que el verificador no confunda usos. En «Check the BOP <em>as well as</em> the choke manifold», <em>well</em> es un adverbio, no el sustantivo «pozo», y no se tiene que marcar.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Código</th><th>En la app</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td><code>NOUN</code></td><td>Sustantivo</td><td>well, casing, pig. Es el valor por defecto y el de casi todo el glosario.</td></tr>
+      <tr><td><code>VERB</code></td><td>Verbo</td><td>to drill, to perforate</td></tr>
+      <tr><td><code>ADJ</code></td><td>Adjetivo</td><td>sour (gas), offshore</td></tr>
+      <tr><td><code>ADV</code></td><td>Adverbio</td><td>downhole, cuando funciona como adverbio</td></tr>
+      <tr><td><code>PROPN</code></td><td>Nombre propio</td><td>Vaca Muerta</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Áreas</h2>
+  <p>Las del plan. En la app se elige de la lista o se escribe una nueva.</p>
+  <div><span class="chip">perforación</span><span class="chip">terminación</span><span class="chip">producción</span><span class="chip">intervención de pozos</span><span class="chip">control de pozo</span><span class="chip">geología</span><span class="chip">HSE</span><span class="chip">general</span></div>
+</section>
+
+<section>
+  <h2>Cómo lo usa el verificador</h2>
+  <div class="flujo">
+    <span class="paso">Texto en inglés</span><span class="flecha">+</span>
+    <span class="paso">Traducción automática</span><span class="flecha">+</span>
+    <span class="paso">Glosario</span><span class="flecha">→</span>
+    <span class="paso"><b>Una etiqueta por término</b></span>
+  </div>
+  <p>Busca cada forma de <code>en</code> en el texto en inglés. Cuando la encuentra, mira qué apareció en la traducción y le pone una etiqueta según el campo donde está esa forma.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Si la traducción dice…</th><th>Etiqueta</th><th>Qué significa</th></tr></thead>
+    <tbody>
+      <tr><td>lo de <code>es_preferred</code></td><td><span class="tag ok">OK</span></td><td>Aparece la traducción preferida.</td></tr>
+      <tr><td>algo de <code>es_allowed</code></td><td><span class="tag var">VARIANTE</span></td><td>Correcta, pero no la preferida. Informativo.</td></tr>
+      <tr><td>algo de <code>es_forbidden</code></td><td><span class="tag proh">PROHIBIDO</span></td><td>Error marcado en el glosario.</td></tr>
+      <tr><td>el término en inglés, sin aceptarlo como préstamo</td><td><span class="tag sin">SIN_TRADUCIR</span></td><td>Quedó en inglés. Si el inglés está en <code>es_preferred</code> o <code>es_allowed</code>, cuenta como préstamo y no se marca.</td></tr>
+      <tr><td>ninguna de las anteriores</td><td><span class="tag no">NO_ENCONTRADO</span></td><td>Error, omisión o un sinónimo que no está en el glosario. Hay que revisar.</td></tr>
+      <tr><td>formas distintas en distintas oraciones</td><td><span class="tag inc">INCONSISTENTE</span></td><td>Aviso a nivel documento: «lodo» en una oración y «fluido» en otra.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Cómo compara</h3>
+  <ul>
+    <li>Sin tildes ni mayúsculas: «Lodo de Perforacion» = «lodo de perforación».</li>
+    <li>Por lema, para plural y género: «tuberías de producción» = «tubería de producción». Con raíces (Snowball) como respaldo.</li>
+    <li>Si dos términos se superponen, gana el más largo: en «drill pipe» se detecta «drill pipe», no «pipe».</li>
+    <li>Las siglas (BOP, ESP, AIB) se buscan respetando mayúsculas.</li>
+  </ul>
+  <p class="nota-al-pie">Hoy la app solo compara sin tildes ni mayúsculas. Los lemas, las raíces y lo demás llegan con el verificador, en la Fase 3.</p>
+</section>
+
+<section>
+  <h2>Un ejemplo completo</h2>
+  <p>Tu fila T001 tal como está guardada, y cómo se ve como ficha.</p>
+  <div class="ficha">
+    <div class="cab"><div><span class="chip en">scrapper</span><span class="chip en">pig</span></div><span class="id">T001</span></div>
+    <div class="meta">Sustantivo · producción</div>
+    <div><span style="color:var(--ok);font-weight:600">✓</span> <span class="chip ok">chancho</span></div>
+    <div class="nota">Se usan por igual las denominaciones en inglés y español en Argentina, pero evitar usar "chancho" en inglés.</div>
+    <div class="fte">Fuente: https://escoarg.com.ar/noticias/97/valvulas-lanzadoras-de-pigs-argus-machine</div>
+  </div>
+  <p>Con esta fila, «chancho» da <span class="tag ok">OK</span> y «pig» o «scrapper» en la traducción dan <span class="tag sin">SIN_TRADUCIR</span>. Si querés que «pig» también valga en castellano, como dice la nota, se agrega en <code>es_allowed</code>. En inglés se escribe «scraper», con una sola p.</p>
+  <div class="csv">
+    <pre id="csv">id,en,pos,es_preferred,es_allowed,es_forbidden,subdomain,note,source
+T001,scrapper|pig,NOUN,chancho,,,producción,"Se usan por igual las denominaciones en inglés y español en Argentina, pero evitar usar ""chancho"" en inglés.",https://escoarg.com.ar/noticias/97/valvulas-lanzadoras-de-pigs-argus-machine</pre>
+    <button id="copiar" type="button">Copiar el CSV</button>
+  </div>
+  <p class="nota-al-pie">El archivo va en UTF-8. Si un campo tiene comas, va entre comillas, y las comillas internas se duplican.</p>
+</section>
+
+<section>
+  <h2>Reglas para armarlo</h2>
+  <ul>
+    <li>Unos 100 términos para la versión 1. Mejor 100 bien hechos que 500 copiados.</li>
+    <li>Cada fila lleva su fuente. Si la decisión es tuya, «criterio propio» y la explicación en <code>note</code>.</li>
+    <li>Una fila por concepto, no por palabra: «rig» y «drilling rig» pueden ir en la misma fila.</li>
+    <li>Los prohibidos salen de errores reales de las traducciones automáticas del corpus. Se agregan cuando aparecen, no antes.</li>
+    <li>Antes de evaluar, el glosario se congela. Si se sigue ajustando mientras se mira el set de prueba, el resultado queda inflado.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Candidatos</h2>
+  <p>Los candidatos viven en otro archivo, <code>data/glossary/candidatos.csv</code>, y no forman parte del glosario. Entran solo cuando los aceptás en <b>Glosario → Candidatos</b>.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Columna</th><th>Qué guarda</th></tr></thead>
+    <tbody>
+      <tr><td><code>id</code></td><td>C001, C002…</td></tr>
+      <tr><td><code>en</code>, <code>en_osha</code>, <code>en_slb</code></td><td>El término en inglés, y si figura en el glosario de OSHA y en el de SLB.</td></tr>
+      <tr><td><code>es_slb</code>, <code>url_slb</code></td><td>El equivalente del SLB Energy Glossary en español y su página.</td></tr>
+      <tr><td><code>es_docs</code>, <code>es_docs_variantes</code>, <code>fuente_docs</code>, <code>id_docs</code></td><td>Lo que dicen tus documentos de CENOVA e YPF, según glosariotest.</td></tr>
+      <tr><td><code>coinciden</code></td><td>«sí» o «no»: si SLB y tus documentos dicen lo mismo.</td></tr>
+      <tr><td><code>area</code>, <code>origen</code></td><td>Área sugerida y de qué lista salió el término.</td></tr>
+      <tr><td><code>estado</code>, <code>id_glosario</code></td><td>pendiente, aprobado (con el id que tomó en el glosario) o descartado.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Qué pasa al aceptar</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Lo que elegís</th><th>Va al campo</th></tr></thead>
+    <tbody>
+      <tr><td>La preferida</td><td><code>es_preferred</code></td></tr>
+      <tr><td>Cada forma marcada «Vale»</td><td><code>es_allowed</code></td></tr>
+      <tr><td>Cada forma marcada «Error»</td><td><code>es_forbidden</code></td></tr>
+      <tr><td>Cada forma marcada «No se usa»</td><td>Ninguno. Si aparece en una traducción, da <span class="tag no">NO_ENCONTRADO</span>.</td></tr>
+      <tr><td>Las fuentes</td><td><code>source</code>, que se completa solo con SLB, tus documentos y OSHA.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Copias y seguridad</h2>
+  <ul>
+    <li>La primera vez que guardás en cada visita, la app deja una copia del archivo anterior en <code>data/glossary/historial/</code>.</li>
+    <li>El archivo se escribe de una vez, así que nunca queda a medio guardar.</li>
+    <li>Si el archivo cambió por otro lado mientras tenías la tabla abierta, la app no guarda y avisa.</li>
+    <li>«Bajar el CSV», al pie de la página Glosario, descarga el archivo actual.</li>
+  </ul>
+</section>
+</main>
+
+<script>
+document.getElementById("copiar").addEventListener("click", function () {
+  var boton = this, texto = document.getElementById("csv").textContent;
+  function seleccionar() {
+    var r = document.createRange(); r.selectNodeContents(document.getElementById("csv"));
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    boton.textContent = "Seleccionado: Ctrl+C para copiar";
+  }
+  try {
+    navigator.clipboard.writeText(texto).then(function () { boton.textContent = "Copiado"; }, seleccionar);
+  } catch (e) { seleccionar(); }
+});
+</script>
+</html>

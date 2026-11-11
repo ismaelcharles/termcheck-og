@@ -1,0 +1,34 @@
+seg_id,system,term_id,label,es_used,comment
+S004,claude,T008,CORRECTO,torre,
+S004,claude,T017,ERROR_TERMINO,cabeza de inyección,
+S004,claude,T025,CORRECTO,bloque corona,"sería ""bloque de corona"""
+S004,claude,T026,ERROR_TERMINO,aparejo,
+S004,deepl,T008,CORRECTO,torre de perforación,
+S004,deepl,T017,ERROR_TERMINO,pivote,
+S004,deepl,T025,CORRECTO,bloque de corona,
+S004,deepl,T026,ERROR_TERMINO,bloque móvil,
+S004,opusmt,T008,SIN_TRADUCIR,derrick,
+S004,opusmt,T017,ERROR_TERMINO,bloque giratorio,
+S004,opusmt,T025,CORRECTO,bloque de la corona,"deberia ser ""bloque de corona"""
+S004,opusmt,T026,CORRECTO,bloque viajero,
+S006,claude,T003,CORRECTO,,
+S006,claude,T021,ERROR_TERMINO,columnas de cañería,
+S006,claude,T031,CORRECTO,,deberia ser intermediate casing
+S006,claude,T044,CORRECTO,,
+S006,claude,T051,CORRECTO,,
+S006,claude,T056,ERROR_TERMINO,cañería intermedia,casing intermedio
+S014,claude,T047,CORRECTO,,
+S014,claude,T073,CORRECTO,,
+S014,deepl,T047,CORRECTO,,investigué y flowback también se puede decir reflujo
+S014,deepl,T073,CORRECTO,,
+S014,opusmt,T047,CORRECTO,,falta el pronombre el
+S014,opusmt,T073,CORRECTO,,
+S022,claude,T079,CORRECTO,,
+S022,deepl,T079,CORRECTO,,
+S022,opusmt,T079,CORRECTO,,
+S118,claude,T008,CORRECTO,,
+S118,claude,T019,CORRECTO,,
+S118,deepl,T008,CORRECTO,,
+S118,deepl,T019,CORRECTO,,
+S118,opusmt,T008,SIN_TRADUCIR,derrick,
+S118,opusmt,T019,ERROR_TERMINO,cabeza del pozo,cabeza de pozo es la alternativa mas parecida

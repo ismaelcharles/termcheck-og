@@ -1,0 +1,361 @@
+seg_id	system	target_es
+S001	claude	Controle la surgencia mediante técnicas de control de pozo adecuadas para evitar la fractura de la formación en pozo abierto, dentro de los límites de presión del equipamiento del pozo (barras de sondeo, sarta de trabajo, cañería de entubación, cabeza de pozo, sistema BOP y equipos relacionados).
+S001	deepl	Controlar el golpe de presión utilizando técnicas adecuadas de control de pozos para evitar la fracturación de la formación en un pozo abierto, dentro de los límites de presión del equipo del pozo (tubo de perforación, sarta de trabajo, revestimiento, cabezal de pozo, sistema BOP y equipo relacionado).
+S001	opusmt	Controlar la patada mediante el uso de técnicas adecuadas de control para evitar la formación de fracturas en un agujero abierto dentro de los límites de presión del equipo de pozo (tubo de perforación, cuerda de trabajo, carcasa, cabeza de pozo, sistema BOP, y equipo relacionado).
+S002	claude	El preventor de reventones (BOP), el acumulador y el múltiple de estrangulación son instalados por la cuadrilla del equipo después de bajar y cementar la cañería guía.
+S002	deepl	El preventor de reventones (BOP), el acumulador y el colector de estrangulamiento son instalados por el equipo de la plataforma una vez que se ha colocado y cementado el revestimiento de superficie.
+S002	opusmt	La tripulación de la plataforma instala el preventor de sopletes (BOP), el acumulador y el colector de estrangulamiento después de que la carcasa de superficie esté fijada y cementada.
+S003	claude	La tubería flexible se introduce en el pozo por dentro de la cañería de producción sin necesidad de llaves, cuñas ni elevadores.
+S003	deepl	La tubería enrollada se introduce en el pozo a través del revestimiento de producción sin necesidad de tenazas, correas de sujeción ni elevadores.
+S003	opusmt	Los tubos en bobina se insertan en el pozo hacia abajo de la carcasa de producción sin necesidad de pinzas, resbalones o ascensores.
+S004	claude	Las tareas de mantenimiento en la torre consisten en lubricar la cabeza de inyección, el aparejo y el bloque corona, y en reemplazar las empaquetaduras de la cabeza de inyección.
+S004	deepl	Las actividades de mantenimiento en la torre de perforación consisten en lubricar el pivote, el bloque móvil y el bloque de corona, así como en sustituir la junta del pivote.
+S004	opusmt	Las actividades de mantenimiento en el derrick consisten en lubricar el bloque giratorio, el bloque viajero y el bloque de la corona, y la sustitución del embalaje giratorio.
+S005	claude	El perforador detiene la rotación de la sarta de perforación y la eleva con el malacate hasta que el vástago de perforación (kelly) queda fuera de la mesa rotativa.
+S005	deepl	El perforador detiene la rotación de la sarta de perforación y la iza con el cabrestante hasta que la varilla Kelly sale de la mesa giratoria.
+S005	opusmt	El taladro detiene la cuerda del taladro de girar, y iza la cuerda del taladro con las obras de dibujo hasta que el kely esté fuera de la mesa rotativa.
+S006	claude	El Gerente de Distrito podrá exigirle que realice pruebas de presión negativa adicionales en otras columnas de cañería o liners (por ejemplo, la cañería intermedia o un liner) o en pozos con conjunto BOP de superficie, según corresponda, para demostrar la integridad de la cañería o del liner.
+S006	deepl	El director de distrito puede exigirle que realice pruebas adicionales de presión negativa en otras columnas de revestimiento o revestimientos interiores (por ejemplo, la columna de revestimiento intermedia o el revestimiento interior) o en pozos con un conjunto de BOP de superficie, según corresponda, para demostrar la integridad del revestimiento o del revestimiento interior.
+S006	opusmt	El District Manager puede requerirle que realice pruebas adicionales de presión negativa en otras cadenas de cubierta o revestimientos (por ejemplo, cadena de cubierta intermedia o revestimiento) o en pozos con una pila de superficie BOP, según proceda, para demostrar la integridad de la carcasa o revestimiento.
+S007	claude	Las operaciones que se realizan con cable (wireline) incluyen perfilaje, punzado, fijación de herramientas de fondo, pesca, achique y pistoneo.
+S007	deepl	Las operaciones realizadas mediante cable incluyen la logging, la perforación, la colocación de herramientas de fondo de pozo, la recuperación de objetos, el achique y el swabbing.
+S007	opusmt	Las operaciones terminadas mediante el uso de cables incluyen tala, perforación, colocación de herramientas de perforación, pesca, fianza y limpieza.
+S008	claude	Todos los pozos, salvo los que producen por extracción artificial, deberán contar con un medio secundario de control inmediato del pozo mediante el uso de un árbol de producción y/o un equipamiento de terminación de fondo adecuados.
+S008	deepl	Todos los pozos, salvo los que se produzcan mediante elevación artificial, deberán disponer de un medio secundario de control inmediato del pozo mediante el uso de un «árbol de Navidad» adecuado y/o equipo de terminación de fondo de pozo.
+S008	opusmt	Todos los pozos, a menos que sean producidos por ascensores artificiales, deberán poseer un medio secundario de control inmediato de los pozos mediante el uso de los correspondientes equipos de terminación de árboles de Navidad y/o pozos.
+S009	claude	La válvula de la línea del estrangulador se utiliza para desviar el lodo desde el pozo hacia el múltiple de estrangulación durante una surgencia.
+S009	deepl	La válvula de la línea de estrangulamiento se utiliza para desviar el lodo del pozo hacia el colector de estrangulamiento durante un golpe de presión.
+S009	opusmt	La válvula de la línea de estrangulamiento se utiliza para redirigir el barro del pozo de perforación al colector de estrangulamiento durante una patada.
+S010	claude	Para comenzar a perforar, se conecta un trépano de superficie a un portamechas de fondo, que a su vez se conecta al vástago de perforación (kelly).
+S010	deepl	Para iniciar la perforación, se acopla una broca de superficie a un collarín de perforación de fondo de pozo, que a su vez se acopla al kelly.
+S010	opusmt	Para comenzar a perforar, una broca de taladro superficial se une a un cuello de taladro de fondo, que a su vez se une al kelly.
+S011	claude	Las tareas de mantenimiento incluyen la inspección, el ajuste y el servicio de equipos como bombas de lodo, mangueras, conexiones de mangueras, válvula de alivio, zarandas, correas y protecciones.
+S011	deepl	Las tareas de mantenimiento incluyen la inspección, el ajuste y la revisión de equipos como bombas de lodo, mangueras, conexiones de mangueras, válvula de descarga, tamizadoras de lodo, correas y protecciones.
+S011	opusmt	Las actividades de mantenimiento incluyen la inspección, ajuste, mantenimiento de equipos como bombas de barro, mangueras, conexiones de mangueras, válvula pop-off, agitadores de esquisto, cinturones y guardias.
+S012	claude	Una vez asentada la cañería, se circula fluido de perforación por la cañería y el espacio anular para eliminar los gases residuales y acondicionar el lodo.
+S012	deepl	Una vez colocada la tubería de revestimiento, se hace circular el fluido de perforación a través de la tubería de revestimiento y el anillo para eliminar cualquier gas residual y acondicionar el lodo.
+S012	opusmt	Una vez desembarcada la carcasa, el fluido de perforación circula a través de la carcasa y el anillo para eliminar los gases residuales y acondicionar el barro.
+S013	claude	Un enganchador que estaba en la plataforma de tubing murió aplastado por el mástil al caer, y dos ayudantes de boca de pozo resultaron gravemente heridos al saltar desde la plataforma de trabajo.
+S013	deepl	Un operario de la torre de perforación que se encontraba en la plataforma de tubería quedó aplastado por el mástil cuando este se derrumbó, y dos operarios de planta resultaron gravemente heridos al saltar desde la cubierta de operaciones.
+S013	opusmt	Un derrickman en la tabla de tubos fue aplastado por el mástil cuando cayó y dos manos del piso resultaron gravemente heridas por saltar de la cubierta de operaciones.
+S014	claude	El flujo de retorno se ha dirigido al separador de producción.
+S014	deepl	El reflujo se ha desviado hacia el separador de producción.
+S014	opusmt	Flowback ha sido enrutado al separador de producción.
+S015	claude	Utilice dispositivos temporales de seguridad de pozo en el fondo, como packers recuperables y tapones puente, diseñados para servicio con H2S.
+S015	deepl	Utilice dispositivos temporales de seguridad de fondo de pozo, como empacadores recuperables y tapones de puente, diseñados para servicio con H₂S.
+S015	opusmt	Utilice dispositivos temporales de seguridad del pozo de descarga, como empacadores recuperables y enchufes de puente diseñados para el servicio H2S.
+S016	claude	Asegúrese de que la línea de suministro de gas lift desde el compresor de gas lift hasta la GLSDV tenga una presión nominal adecuada para la MAOP del riser del ducto.
+S016	deepl	Asegúrese de que la línea de suministro de elevación por gas, desde el compresor de elevación por gas hasta la válvula GLSDV, tenga una presión nominal adecuada para la MAOP del tubo ascendente.
+S016	opusmt	Asegúrese de que el flujo de suministro de gas-lift desde el compresor de gas-lift hasta el GLSDV está calificado a presión para el MAOP de la tubería.
+S017	claude	Como mínimo, debe cementar el espacio anular 500 pies de profundidad medida por encima de la zapata de la cañería y 500 pies de profundidad medida por encima de cada zona que deba aislarse.
+S017	deepl	Como mínimo, debe cementarse el espacio anular a 500 pies MD por encima de la zapata de revestimiento y a 500 pies MD por encima de cada zona que se vaya a aislar.
+S017	opusmt	Como mínimo, debe cementar el espacio anular 500 pies MD por encima del zapato de la carcasa y 500 pies MD por encima de cada zona para ser aislado.
+S018	claude	Al reinstalarse, el árbol deberá estar equipado con al menos una válvula maestra y una válvula de seguridad de superficie en el tramo vertical del árbol.
+S018	deepl	El árbol deberá estar equipado con, como mínimo, una válvula maestra y una válvula de seguridad en superficie en el tramo vertical del árbol cuando se vuelva a instalar.
+S018	opusmt	El árbol estará equipado con un mínimo de una válvula maestra y una válvula de seguridad de superficie en el recorrido vertical del árbol cuando se vuelva a instalar.
+S019	claude	Cuando lo justifiquen condiciones como permafrost, fondo marino inestable, formación de hidratos o problemas de parafina, el Gerente de Distrito podrá aprobar una profundidad de asentamiento alternativa, caso por caso.
+S019	deepl	Cuando lo justifiquen condiciones tales como el permafrost, la inestabilidad del lecho, la formación de hidratos o problemas de parafina, el director de distrito podrá aprobar una profundidad de instalación alternativa, valorando cada caso individualmente.
+S019	opusmt	Cuando lo justifiquen condiciones como el permafrost, condiciones de fondo inestables, formación de hidratos o problemas de parafina, el Administrador del Distrito podrá aprobar una profundidad de ajuste alternativa caso por caso.
+S020	claude	Los programas de entubación y cementación propuestos deberán ejecutarse según lo aprobado para proteger y/o aislar todas las zonas de agua aprovechable, las zonas potencialmente productivas, las zonas de pérdida de circulación, las zonas con presiones anormales y cualquier yacimiento mineral potencialmente valioso.
+S020	deepl	Los programas propuestos de entubado y cementación se llevarán a cabo tal y como se hayan aprobado, con el fin de proteger y/o aislar todas las zonas de agua aprovechables, las zonas potencialmente productivas, las zonas de pérdida de circulación, las zonas con presiones anómalas y cualquier yacimiento mineral que pueda resultar valioso en el futuro.
+S020	opusmt	Los programas de cubierta y cementación propuestos se llevarán a cabo según se aprueben para proteger y/o aislar todas las zonas de agua utilizables, zonas potencialmente productivas, zonas de circulación perdida, zonas anormalmente presionadas y cualquier depósito de minerales que pueda ser útil.
+S021	claude	Reemplace las cintas transportadoras de agente de sostén por tornillos sinfín.
+S021	deepl	Sustituir las cintas transportadoras de agente de apuntalamiento por sinfines.
+S021	opusmt	Reemplazar las correas de transferencia con tornillos.
+S022	claude	La estimulación de pozos abarca técnicas para optimizar el rendimiento del pozo.
+S022	deepl	La estimulación de pozos implica técnicas para optimizar el rendimiento de los mismos.
+S022	opusmt	La estimulación del pozo implica técnicas para optimizar el rendimiento del pozo.
+S023	claude	Un soldador y un ayudante estaban colocando tapas en pozos petroleros abandonados.
+S023	deepl	Un soldador y un ayudante estaban taponando pozos de petróleo abandonados.
+S023	opusmt	Un soldador y un ayudante estaban tapando pozos de petróleo abandonados.
+S024	claude	En algunas locaciones de perforación puede excavarse un antepozo por debajo del nivel del terreno.
+S024	deepl	En algunos emplazamientos de perforación, puede excavarse un sótano por debajo del nivel del suelo.
+S024	opusmt	En algunos sitios de perforación, se puede excavar un sótano bajo el suelo.
+S025	claude	Otros diseños de equipo pueden incluir el uso de un top drive.
+S025	deepl	Otros diseños de plataformas de perforación pueden incluir el uso de un accionamiento superior.
+S025	opusmt	Otros diseños de plataforma pueden incluir el uso de una unidad superior.
+S026	claude	Un pozo que no produce a su máximo potencial puede requerir un servicio o un reacondicionamiento (workover).
+S026	deepl	Un pozo que no esté produciendo a su máximo potencial puede requerir mantenimiento o reacondicionamiento.
+S026	opusmt	Un pozo que no está produciendo a su máximo potencial puede requerir servicio o trabajo en marcha.
+S027	claude	Cuatro trabajadores intentaban realizar un servicio en un pozo de petróleo y gas para abandonarlo.
+S027	deepl	Cuatro trabajadores intentaban realizar el mantenimiento de un pozo de petróleo y gas con el fin de abandonarlo.
+S027	opusmt	Cuatro trabajadores estaban tratando de servir un pozo de petróleo y gas para abandonarlo.
+S028	claude	La línea de gas rota estaba a unos 20 pies de la casilla del perforador, donde se encontraban tres empleados.
+S028	deepl	La tubería de gas rota se encontraba a unos 20 pies de una caseta de trabajo, en la que se encontraban tres empleados.
+S028	opusmt	La línea de gas rota estaba a unos 20 pies de un Doghouse, que estaba ocupado por tres empleados.
+S029	claude	Para dar servicio, reparar o reemplazar las varillas o la bomba, debe sacarse del pozo la sarta de varillas de bombeo.
+S029	deepl	Para realizar el mantenimiento, la reparación o la sustitución de las varillas o la bomba, es necesario extraer la sarta de varillas de bombeo del pozo.
+S029	opusmt	Para el servicio, reparación o reemplazo de las varillas o la bomba, la cuerda de la varilla aspirante debe ser sacada del agujero.
+S030	claude	Prohíba las llamas abiertas en las inmediaciones del equipo, teniendo en cuenta la ubicación de equipos como unidades de petróleo caliente, calentadores-tratadores, calefactores a propano, quema de residuos, etc.
+S030	deepl	Prohíba las llamas abiertas en las inmediaciones de la plataforma, teniendo en cuenta la ubicación de equipos como lubricadores de aceite caliente, calentadores de tratamiento, calentadores de propano, basura en combustión, etc.
+S030	opusmt	Prohíba las llamas abiertas desde las proximidades de la plataforma, considerando la ubicación del equipo, tales como aceiteras calientes, calentadores-tractores, calentadores de propano, basura ardiente, etc.
+S031	claude	Un operador de equipo pesado usaba una topadora para excavar una fosa de 20 pies de profundidad por 10 pies de ancho, ubicada a 5 pies del borde de una pileta de reserva de un yacimiento llena de fluidos.
+S031	deepl	Un operador de maquinaria pesada estaba utilizando una excavadora para excavar un foso de 20 pies de profundidad por 10 pies de ancho, situado a 5 pies del borde de un foso de reserva de un yacimiento petrolífero lleno de fluidos.
+S031	opusmt	Un operador de equipo pesado estaba usando una excavadora para cavar un pozo de 20 pies de profundidad por 10 pies de ancho, ubicado a 5 pies del borde de un pozo de reserva de campos petrolíferos lleno de fluidos.
+S032	claude	Antes de iniciar cualquier prueba, la dirección del equipo debe asegurarse de que el sistema de prevención de reventones incluya un sistema de ahogo capaz de bombear fluido al pozo por debajo del preventor anular y de al menos un juego de esclusas de tubería.
+S032	deepl	Antes de iniciar cualquier prueba, la dirección de la plataforma debe asegurarse de que el sistema de prevención de reventones incluya un sistema de cierre capaz de bombear fluido al pozo por debajo del preventor anular y, como mínimo, hasta el primer conjunto de pistones de tubería.
+S032	opusmt	Antes de que comience cualquier prueba, la dirección de la plataforma debe asegurarse de que el sistema de prevención de la explosión incluye un sistema de extinción que es capaz de bombear líquido en el pozo por debajo del preventor anular y al menos en la puesta de los arietes de tubería.
+S033	claude	Se recomienda enfáticamente contar con contención para los tanques de agua de producción.
+S033	deepl	Se recomienda encarecidamente el uso de contención para los depósitos de agua de producción.
+S033	opusmt	Se sugiere encarecidamente la contención para los tanques de agua producidos.
+S034	claude	Esta batería central de tanques está rodeada por un muro de contención de chapa corrugada.
+S034	deepl	Esta batería de depósitos central se ha rodeado con un muro de contención de chapa ondulada.
+S034	opusmt	Esta batería del tanque central ha sido rodeada con una pared de contención de metal corrugado.
+S035	claude	Pozo sumidero significa un pozo utilizado para la disposición de residuos en un estrato del subsuelo.
+S035	deepl	Por «pozo de eliminación» se entiende un pozo utilizado para la eliminación de residuos en un estrato subterráneo.
+S035	opusmt	Eliminación bien significa un bien utilizado para la eliminación de residuos en un estrato subsuperficial.
+S036	claude	Puede utilizar un juego de esclusas combinadas de accionamiento hidráulico como esclusas ciegas y esclusas de corte.
+S036	deepl	Se puede utilizar un conjunto de obturadores combinados de accionamiento hidráulico para los obturadores ciegos y los obturadores de cizallamiento.
+S036	opusmt	Usted puede utilizar un conjunto de carneros combinados accionados hidráulicamente para los carneros ciegos y los carneros de cizallamiento.
+S037	claude	Debe asegurar la correcta instalación de la cañería en la cabeza de pozo submarina o del liner en el colgador de liner.
+S037	deepl	Debe garantizarse la correcta instalación del revestimiento en la cabeza de pozo submarina o del revestimiento interior en el colgador de revestimiento.
+S037	opusmt	Debe garantizar la correcta instalación de la carcasa en la cabeza del pozo submarino o el revestimiento en la percha del revestimiento.
+S038	claude	Su registro direccional compuesto debe abarcar el intervalo desde el fondo de la cañería conductora hasta la profundidad total.
+S038	deepl	El estudio direccional compuesto debe mostrar el intervalo desde el fondo del revestimiento conductor hasta la profundidad total.
+S038	opusmt	Su encuesta direccional compuesta debe mostrar el intervalo desde la parte inferior de la carcasa del conductor hasta la profundidad total.
+S039	claude	El gas proviene del desgasificador, del separador lodo-gas, del separador o, durante un ensayo de formación (DST), directamente de las barras de sondeo.
+S039	deepl	El gas procede del desgasificador, del «gas buster», del separador o, en el caso de las pruebas de la columna de perforación, directamente de la tubería de perforación.
+S039	opusmt	El gas proviene del desgasificador, buster de gas, separador, o cuando se prueba el taladro, directamente desde el tubo de perforación.
+S040	claude	Zona de presión anormal significa una zona con una presión superior o inferior al gradiente normal para un área y/o profundidad.
+S040	deepl	Por «zona de presión anómala» se entiende una zona cuya presión es superior o inferior al gradiente normal para una zona y/o profundidad determinadas.
+S040	opusmt	Zona de presión anormal: zona que tiene presión por encima o por debajo del gradiente normal para un área y/o profundidad.
+S041	claude	La fractura hidráulica es una técnica de estimulación de pozos en la que se bombea fluido a alta presión a través de los punzados de la cañería para fracturar una formación de lutita que de otro modo sería impermeable.
+S041	deepl	La fracturación hidráulica es una técnica de estimulación de pozos en la que se bombea fluido a alta presión a través de las perforaciones del revestimiento del pozo para romper una formación de pizarra que, de otro modo, sería impermeable.
+S041	opusmt	La fracturación hidráulica es una técnica de estimulación de pozos en la que el líquido se bombea bajo alta presión a través de perforaciones de la carcasa del pozo para romper una formación de esquisto de otro modo impermeable.
+S042	claude	Las operaciones de entubación se realizan periódicamente a lo largo de la perforación, comenzando con la cañería guía, siguiendo con la cañería intermedia y terminando con la cañería de producción, que se baja durante la terminación del pozo.
+S042	deepl	Las operaciones de entubado se llevan a cabo periódicamente a lo largo del proceso de perforación, comenzando por el entubado de superficie, el entubado intermedio y terminando con la sarta de producción, que tiene lugar durante la terminación del pozo.
+S042	opusmt	Las operaciones de carcasa se realizan periódicamente durante todo el proceso de perforación, comenzando con la carcasa de superficie, la carcasa intermedia, y terminando con la cadena de producción que se lleva a cabo durante la terminación del pozo.
+S043	claude	El control de pozo consta de dos componentes básicos: uno activo, que consiste en las actividades de monitoreo de la presión del fluido de perforación, y uno pasivo, que consiste en los preventores de reventones.
+S043	deepl	El control del pozo consta de dos componentes básicos: un componente activo, que consiste en las actividades de monitorización de la presión del fluido de perforación, y un componente pasivo, que consiste en los preventores de reventones.
+S043	opusmt	El control del pozo consta de dos componentes básicos: un componente activo que consiste en actividades de monitoreo de la presión del fluido de perforación, y un componente pasivo que consiste en los Preventores de Explosión.
+S044	claude	Se utilizan muchos tipos de herramientas de pesca (por ejemplo, tijeras hidráulicas, arpones y pescadores de enchufe), que se introducen en el pozo mediante una sarta de perforación o con cable.
+S044	deepl	Existen muchos tipos de herramientas de recuperación (por ejemplo, percutores hidráulicos, lanzas y overshots) que se introducen en el pozo mediante una sarta de perforación o un cable de servicio.
+S044	opusmt	Hay muchos tipos de herramientas de pesca utilizadas (por ejemplo, jarras hidráulicas, lanzas y tomas excesivas) que se insertan en el pozo a través de una cuerda de perforación o alambre.
+S045	claude	Coloque una bandera roja u otro dispositivo de advertencia en la palanca del embrague del malacate como recordatorio para el perforador cada vez que se mueva o desactive el dispositivo de seguridad de corona para permitir que el aparejo suba por encima del punto de detención preestablecido.
+S045	deepl	Coloca una bandera roja u otro dispositivo de advertencia en la palanca del embrague del cabrestante como recordatorio para el perforador cada vez que se mueva o desactive el dispositivo de seguridad de la corona para permitir que el bloque móvil se eleve por encima del punto de parada preestablecido.
+S045	opusmt	Coloque una bandera roja u otro dispositivo de advertencia a la palanca de embrague de las máquinas de tracción como recordatorio al perforador siempre que el dispositivo de seguridad de la corona se mueva o desactive para permitir que el bloque viajero se eleve por encima del punto de parada preestablecido.
+S046	claude	Mientras uno de los trabajadores abría lentamente la válvula maestra del árbol de producción para igualar la presión del pozo con un lubricador de wireline, el lubricador de 2000 libras se desprendió del árbol y golpeó en la espalda a uno de los operadores de wireline, causándole la muerte.
+S046	deepl	Mientras uno de los trabajadores abría lentamente la válvula principal del «árbol de Navidad» para igualar la presión del pozo con la de un lubricador de cable, el lubricador, de 2.000 libras, salió disparado del árbol y golpeó a uno de los trabajadores de cable en la espalda, lo que le causó la muerte.
+S046	opusmt	Como uno de los trabajadores lentamente abrió la válvula maestra del árbol de Navidad para igualar la presión del pozo a un lubricador de alambre, el lubricador de 2.000 libras voló del árbol, golpeando a uno de los trabajadores de alambre en la espalda resultando en su muerte.
+S047	claude	Los pisos de equipo, torres, mástiles, tanques y otros equipos elevados en las locaciones exponen con frecuencia a los trabajadores a caídas.
+S047	deepl	Las plataformas de perforación, las torres de perforación, los mástiles, los tanques y otros equipos elevados en los emplazamientos de los pozos suelen exponer a los trabajadores al riesgo de caídas.
+S047	opusmt	Suelos rígidos, derricks, mástiles, tanques y otros equipos elevados en los pozos a menudo exponen a los trabajadores a caídas.
+S048	claude	Luego, el perforador enrosca el vástago (kelly) con el enroscador del vástago o la cadena de enroscar, y la cuadrilla aplica torque a la unión con las llaves.
+S048	deepl	A continuación, el perforador hace girar el kelly utilizando el girador de kelly o la cadena giratoria, y el equipo utiliza tenazas para apretar la unión.
+S048	opusmt	El taladro entonces gira sobre el kelly usando el spinner de kelly o la cadena de hilado y la tripulación utiliza pinzas para torcer la articulación.
+S049	claude	Una falla en el asiento del packer o una pérdida de fluido hacia una formación superior podría provocar una surgencia que derive en un reventón con heridos y muertos.
+S049	deepl	Un fallo en el asiento de un empacador o una fuga de fluido hacia una formación superior podría provocar un golpe de presión que, a su vez, podría dar lugar a una erupción con el consiguiente riesgo de lesiones y muertes.
+S049	opusmt	Un fallo en el asiento del empaquetador o pérdida de líquido a una formación superior podría causar una patada que podría resultar en una explosión causando lesiones y muertes.
+S050	claude	Cuando las operaciones no requieran la presencia de un enganchador en la plataforma de varillas o de tubing por encima de la operación, ni de ayudantes de boca de pozo en las inmediaciones de la operación en la cabeza de pozo o en el piso, estos deben retirarse o aislarse de la zona de peligro.
+S050	deepl	Cuando las operaciones no requieran la presencia de un operario de torre en la plataforma de varillas o tubería situada por encima de la zona de trabajo, ni de operarios de planta en las inmediaciones de la zona de trabajo, en la boca del pozo o en la planta, estos deberán retirarse o aislarse de la zona de peligro.
+S050	opusmt	Cuando las operaciones no requieran un derrickman presente en la varilla o en la tabla de tubos por encima de la operación, o las manos del suelo presentes en las inmediaciones de la operación en la cabeza del pozo o en el suelo, deben retirarse o aislarse de la zona de peligro.
+S051	claude	Se utiliza la mesa rotativa o el enroscador del vástago para girar la sarta o el vástago (kelly) y desenroscarlo de la unión de las barras de sondeo.
+S051	deepl	Se utiliza la mesa giratoria o el girador de kelly para hacer girar la sarta de perforación o el kelly y desenroscarlo de la junta del tubo de perforación.
+S051	opusmt	Ya sea la mesa rotativa o el spinner de kely se utiliza para girar la cuerda de perforación o kely para desenroscarla de la articulación de la tubería de perforación.
+S052	claude	Los BOP, los acumuladores y el múltiple de estrangulación deben probarse y mantenerse adecuadamente.
+S052	deepl	Los BOP, los acumuladores y el colector de estrangulamiento deben someterse a pruebas y recibir un mantenimiento adecuado.
+S052	opusmt	Los BOPs, acumuladores y colectores de estrangulación deben ser probados y mantenidos adecuadamente.
+S053	claude	Durante una operación de taponamiento y abandono en un pozo de petróleo/gas, se produjo una surgencia o reventón mientras una empresa de servicios bombeaba un tapón de cemento en el pozo.
+S053	deepl	Durante una operación de taponamiento y abandono en un pozo de petróleo o gas, se produjo un golpe de presión o una erupción mientras una empresa de servicios bombeaba un tapón de cemento al interior del pozo.
+S053	opusmt	Durante un enchufe y abandonar la operación en un pozo de petróleo/gas, una patada o explosión ocurrió mientras una compañía de servicios estaba bombeando un enchufe de cemento en el agujero.
+S054	claude	Los elevadores de tubing se utilizan para levantar el tubing desde el caballete hasta el piso del equipo.
+S054	deepl	Los elevadores de tubería se utilizan para elevar la tubería desde el bastidor hasta la plataforma de perforación.
+S054	opusmt	Los elevadores de tubos se utilizan para levantar los tubos desde el rack hasta el suelo de la plataforma.
+S055	claude	Elimine todo derrame de líquidos inflamables de los equipos, antepozos, piso del equipo y terreno adyacente a la cabeza de pozo.
+S055	deepl	Elimine todo derrame de líquidos inflamables del equipo, los sótanos, la plataforma de perforación y la zona del terreno adyacente a la boca del pozo.
+S055	opusmt	Retire todo el derrame de líquidos inflamables del equipo, sótanos, suelo de plataforma y área de suelo adyacente a la cabeza del pozo.
+S056	claude	Un preventor de reventones (BOP) con un BOP anular en la parte superior y dos BOP de esclusas se apilan junto con una válvula de la línea de ahogo y una válvula de la línea del estrangulador.
+S056	deepl	Un preventor de reventones (BOP) con un BOP anular en la parte superior y dos BOP de tipo ram están apilados junto con una válvula de la línea de cierre y una válvula de la línea de estrangulamiento.
+S056	opusmt	Se apila un preventor de soplete (BOP) con un BOP anular en la parte superior y dos BOP tipo carnero junto con una válvula de línea de cierre y una válvula de línea de estrangulamiento.
+S057	claude	El cable de perforación es el cable de acero enhebrado a través del bloque corona y el aparejo.
+S057	deepl	La línea de perforación es el cable de acero que pasa por la polea de corona y el bloque móvil.
+S057	opusmt	La línea de perforación es la cuerda de alambre de acero arrastrada a través del bloque de la corona y el bloque de viaje.
+S058	claude	Si el pozo no fluye por sí mismo, puede ser necesario considerar la estimulación del pozo o la extracción artificial.
+S058	deepl	Si el pozo no fluye por sí solo, puede ser necesario considerar la estimulación del pozo o el bombeo artificial.
+S058	opusmt	Si el pozo no fluye por sí solo, puede ser necesario considerar la estimulación del pozo o la elevación artificial.
+S059	claude	El fluido de fractura está compuesto por un fluido base, un agente de sostén (arena u otro agente de sostén alternativo) y aditivos químicos (ver Fluido de fractura).
+S059	deepl	El fluido de fracturación está compuesto por un fluido base, un agente de apuntalamiento (arena o un agente alternativo) y aditivos químicos (véase «Fluido de fracturación»).
+S059	opusmt	El líquido de fractura se compone de un líquido base, proppant (arena, o un proppant alternativo) y aditivos químicos (véase Fluido de fractura).
+S060	claude	Tenga en cuenta el riesgo de caída al trabajar en la torre o el mástil, el piso de perforación, el piso del equipo de servicio, los tanques y otros equipos elevados.
+S060	deepl	Hay que tener en cuenta los riesgos de caída al trabajar en la torre de perforación o el mástil, la plataforma de perforación, la zona de mantenimiento de la plataforma, los depósitos y otros equipos elevados.
+S060	opusmt	Tenga en cuenta los riesgos de caída al trabajar en el derrick o mástil, el suelo de perforación, el suelo de la plataforma de servicio, tanques y otros equipos elevados.
+S061	claude	El perforador usa el malacate para sacar el vástago (kelly) y la barra conectada de la ratonera.
+S061	deepl	El perforador utiliza el cabrestante para elevar el kelly y el tramo acoplado fuera del «mousehole».
+S061	opusmt	El taladro utiliza las obras de dibujo para levantar el kely y la junta unida fuera del agujero del ratón.
+S062	claude	Una unidad de petróleo caliente está diseñada para circular fluido calentado por cañerías, tubing, casing o tanques por diversos motivos, entre ellos la remoción de parafina y de petróleos de base asfáltica.
+S062	deepl	Una unidad de aceite caliente está diseñada para hacer circular fluido calentado por las tuberías, los tubos de producción, el revestimiento o los depósitos con diversos fines, entre ellos la eliminación de parafinas y aceites a base de alquitrán.
+S062	opusmt	Una unidad de aceite caliente está diseñada para circular fluido calentado en tuberías, tubos, carcasas o tanques por una variedad de razones, incluyendo la eliminación de parafina y aceites a base de alquitrán.
+S063	claude	La cuadrilla trabajaba con el pozo abierto; no se estaba usando ningún dispositivo de control de pozo.
+S063	deepl	La tripulación trabajaba en un pozo abierto; no se estaba utilizando ningún dispositivo de control del pozo.
+S063	opusmt	La tripulación estaba trabajando con un agujero abierto; no se estaba usando ningún dispositivo de control de pozos.
+S064	claude	Una mezcla de fluido de fractura y gas o petróleo retorna del pozo por las líneas de flujo hacia piletas o tanques.
+S064	deepl	Una mezcla de fluido de fracturación y gas o petróleo refluye del pozo a través de las líneas de flujo hacia fosos o depósitos.
+S064	opusmt	Una mezcla de líquido fraccionante y gas o aceite fluye de vuelta del pozo a través de líneas de flujo en pozos o tanques.
+S065	claude	Los punzados permiten que el petróleo o el gas fluyan hacia el interior de la cañería o del liner.
+S065	deepl	Las perforaciones permiten que el petróleo o el gas fluyan hacia el revestimiento o el forro.
+S065	opusmt	Las perforaciones permiten que el aceite o el gas fluyan en la carcasa o el revestimiento.
+S066	claude	Estas áreas incluyen la cabeza de pozo, los tanques (incluidos los de fluidos de producción), los calentadores-tratadores, los camiones cisterna, las unidades de petróleo caliente y otros equipos y líneas conectados al proceso.
+S066	deepl	Estas áreas incluyen la cabeza de pozo, los depósitos (incluidos los de fluidos producidos), los calentadores-tratadores, los camiones cisterna, las unidades de aceite caliente y otros equipos y líneas conectados al proceso.
+S066	opusmt	Estas áreas incluyen la cabeza del pozo, tanques (incluyendo tanques de fluidos producidos), calentadores-tractores, camiones cisterna, oleadores calientes, y otros equipos y líneas conectadas al proceso.
+S067	claude	La válvula de la línea de ahogo se utiliza para dirigir fluido de perforación hacia el BOP durante una surgencia.
+S067	deepl	La válvula de la línea de cierre se utiliza para dirigir el fluido de perforación hacia el BOP durante un golpe de presión.
+S067	opusmt	La válvula de la línea de cierre se utiliza para dirigir el fluido de perforación a la BOP durante una patada.
+S068	claude	El enganchador engancha los elevadores a la tubería desde la plataforma del enganchador (changuero).
+S068	deepl	El operario de la torre de perforación engancha los elevadores a la tubería desde la plataforma de trabajo.
+S068	opusmt	El derrickman fija los ascensores en la tubería desde el monoboard.
+S069	claude	Considere otras tecnologías (como un enroscador de tubería, un enroscador del vástago o una unidad top drive) para eliminar este peligro.
+S069	deepl	Considere otras tecnologías (como un girador de tuberías, un girador de kelly o una unidad de accionamiento superior) para eliminar este riesgo.
+S069	opusmt	Considere otras tecnologías (como un spinner de tubería, kelly spinner o unidad de accionamiento superior) para eliminar este peligro.
+S070	claude	Un equipo de reacondicionamiento (workover) se traslada o transporta a la locación y se posiciona sobre el pozo.
+S070	deepl	Una plataforma de reacondicionamiento se conduce o se transporta hasta el emplazamiento y se coloca junto al pozo.
+S070	opusmt	Una plataforma de trabajo en off se conduce o transporta al sitio y se coloca en el pozo.
+S071	claude	Las tareas de mantenimiento incluyen la inspección, el ajuste y el servicio de equipos como el malacate, la mesa rotativa, los cabirones, las llaves, los guinches neumáticos y el cable de acero.
+S071	deepl	Las actividades de mantenimiento incluyen la inspección, el ajuste y la revisión de equipos como cabrestantes, perforadoras rotativas, cabezales de perforación, tenazas, polipastos neumáticos y cables de acero.
+S071	opusmt	Las actividades de mantenimiento incluyen la inspección, el ajuste y el mantenimiento de equipos tales como máquinas de tracción, rotativas, cabezas de gato, pinzas, polipastos de aire y cables.
+S072	claude	El acumulador y el múltiple de estrangulación se colocaron en su lugar durante el montaje del equipo y ahora deben conectarse y probarse.
+S072	deepl	El acumulador y el colector de estrangulamiento se han colocado en su sitio durante el montaje y ahora es necesario conectarlos y someterlos a prueba.
+S072	opusmt	El acumulador y el colector de estrangulamiento se han puesto en su lugar durante el montaje y ahora necesitan ser conectados y probados.
+S073	claude	Mantenga la zona de trabajo alrededor de la mesa rotativa limpia y libre de fluidos de perforación, lodo, hielo, nieve, residuos y otros materiales que puedan provocar resbalones o tropiezos.
+S073	deepl	Mantenga la zona de trabajo alrededor de la mesa giratoria limpia y libre de fluidos de perforación, lodo, hielo, nieve, escombros y otros materiales que puedan provocar resbalones o tropiezos.
+S073	opusmt	Mantenga el área de trabajo alrededor de la mesa rotativa limpia y limpia de fluidos de perforación, barro, hielo, nieve, escombros y otros materiales que pueden causar deslizamiento o tropezamiento.
+S074	claude	Esto puede incluir, entre otras, operaciones de pesca, operaciones con cable (especialmente las que usan explosivos, como el corte de tubería), golpes con tijera, izaje, spudding, aflojado, fijación, rotación o cualquier otra operación identificada en el AST/ATS.
+S074	deepl	Esto puede incluir, entre otras cosas, operaciones de recuperación de objetos, operaciones con cable (especialmente aquellas que impliquen explosivos, como el corte de tuberías), sacudidas, izado, inicio de perforación, aflojamiento, fijación, rotación o cualquier otra operación identificada en el JHA/JSA.
+S074	opusmt	Esto puede incluir, pero no limitarse a, operaciones de pesca, operaciones de alambrón (especialmente las relacionadas con explosivos como el corte de tuberías), jarros, izar, spudding, aflojamiento, ajuste, rotación, o cualquier otra operación identificada por la JAI/JSA.
+S075	claude	Los operarios que recuperaban la cañería estaban circulando lodo en preparación para cementar el pozo cuando una bolsa de hidrocarburos salió despedida del pozo.
+S075	deepl	Los operarios encargados de extraer el revestimiento estaban haciendo circular lodo como preparación para la cementación del pozo cuando se produjo una fuga de hidrocarburos del pozo.
+S075	opusmt	Los tirantes de la carcasa estaban circulando barro en preparación para cementar el pozo cuando un bolsillo de hidrocarburos salió del pozo.
+S076	claude	Una vez retirada toda la tubería y fijados y probados los tapones de cemento, se excava alrededor de la cañería guía en la cabeza de pozo y se corta la cañería por debajo del nivel del terreno.
+S076	deepl	Una vez retirados todos los tubos y colocados y probados los tapones de cemento, se excava alrededor del revestimiento de superficie y se corta el revestimiento por debajo del nivel del suelo.
+S076	opusmt	Después de que todos los tubulares se retiran y se ponen tapones de cemento y se prueban, la cabeza del pozo se excava alrededor de la cubierta superficial y la carcasa se corta por debajo del nivel del suelo.
+S077	claude	La fractura hidráulica se realiza durante la etapa de terminación del pozo.
+S077	deepl	La fracturación hidráulica se lleva a cabo durante la fase de terminación del pozo.
+S077	opusmt	La fracturación hidráulica se produce durante la fase de terminación del pozo.
+S078	claude	El enganchador sube por la torre hasta la plataforma del enganchador (changuero).
+S078	deepl	El operario de la torre de perforación sube por la torre hasta la plataforma de trabajo.
+S078	opusmt	El derrickman sube por el derrick a la tabla de monos.
+S079	claude	Entre los motivos para sacar el tubing se incluyen el reemplazo de un packer, la localización de una pérdida en el tubing o un tubing obstruido.
+S079	deepl	Entre los motivos para extraer la tubería se incluyen la sustitución de un empacador, la localización de una fuga en la tubería o una tubería obstruida.
+S079	opusmt	Entre las razones para tirar de los tubos incluye reemplazar un empaquetador, localizar una fuga de tubos, o tubos enchufados.
+S080	claude	Se posicionan la planchada y los caballetes, y se colocan sobre los caballetes la tubería y los portamechas.
+S080	deepl	Se colocan la pasarela y los soportes para tubos, y se colocan los tubos y los collares de perforación en los soportes.
+S080	opusmt	La pasarela y los bastidores de tuberías están colocados y el tubo y los collares de perforación están colocados en los bastidores.
+S081	claude	Cuatro trabajadores de una empresa de servicios de pozos se encontraban en la locación de un pozo petrolero programado para abandono temporal.
+S081	deepl	Cuatro trabajadores de una empresa de mantenimiento de pozos se encontraban en una plataforma petrolífera cuyo pozo estaba programado para su abandono temporal.
+S081	opusmt	Cuatro trabajadores de una empresa de servicios de pozos estaban en un pozo de petróleo que estaba programado para el abandono temporal.
+S082	claude	Implemente procedimientos y procesos, incluidos procedimientos adecuados de control de pozo, e instale y utilice equipos (es decir, preventores de reventones) para evitar o minimizar las liberaciones.
+S082	deepl	Aplicar procedimientos y procesos, incluidos los procedimientos adecuados de control de pozos, e instalar y utilizar equipos (por ejemplo, preventores de reventones) para evitar o minimizar las fugas.
+S082	opusmt	Aplicar procedimientos y procesos, incluidos procedimientos adecuados de control de los pozos, e instalar y utilizar equipo (es decir, dispositivos de prevención de explosiones) para prevenir o reducir al mínimo las liberaciones.
+S083	claude	La operación de fractura comienza con el punzado de la cañería del pozo.
+S083	deepl	La operación de fracturación comienza con la perforación del revestimiento del pozo.
+S083	opusmt	El trabajo de fractura comienza perforando la carcasa del pozo.
+S084	claude	Tres trabajadores estaban preparando una cabeza de pozo y un conjunto doble (árbol de navidad) para el taponamiento y abandono.
+S084	deepl	Tres trabajadores estaban preparando una cabeza de pozo y un conjunto doble (árbol de Navidad) para su taponamiento y abandono.
+S084	opusmt	Tres trabajadores estaban preparando una cabeza de pozo y una asamblea dual (árbol de Navidad) para taponar y abandonar.
+S085	claude	El snubbing es el control de una sarta de tubing mientras se baja o se saca de un pozo bajo presión.
+S085	deepl	El «snubbing» es el control de una sarta de tubería mientras se introduce o se extrae del pozo bajo presión.
+S085	opusmt	Desnudo es el control de una cuerda de tubo mientras se ejecuta dentro o fuera de un pozo perforado bajo presión.
+S086	claude	En el mástil se instala un dispositivo de escape de emergencia de la torre.
+S086	deepl	En el mástil se instala un dispositivo de evacuación de emergencia para la torre de perforación.
+S086	opusmt	Se instala un dispositivo de escape de emergencia derrick en el mástil.
+S087	claude	En muchos casos, los vapores y gases inflamables se acumulan en zonas cerradas como recintos de contención, zanjas y debajo de la estructura del equipo, incluido el antepozo.
+S087	deepl	En muchos casos, se acumulan vapores y gases inflamables en zonas cerradas, como terraplenes, zanjas y debajo de la estructura de la plataforma, incluido el sótano.
+S087	opusmt	En muchos casos, los vapores y gases inflamables se acumulan en zonas cerradas como bermas, trincheras y debajo de la estructura de la plataforma, incluida la bodega.
+S088	claude	Las siguientes tareas genéricas suponen el uso de un vástago (kelly) y una mesa rotativa.
+S088	deepl	Las siguientes tareas genéricas suponen el uso de una barra Kelly y una mesa rotativa.
+S088	opusmt	Las siguientes tareas genéricas asumen el uso de un kelly y una mesa rotativa.
+S089	claude	Las operaciones de fractura hidráulica requieren más equipos en la locación que una terminación de pozo convencional.
+S089	deepl	Las operaciones de fracturación hidráulica requieren más equipo en la plataforma de perforación que la terminación convencional de un pozo.
+S089	opusmt	Las operaciones de fracturación hidráulica requieren más equipo en la almohadilla del pozo que la terminación convencional del pozo.
+S090	claude	Las operaciones de cementación y bombeo pueden ser realizadas por servicios de bombeo especializados o junto con operaciones de servicio de pozos (como entubación, cementación a presión y aislamiento de zonas).
+S090	deepl	Las operaciones de cementación y bombeo pueden ser realizadas por servicios de bombeo especializados o en combinación con operaciones de mantenimiento de pozos (como el entubado, el «squeezing» y los aislamientos de zonas).
+S090	opusmt	Las operaciones de cementación y bombeo pueden ser realizadas por servicios especializados de bombeo o en conjunción con operaciones de mantenimiento de pozos (como, carcasas, apretones y aislamientos de zonas).
+S091	claude	Sidetrack es el término de reacondicionamiento para la perforación de un pozo direccional que evita una obstrucción en el pozo que no puede retirarse o un daño en el pozo, como una cañería colapsada que no puede repararse.
+S091	deepl	El desvío lateral es el término utilizado en la reacondicionación de pozos para referirse a la perforación de un pozo direccional con el fin de sortear una obstrucción en el pozo que no se puede eliminar o un daño en el mismo, como un revestimiento derrumbado que no se puede reparar.
+S091	opusmt	Sidetracking es el término para perforar un agujero direccional para evitar una obstrucción en el pozo que no puede ser removida o dañar el pozo, como la carcasa colapsada que no puede ser reparada.
+S092	claude	Las llaves de potencia se utilizan para enroscar el tubing.
+S092	deepl	Las tenazas motorizadas se utilizan para montar la tubería.
+S092	opusmt	Las pinzas eléctricas se utilizan para maquillar tubos.
+S093	claude	Debe realizarse una inspección exhaustiva del mástil antes de levantar el mástil/torre.
+S093	deepl	Se debe realizar una inspección exhaustiva del mástil antes de izarlo o la grúa.
+S093	opusmt	Antes de levantar el mástil/derrick se debe realizar una inspección exhaustiva del mástil.
+S094	claude	La primera línea de defensa en el control de pozo es mantener suficiente presión de fluido de perforación en el pozo.
+S094	deepl	La primera línea de defensa en el control de pozos consiste en mantener una presión suficiente del fluido de perforación en el pozo.
+S094	opusmt	La primera línea de defensa en control de pozos es tener suficiente presión de fluido de perforación en el agujero del pozo.
+S095	claude	Use las manijas de los elevadores mientras descienden hasta su posición sobre el tubing.
+S095	deepl	Utiliza las asas de los elevadores mientras descienden hasta colocarse sobre la tubería.
+S095	opusmt	Utilice asas en ascensores ya que están descendiendo en su lugar sobre el tubo.
+S096	claude	En un intento por liberar la presión existente contra el packer, la cuadrilla desenroscó el tubing de producción del packer.
+S096	deepl	En un intento por liberar la presión existente contra el empacador, la tripulación desenroscó la tubería de producción del empacador.
+S096	opusmt	En un intento de liberar la presión existente contra el empaquetador, el equipo desenroscó el tubo de producción del empaquetador.
+S097	claude	La ratonera es un hueco poco profundo debajo del piso del equipo, generalmente revestido con tubería, en el que se colocan temporalmente barras de sondeo.
+S097	deepl	Un «mousehole» es un agujero de poca profundidad situado bajo la plataforma de perforación, normalmente revestido con tubería, en el que se colocan temporalmente los tramos de la tubería de perforación.
+S097	opusmt	Un agujero de ratón es un agujero de perforación poco profundo bajo el suelo de la plataforma, generalmente forrado con tubería, en el que las articulaciones de la tubería de perforación se colocan temporalmente.
+S098	claude	Esto incluye soldar un niple de perforación a la cañería conductora y conectar una línea de flujo.
+S098	deepl	Esto incluye soldar un niple de perforación a la tubería conductora y acoplar una línea de flujo.
+S098	opusmt	Esto incluye la soldadura en un pezón de perforación a la tubería del conductor y la fijación de una línea de flujo.
+S099	claude	Un camión de petróleo caliente llegó a la locación para bombear agua caliente al pozo y derretir la parafina.
+S099	deepl	Un camión de aceite caliente llegó al emplazamiento para bombear agua caliente al pozo con el fin de derretir la parafina.
+S099	opusmt	Un camión de aceite caliente llegó al lugar para bombear agua caliente por el pozo para derretir la parafina.
+S100	claude	El trabajador n.º 1 operaba una zanjadora para cavar una zanja en una locación de perforación de un pozo petrolero para el control de derrames.
+S100	deepl	El trabajador n.º 1 estaba manejando una zanjadora para excavar una zanja en un emplazamiento de perforación de un pozo de petróleo con el fin de controlar los derrames.
+S100	opusmt	Trabajador #1 estaba operando una zanja para cavar una zanja en un pozo de petróleo sitio de perforación para el control de derrames.
+S101	claude	Un pozo de petróleo o gas se tapona y abandona cuando llega al final de su vida útil o resulta un pozo seco.
+S101	deepl	Un pozo de petróleo o gas se tapa y se abandona cuando alcanza el final de su vida útil o se convierte en un pozo seco.
+S101	opusmt	Un pozo de petróleo o gas se enchufa y abandona cuando llega al final de su vida útil o se convierte en un agujero seco.
+S102	claude	Además, los tratamientos con ácido clorhídrico, al entrar en contacto con productos de corrosión de sulfuro de hierro, pueden reaccionar y generar gas H2S en el pozo o en los tanques del equipo.
+S102	deepl	Además, los tratamientos con ácido clorhídrico, al entrar en contacto con productos de corrosión de sulfuro de hierro, pueden reaccionar y generar gas H₂S en el pozo o en los depósitos de la plataforma.
+S102	opusmt	Además, los tratamientos con ácido clorhídrico, cuando están en contacto con productos de corrosión por sulfuro de hierro, pueden reaccionar para crear gas H2S en el pozo o en tanques de perforación.
+S103	claude	El malacate levanta el vástago (kelly) y la sarta conectada para facilitar el retiro de las cuñas.
+S103	deepl	El cabrestante eleva el kelly y la sarta acoplada para facilitar la retirada de los deslizadores.
+S103	opusmt	Las tablas levantan el kely y la cuerda adjunta para facilitar la eliminación de los resbalones.
+S104	claude	El perforador baja la sarta hasta que el buje de impulso del vástago encastra en el buje maestro.
+S104	deepl	El perforador baja la sarta hasta que el casquillo de acoplamiento de la varilla Kelly encaja en el casquillo maestro.
+S104	opusmt	El perforador baja la cuerda hasta que el bushing de kelly conecta el bushing maestro.
+S105	claude	Esté atento a los indicios de surgencias y reventones producidos por aumentos repentinos de la presión de fondo.
+S105	deepl	Esté atento a los indicios de sacudidas y reventones provocados por aumentos repentinos de presión en el fondo del pozo.
+S105	opusmt	Cuidado con los signos de patadas y estallidos resultantes de subidas repentinas de la presión del agujero.
+S106	claude	Desenrolle todas las líneas de modo que queden alejadas de todos los trabajadores cuando se levante el mástil o la torre.
+S106	deepl	Desenrolle todos los cables para que no obstaculicen el paso de los trabajadores cuando se eleve el mástil o la grúa.
+S106	opusmt	Desenrollar todas las líneas para que estén libres de todos los trabajadores cuando el mástil o derrick se levanta.
+S107	claude	Los liners y la cañería son esencialmente lo mismo, y los procedimientos de reparación son iguales para ambos.
+S107	deepl	Los revestimientos y las tuberías de revestimiento son esencialmente iguales, y los procedimientos de reparación son los mismos para ambos.
+S107	opusmt	Los forros y la carcasa son esencialmente los mismos y los procedimientos de reparación son los mismos para ambos.
+S108	claude	El rotado de los tapones requerirá operaciones con cable, snubbing o procedimientos con tubería flexible.
+S108	deepl	La perforación de los tapones requerirá operaciones con cable, snubbing o procedimientos con tubería enrollable.
+S108	opusmt	La perforación de los enchufes requerirá operaciones de cableado, desnubling, o procedimientos de tubos de bobina.
+S109	claude	El pistoneo del pozo al sacar la herramienta de ensayo podría provocar una surgencia, que podría derivar en un reventón con heridos y muertos.
+S109	deepl	Limpiar el pozo durante la salida con la herramienta de prueba podría provocar un golpe de presión, lo que podría dar lugar a una erupción con consiguientes lesiones y muertes.
+S109	opusmt	El intercambio del agujero en la salida con la herramienta de prueba podría causar una patada a ocurrir, lo que podría resultar en una explosión que conduce a lesiones y muertes.
+S110	claude	El perforador baja la sarta de perforación, el buje del vástago se asienta en el buje de impulso de la mesa rotativa y se acciona la mesa rotativa.
+S110	deepl	El perforador baja la sarta de perforación, el casquillo Kelly se coloca en el casquillo del accionamiento rotativo y se activa el rotativo.
+S110	opusmt	El taladro baja la cuerda del taladro y el casquillo de kely se establece en el buje de accionamiento rotativo y el rotativo está activado.
+S111	claude	Identifique la distancia libre entre la plataforma de emboque y los elevadores de cañería.
+S111	deepl	Compruebe el espacio libre entre la plataforma de acoplamiento y los elevadores de revestimiento.
+S111	opusmt	Identifique la separación entre la tabla de apuñalamiento y los ascensores de la carcasa.
+S112	claude	Cuando esto ocurre, se utilizan herramientas de pesca para su remoción.
+S112	deepl	Cuando esto ocurre, se utilizan herramientas de recuperación para su extracción.
+S112	opusmt	Cuando esto ocurre, las herramientas de pesca se utilizan para la eliminación.
+S113	claude	Inspeccione los equipos de cementación y las líneas presurizadas antes de usarlos.
+S113	deepl	Inspeccione el equipo de cementación y las líneas presurizadas antes de su uso.
+S113	opusmt	Inspeccione los equipos de cementación y las líneas presurizadas antes de su uso.
+S114	claude	El equipamiento del antepozo comienza, pero puede realizarse a lo largo de todo el proceso de montaje del equipo.
+S114	deepl	Comienza el equipamiento del cellar, aunque puede realizarse a lo largo de todo el proceso de montaje.
+S114	opusmt	El equipamiento de la bodega comienza, pero se puede hacer durante todo el proceso de aparejo.
+S115	claude	Si no se requieren más servicios previos a la producción, se instala el árbol de navidad y comienza la producción.
+S115	deepl	Si no se necesita ningún otro mantenimiento previo a la producción, se instala el árbol de Navidad y comienza la producción.
+S115	opusmt	Si no se necesita más servicio de preproducción, se instala el árbol de Navidad y comienza la producción.
+S116	claude	Indique a los trabajadores que se mantengan alejados de la zona de llaves y cuñas al bajar el elevador y el aparejo.
+S116	deepl	Indique a los trabajadores que se mantengan alejados de la zona de las tenazas y los deslizadores al bajar el elevador y el bloque móvil.
+S116	opusmt	Instruya a los trabajadores a mantenerse alejados de la tenaza y el área de deslizamiento al bajar el ascensor y el bloque de viaje.
+S117	claude	Conecte la línea de petróleo caliente directamente a la línea de flujo si la presión de bombeo supera los límites seguros (500 psi).
+S117	deepl	Conecte la línea de aceite caliente directamente a la línea de flujo si la presión de la bomba supera los límites de seguridad (500 psi).
+S117	opusmt	Conecte la línea de aceite caliente directamente a la línea de flujo si la presión de la bomba supera los límites de seguridad (500 psi).
+S118	claude	Mantenga a todo el personal alejado de la torre o fuera de un radio de seis pies (dos metros) de la cabeza de pozo durante las operaciones de pistoneo.
+S118	deepl	Mantenga a todo el personal alejado de la torre de perforación o a una distancia de seis pies (dos metros) de la boca del pozo durante las operaciones de bombeo.
+S118	opusmt	Mantenga a todo el personal alejado del derrick o a menos de dos metros de la cabeza del pozo durante las operaciones de limpieza.
+S119	claude	Las tareas de reacondicionamiento incluyen una o más de diversas operaciones correctivas en un pozo productor para intentar aumentar la producción.
+S119	deepl	Las actividades de reacondicionamiento incluyen una o varias operaciones correctivas en un pozo en producción con el fin de intentar aumentar la producción.
+S119	opusmt	Las actividades de trabajo en off incluyen una o más de una variedad de operaciones correctivas en un pozo de producción para tratar de aumentar la producción.
+S120	claude	Al llegar a la locación, se arman las herramientas y luego se bajan al pozo con una unidad de cable o se transportan con tubing.
+S120	deepl	Al llegar al emplazamiento, se montan las herramientas y, a continuación, se bajan al pozo mediante una unidad de cable o se transportan por la tubería.
+S120	opusmt	Al llegar al lugar, las herramientas se ensamblan, luego se bajan en el pozo por una unidad de alambre o se transportan por tubos.

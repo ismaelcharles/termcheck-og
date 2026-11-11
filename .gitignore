@@ -1,0 +1,40 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+out/
+data/glossary/historial/
+data/glossary/*.tmp
+.clave-web
+.streamlit/secrets.toml
+data/originales/
+data/originales_texto/
+data/auditoria/
+salida/
+
+# --- No se publica (revisado el 2026-11-11, antes del primer commit) ---
+# Notas de trabajo con el asistente y registro interno
+.claude/
+PROGRESO.md
+docs/como-terminar.*
+# Datos del servidor (IP, servicio, Caddy)
+deploy/
+# Material de trabajo del glosario: trae equivalentes tomados de SLB y de apuntes de curso que no son públicos,
+# con nombres de personas. Lo público es glossary_en_es.csv (con su fuente por término) y SOURCES.md.
+data/glossary/candidatos.csv
+data/glossary/formas_fuentes.csv
+data/glossary/revision_previa.csv
+data/glossary/fuentes.csv
+data/glossary/CANDIDATOS.md
+docs/auditoria-glosariotest.md
+docs/reauditoria-fuentes.*
+docs/revision-previa.*
+docs/fuentes-y-confiabilidad.*
+# Scripts que solo sirven con ese material, y el aviso por Telegram
+scripts/revision_previa.py
+scripts/fuentes_formas.py
+scripts/auditar_citas.py
+scripts/textos_originales.py
+scripts/avisar.py
+# Tandas crudas de DeepL (las filas ya están en data/mt/translations.tsv)
+data/mt/deepl/

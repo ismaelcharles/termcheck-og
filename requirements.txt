@@ -1,0 +1,16 @@
+# Lo que usa el proyecto. Las versiones son las que se probaron en el VPS (ARM, Python 3.12).
+spacy==3.8.18
+pandas==3.1.1
+nltk==3.10.4
+rapidfuzz==3.14.6
+pytest==9.2.0
+streamlit==1.67.0
+Authlib==1.9.5
+# Modelos de spaCy (se bajan aparte, ver README):
+#   python -m spacy download en_core_web_sm
+#   python -m spacy download es_core_news_sm
+# Fase 2: traducción con Opus-MT (torch sin GPU: pip install torch --index-url https://download.pytorch.org/whl/cpu)
+torch==2.15.0
+transformers==4.57.6
+sentencepiece==0.2.3
+sacremoses==0.2.0

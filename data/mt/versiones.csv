@@ -1,0 +1,4 @@
+system,fecha,version,como
+opusmt,2026-11-08,Helsinki-NLP/opus-mt-en-es@5bc4493d463cf000c1f0b50f8d56886a392ed4ab,"transformers, beam 4, sin muestreo, CPU"
+claude,2026-11-08,"claude-opus-5-5 (Claude Code, subagente)","subagente nuevo, sin herramientas ni acceso a archivos ni a esta conversación; prompt fijo del plan aplicado a cada oración; las 120 en un solo pedido"
+deepl,2026-11-09,DeepL Translator web gratuita,"pegado a mano por tandas, inglés → español, sin opciones ni glosario"
