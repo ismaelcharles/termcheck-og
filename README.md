@@ -14,9 +14,10 @@ de perforación o de seguridad, un término mal traducido es un error caro, y cu
 bien. Los glosarios generales tampoco alcanzan: muchas formas que se usan en España o en otros países no son las
 que se usan en un yacimiento argentino.
 
-<!-- HUECO: ejemplos -->
+<!-- autor:ejemplos:inicio -->
 > **Pendiente, lo completa el autor.** Dos ejemplos reales del corpus: la oración en inglés, lo que tradujo el
 > sistema y la forma que se usa en Argentina.
+<!-- autor:ejemplos:fin -->
 
 ## 2. Demo
 
@@ -122,9 +123,10 @@ IC 95 %: intervalo de Wilson. Con pocos casos es ancho: los números son orienta
 
 ### Hallazgos
 
-<!-- HUECO: hallazgos -->
+<!-- autor:hallazgos:inicio -->
 > **Pendiente, lo completa el autor** cuando esté la evaluación final: qué sistema maneja mejor la terminología,
 > qué tipos de error aparecen más y por qué falla el verificador cuando falla.
+<!-- autor:hallazgos:fin -->
 
 ## 5. Validación
 

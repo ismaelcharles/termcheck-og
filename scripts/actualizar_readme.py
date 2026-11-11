@@ -10,6 +10,10 @@ Qué copia:
 Nunca calcula la evaluación de la prueba: eso se hace una sola vez, con el botón «Calcular la evaluación final».
 Solo cambia lo que está entre los marcadores; el resto del README no se toca. Correrlo dos veces deja el archivo
 igual.
+
+También guarda los dos textos que escribe el autor (los ejemplos de errores reales y los hallazgos), cada uno entre
+sus propios marcadores. Los usa la app (Resultados → Publicar → «Tus textos del README»), para que el autor no
+tenga que editar el archivo a mano. Este script nunca escribe el contenido de esos textos.
 """
 import os
 import sys
@@ -19,6 +23,62 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 INICIO = "<!-- resultados:inicio (lo escribe scripts/actualizar_readme.py; no editar a mano) -->"
 FIN = "<!-- resultados:fin -->"
+
+# Los textos que escribe el autor: nombre → (título para la app, recuadro que queda mientras no haya texto)
+AUTOR = {
+    "ejemplos": ("Dos ejemplos de errores reales",
+                 "> **Pendiente, lo completa el autor.** Dos ejemplos reales del corpus: la oración en inglés, lo "
+                 "que tradujo el\n> sistema y la forma que se usa en Argentina."),
+    "hallazgos": ("Hallazgos",
+                  "> **Pendiente, lo completa el autor** cuando esté la evaluación final: qué sistema maneja mejor "
+                  "la terminología,\n> qué tipos de error aparecen más y por qué falla el verificador cuando falla."),
+}
+
+
+def marcas_autor(nombre):
+    return f"<!-- autor:{nombre}:inicio -->", f"<!-- autor:{nombre}:fin -->"
+
+
+def _partes_autor(readme, nombre):
+    """(lo de antes, lo que hay entre los marcadores, lo de después), o None si el README no tiene ese lugar."""
+    readme = Path(readme)
+    if not readme.exists():
+        return None
+    texto = readme.read_text(encoding="utf-8")
+    ini, fin = marcas_autor(nombre)
+    if texto.count(ini) != 1 or texto.count(fin) != 1 or texto.index(ini) > texto.index(fin):
+        return None
+    antes, resto = texto.split(ini)
+    medio, despues = resto.split(fin)
+    return antes, medio.strip("\n"), despues
+
+
+def leer_autor(readme, nombre):
+    """El texto que el autor ya escribió en ese lugar del README. "" si todavía está el recuadro «Pendiente»."""
+    partes = _partes_autor(readme, nombre)
+    if not partes or partes[1] == AUTOR[nombre][1]:
+        return ""
+    return partes[1]
+
+
+def escribir_autor(readme, nombre, texto):
+    """Guarda el texto del autor en su lugar del README. Vacío → vuelve el recuadro «Pendiente».
+    Devuelve (salió bien, texto para mostrar)."""
+    titulo = AUTOR[nombre][0]
+    partes = _partes_autor(readme, nombre)
+    if not partes:
+        return False, f"El README no tiene el lugar para «{titulo}» (o está repetido). No se cambió nada."
+    texto = (texto or "").replace("\r\n", "\n").strip()
+    if "<!--" in texto or "-->" in texto:
+        return False, f"«{titulo}»: el texto no puede tener «<!--» ni «-->». No se cambió nada."
+    antes, medio, despues = partes
+    nuevo = texto or AUTOR[nombre][1]
+    if nuevo == medio:
+        return True, f"«{titulo}» ya estaba guardado así."
+    ini, fin = marcas_autor(nombre)
+    Path(readme).write_text(f"{antes}{ini}\n{nuevo}\n{fin}{despues}", encoding="utf-8")
+    return True, (f"«{titulo}» guardado en el README." if texto else
+                  f"«{titulo}» quedó vacío: volvió el recuadro «Pendiente».")
 
 
 def carpeta_datos():

@@ -74,7 +74,7 @@ def test_sin_marcadores_no_cambia_nada(tmp_path):
 def test_el_readme_del_proyecto_tiene_los_marcadores_y_los_huecos():
     texto = (RAIZ / "README.md").read_text(encoding="utf-8")
     assert texto.count(ar.INICIO) == 1 and texto.count(ar.FIN) == 1
-    assert "<!-- HUECO: ejemplos -->" in texto and "<!-- HUECO: hallazgos -->" in texto
+    assert all(texto.count(m) == 1 for n in ar.AUTOR for m in ar.marcas_autor(n))
 
 
 def test_el_boton_de_resultados_actualiza_el_readme(proyecto):
@@ -89,3 +89,58 @@ def test_el_boton_de_resultados_actualiza_el_readme(proyecto):
     texto = (proyecto / "README.md").read_text(encoding="utf-8")
     assert "Resultados provisorios" in texto and "| TermCheck | 3 | 1 | 0 | 0 | 2 |" in texto
     assert any("README actualizado" in s.value for s in at.success)
+
+
+# --- Los dos textos del autor (ejemplos y hallazgos) ---
+
+def readme_con_lugares(tmp_path):
+    partes = [f"## {n}\n\n{ar.marcas_autor(n)[0]}\n{ar.AUTOR[n][1]}\n{ar.marcas_autor(n)[1]}\n" for n in ar.AUTOR]
+    ruta = tmp_path / "README.md"
+    ruta.write_text("# Proyecto\n\n" + "\n".join(partes) + f"\n{ar.INICIO}\nviejo\n{ar.FIN}\n", encoding="utf-8")
+    return ruta
+
+
+def test_el_recuadro_pendiente_se_lee_como_vacio(tmp_path):
+    readme = readme_con_lugares(tmp_path)
+    assert ar.leer_autor(readme, "ejemplos") == "" and ar.leer_autor(readme, "hallazgos") == ""
+
+
+def test_guardar_y_volver_a_leer_el_texto_del_autor(tmp_path):
+    readme = readme_con_lugares(tmp_path)
+    antes = readme.read_text(encoding="utf-8")
+    bien, mensaje = ar.escribir_autor(readme, "ejemplos", "Texto inventado.\r\n\r\n- uno\n")
+    assert bien and "guardado" in mensaje
+    assert ar.leer_autor(readme, "ejemplos") == "Texto inventado.\n\n- uno"
+    assert ar.leer_autor(readme, "hallazgos") == ""          # el otro lugar no se toca
+    assert ar.escribir_autor(readme, "ejemplos", "Texto inventado.\n\n- uno")[1].endswith("ya estaba guardado así.")
+    bien, mensaje = ar.escribir_autor(readme, "ejemplos", "   ")   # vacío: vuelve el recuadro
+    assert bien and "Pendiente" in mensaje
+    assert readme.read_text(encoding="utf-8") == antes
+
+
+def test_el_texto_del_autor_no_puede_romper_los_marcadores(tmp_path):
+    readme = readme_con_lugares(tmp_path)
+    antes = readme.read_text(encoding="utf-8")
+    bien, _ = ar.escribir_autor(readme, "hallazgos", "hola <!-- resultados:fin --> chau")
+    assert not bien and readme.read_text(encoding="utf-8") == antes
+
+
+def test_sin_el_lugar_en_el_readme_no_cambia_nada(tmp_path):
+    readme = tmp_path / "README.md"
+    readme.write_text(README, encoding="utf-8")
+    bien, mensaje = ar.escribir_autor(readme, "ejemplos", "algo")
+    assert not bien and readme.read_text(encoding="utf-8") == README
+    assert ar.leer_autor(readme, "ejemplos") == ""
+
+
+def test_guardar_los_textos_desde_la_app(proyecto):
+    readme_con_lugares(proyecto)
+    at = AppTest.from_file(str(RAIZ / "app/paginas/resultados.py"), default_timeout=120)
+    at.session_state["res_vista"] = "pub"
+    at.run()
+    [a for a in at.text_area if a.label == "Hallazgos"][0].set_value("Hallazgo inventado.")
+    [b for b in at.button if "Guardar en el README" in b.label][0].click().run()
+    assert not at.exception, at.exception
+    assert ar.leer_autor(proyecto / "README.md", "hallazgos") == "Hallazgo inventado."
+    assert ar.leer_autor(proyecto / "README.md", "ejemplos") == ""
+    assert any("guardado" in s.value for s in at.success)

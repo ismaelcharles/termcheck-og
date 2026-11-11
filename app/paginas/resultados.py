@@ -175,10 +175,31 @@ elif pestana == "pub":
     if st.session_state.get("res_readme"):
         bien, texto = st.session_state.res_readme
         (st.success if bien else st.error)(texto)
-    st.caption("Los dos ejemplos de errores y los hallazgos no se escriben solos: están marcados como «Pendiente» "
-               "en el README y los completás vos.")
+    st.caption("Los dos ejemplos de errores y los hallazgos no se escriben solos: los completás vos en el paso 2.")
 
-    st.subheader("2. Publicar en GitHub")
+    st.subheader("2. Tus textos del README")
+    st.markdown("El README tiene dos partes que escribís vos. Escribilas acá y tocá **Guardar en el README**: "
+                "quedan en su lugar sin abrir el archivo.")
+    readme = datos.DATOS / "README.md"
+    with st.form("res_autor", border=False):
+        st.text_area("Dos ejemplos de errores reales", value=ar.leer_autor(readme, "ejemplos"), height=220,
+                     key="res_txt_ejemplos",
+                     help="Sección 1 del README. Para cada ejemplo: la oración en inglés, lo que tradujo el "
+                          "sistema y la forma que se usa en Argentina.")
+        st.text_area("Hallazgos", value=ar.leer_autor(readme, "hallazgos"), height=220, key="res_txt_hallazgos",
+                     help="Sección de resultados. Qué sistema maneja mejor la terminología, qué tipos de error "
+                          "aparecen más y por qué falla el verificador cuando falla. Se escribe con la "
+                          "evaluación final.")
+        if st.form_submit_button("Guardar en el README", icon=":material/save:"):
+            st.session_state.res_autor_msj = [ar.escribir_autor(readme, n, st.session_state[f"res_txt_{n}"])
+                                              for n in ar.AUTOR]
+    for bien, texto in st.session_state.get("res_autor_msj", []):
+        (st.success if bien else st.error)(texto)
+    st.caption("Podés usar Markdown: una línea en blanco separa párrafos, «- » arma una lista y `**texto**` va en "
+               "negrita. Si dejás un cuadro vacío, en el README vuelve el recuadro «Pendiente». Lo que guardás "
+               "acá se sube a GitHub con el botón de abajo.")
+
+    st.subheader("3. Publicar en GitHub")
     st.markdown("Guarda en GitHub lo que cambiaste: la anotación, el glosario (y el v1 congelado), el README y los "
                 "documentos del informe. No sube nada más.")
     cambios = pub.pendientes(datos.RAIZ)

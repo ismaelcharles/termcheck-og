@@ -12,6 +12,10 @@ Unidad: cada término anotado (seg_id, system, term_id) en gold.csv. Las filas �
 
 Escribe salida/eval_<conjunto>.md (tablas para el README) y salida/eval_<conjunto>_casos.csv (todos los FP y FN,
 con el inglés y la traducción, para el análisis de errores).
+
+En ese archivo, «causa_sugerida» es una pista automática, hecha con reglas simples (causa_sugerida(), más abajo).
+No es el análisis: la causa la decide el dueño y la escribe en la columna «causa», que sale vacía. Las reglas para
+los falsos negativos se probaron solo con casos inventados, porque en desarrollo no hubo ninguno.
 """
 import argparse
 import csv
@@ -28,6 +32,7 @@ sys.path.insert(0, str(RAIZ / "scripts"))
 from baseline import marca as marca_baseline  # noqa: E402
 from termcheck.checker import verificar  # noqa: E402
 from termcheck.glossary import cargar  # noqa: E402
+from termcheck.normalize import normalizar  # noqa: E402
 
 ERRORES_GOLD = {"ERROR_TERMINO", "OMISION", "SIN_TRADUCIR"}
 # Dónde están los datos. Normalmente, la carpeta del proyecto. Las pruebas automáticas y los ensayos usan otra
@@ -111,8 +116,78 @@ def evaluar(conjunto, glosario_ruta=None):
             "marca_baseline": marca_baseline(trad.get(clave[:2], ""), t.es_preferred) if t else True,
             "source_en": segmentos[g["seg_id"]], "target_es": trad.get(clave[:2], ""),
             "es_preferred": t.es_preferred if t else "",
+            "sugerencia": "|".join(o.suggestion for o in oc if o.suggestion),
+            "causa_sugerida": "", "causa": "",
         })
+        if casos[-1]["error_gold"] != casos[-1]["marca_verificador"]:
+            casos[-1]["causa_sugerida"] = causa_sugerida(casos[-1], terminos)
     return casos
+
+
+def _dentro_de_otro(t, texto_en, terminos):
+    """Si una forma inglesa del término está dentro de otra más larga de otro término que aparece en la oración,
+    devuelve (forma, forma más larga). Si no, None."""
+    oracion = f" {normalizar(texto_en)} "
+    for otro in terminos:
+        if otro.id == t.id:
+            continue
+        for larga in otro.en:
+            for corta in t.en:
+                c, l = f" {normalizar(corta)} ", f" {normalizar(larga)} "
+                if c != l and c in l and l.rstrip() in oracion:
+                    return corta, larga
+    return None
+
+
+def _parecida(caso, t):
+    """La forma de la traducción que se parece a una forma válida del glosario sin ser igual, o "".
+    Mira lo que el dueño marcó como usado (es_used) y lo que el verificador encontró más parecido a la preferida."""
+    from rapidfuzz import fuzz
+    validas = [normalizar(f) for f in [t.es_preferred] + list(t.es_allowed) if f]
+    for usada in [caso.get("es_used", "")] + caso.get("sugerencia", "").split("|"):
+        n = normalizar(usada)
+        if n and n not in validas and any(fuzz.ratio(n, v) >= 70 for v in validas):
+            return usada
+    return ""
+
+
+def causa_sugerida(caso, terminos):
+    """Una pista sobre por qué el verificador y la anotación no coinciden en este caso (plan 6.3).
+
+    Reglas simples, en este orden. Falso positivo (anotado Correcto, el verificador marcó):
+      quedó en inglés → préstamo · forma prohibida → ambigüedad · se parece a una forma válida → morfología ·
+      si no → sinónimo que falta.
+    Falso negativo (anotado como error, el verificador no marcó):
+      término no detectado en el inglés → dentro de otro o no detectado · el glosario acepta la forma inglesa →
+      préstamo · si no → ambigüedad o error de la anotación.
+    """
+    t = next((x for x in terminos if x.id == caso["term_id"]), None)
+    if t is None:
+        return "el término ya no está en el glosario"
+    etiquetas = set(caso["etiquetas_verificador"].split("|")) - {""}
+    if not caso["error_gold"]:                                        # falso positivo
+        if "SIN_TRADUCIR" in etiquetas:
+            return "préstamo: quedó en inglés y se anotó Correcto; la forma inglesa no figura como válida"
+        if "PROHIBIDO" in etiquetas:
+            return (f"ambigüedad: apareció la forma prohibida «{caso['es_found'].strip('|')}» y se anotó Correcto; "
+                    "puede tener otro sentido en esta oración")
+        parecida = _parecida(caso, t)
+        if parecida:
+            return f"morfología: «{parecida}» se parece a una forma válida y no se reconoció"
+        if caso.get("es_used"):
+            return f"sinónimo que falta: se usó «{caso['es_used']}» y el glosario no lo lista"
+        return "sinónimo que falta: la traducción usó una forma que el glosario no lista"
+    if not caso["detectado"]:                                         # falso negativo
+        dentro = _dentro_de_otro(t, caso["source_en"], terminos)
+        if dentro:
+            return f"término dentro de otro: «{dentro[0]}» quedó dentro de «{dentro[1]}»"
+        return "término no detectado en el inglés: la forma del texto no coincide con las del glosario"
+    encontrada = caso["es_found"].strip("|")
+    if caso["label"] == "SIN_TRADUCIR":
+        return f"préstamo: el glosario acepta «{encontrada}» y se anotó Sin traducir"
+    return (f"ambigüedad: el verificador encontró la forma válida «{encontrada}» y se anotó "
+            f"{'Omisión' if caso['label'] == 'OMISION' else 'Error de término'}; puede estar en otra parte de la "
+            "oración o con otro sentido, o es un error de la anotación")
 
 
 def informe(casos, conjunto):
@@ -157,7 +232,7 @@ ETIQ = ["OK", "VARIANTE", "PROHIBIDO", "SIN_TRADUCIR", "NO_ENCONTRADO", "(no det
 
 
 COLUMNAS_CASOS = ["tipo", "seg_id", "system", "term_id", "label", "es_used", "comment", "etiquetas_verificador",
-                  "es_found", "es_preferred", "source_en", "target_es"]
+                  "es_found", "es_preferred", "source_en", "target_es", "causa_sugerida", "causa"]
 
 
 def escribir(casos, conjunto):
