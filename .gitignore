@@ -16,6 +16,8 @@ salida/
 # Notas de trabajo con el asistente y registro interno
 .claude/
 PROGRESO.md
+# El plan trae el prompt maestro, con datos personales del autor (sacado del repo el 2026-11-12)
+docs/plan.md
 docs/como-terminar.*
 # Datos del servidor (IP, servicio, Caddy)
 deploy/

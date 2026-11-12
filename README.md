@@ -213,7 +213,7 @@ Qué hay en cada carpeta:
 | `app/` | La app web (Streamlit): glosario, traducciones, anotación, verificación y resultados; `demo.py` es la demo pública |
 | `data/` | Glosario, corpus, traducciones, división en conjuntos y anotación |
 | `tests/` | Pruebas automáticas, con un proyecto inventado que no toca los datos reales |
-| `docs/` | El plan del proyecto y la guía de anotación |
+| `docs/` | La guía de anotación y los hallazgos |
 
 ## 8. Datos y licencias
 

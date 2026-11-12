@@ -1,6 +1,6 @@
 # Hallazgos
 
-> Estructura propuesta por Claude el 2026-11-12, según `docs/plan.md` (6.3). El contenido lo escribe el autor.
+> Estructura propuesta por Claude el 2026-11-12, según el plan del proyecto (6.3). El contenido lo escribe el autor.
 > Donde dice **[A COMPLETAR]** falta su texto. Los números salen de `salida/eval_prueba.md` y los casos de
 > `salida/eval_prueba_casos.csv`, que se generan con «Calcular la evaluación final».
 

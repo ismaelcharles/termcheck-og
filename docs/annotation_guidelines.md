@@ -1,7 +1,7 @@
 # Guía de anotación
 
 > Estructura propuesta por Claude el 2026-11-09. Las definiciones y las decisiones las escribe el dueño.
-> Donde dice **[A DECIDIR]** falta su criterio. Las etiquetas y el formato vienen de `docs/plan.md` (5.4).
+> Donde dice **[A DECIDIR]** falta su criterio. Las etiquetas y el formato vienen del plan del proyecto (5.4).
 
 ## Para qué sirve
 
