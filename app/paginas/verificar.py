@@ -1,4 +1,5 @@
-"""Página «Verificar» (Fase 5 del plan): pegar un texto en inglés y su traducción, o subir un TSV, y ver el reporte.
+"""Página «Verificar» (Fase 5 del plan): pegar un texto en inglés y su traducción, o subir un archivo (TSV, CSV,
+XLIFF o TMX), y ver el reporte.
 
 Usa el glosario del proyecto o uno que sube la persona (mismo formato de columnas). El verificador es el de
 src/termcheck (el mismo que se evalúa); esta página solo lo muestra.
@@ -23,6 +24,7 @@ import vista
 from limites import MAX_LETRAS, MAX_SEGMENTOS, MAX_TERMINOS, aplicar
 from termcheck.checker import verificar
 from termcheck.consistency import inconsistencias
+from termcheck.formatos import ErrorDeFormato, es_de_traduccion, leer as leer_formato
 from termcheck.glossary import ErrorDeGlosario, cargar, validar
 from termcheck import NOMBRE
 from termcheck.report import NOMBRES, a_csv_texto, a_html
@@ -126,10 +128,24 @@ if modo == "pegar":
 
 elif modo == "tsv":
     st.caption("TSV o CSV con dos columnas: inglés y traducción (con encabezado `source_en` y `target_es`, o "
-               "sin encabezado). Una fila por segmento."
+               "sin encabezado). Una fila por segmento. También XLIFF 1.2, XLIFF 2.0 y TMX (`.xliff`, `.xlf`, "
+               "`.tmx`): se probaron con archivos armados a mano según la norma, no con exportaciones reales de "
+               "Trados o memoQ, y no se leen `.sdlxliff` ni `.mqxliff`."
                + (f" En la demo: hasta 1 MB y {MAX_SEGMENTOS} segmentos." if DEMO else ""))
-    archivo = st.file_uploader("Archivo", type=["tsv", "csv", "txt"], label_visibility="collapsed")
-    if archivo:
+    archivo = st.file_uploader("Archivo", type=["tsv", "csv", "txt", "xliff", "xlf", "tmx"],
+                               label_visibility="collapsed", key="vf_archivo")
+    if archivo and es_de_traduccion(archivo.name):
+        try:
+            leidos, sin_traduccion = leer_formato(archivo.getvalue(), archivo.name)
+        except ErrorDeFormato as e:
+            st.warning(str(e))
+            st.stop()
+        pares = [(seg_id, "", en, es) for seg_id, en, es in leidos]
+        if sin_traduccion:
+            st.caption(f"Se saltearon {sin_traduccion} segmento(s) sin traducción.")
+        if not pares:
+            st.warning("Ningún segmento del archivo tiene traducción.")
+    elif archivo:
         try:
             texto = archivo.getvalue().decode("utf-8-sig")
         except UnicodeDecodeError:

@@ -180,6 +180,12 @@ Verificar un par de archivos de texto, con una oración por línea y en el mismo
 .venv/bin/python scripts/run_check.py --src origen.txt --tgt traduccion.txt --out salida/mio
 ```
 
+Verificar un archivo XLIFF 1.2, XLIFF 2.0 o TMX. La página Verificar también los acepta en «Subir archivo»:
+
+```
+.venv/bin/python scripts/run_check.py --file proyecto.xliff --out salida/proyecto
+```
+
 Escribe `salida/mio.csv` y `salida/mio.html`. Con `--glossary` se usa otro glosario, con las mismas columnas que
 `data/glossary/glossary_en_es.csv`.
 
@@ -229,5 +235,6 @@ Las fuentes de cada término, lo que se excluyó por copyright y el método de c
 
 - Un segundo anotador sobre una parte de la prueba, para medir el acuerdo.
 - Más formas prohibidas en el glosario, cada una con un error real que la respalde.
-- Leer archivos XLIFF y TMX, que es como trabajan las herramientas de traducción.
+- Probar la lectura de XLIFF y TMX con exportaciones reales de Trados y memoQ. Hoy lee XLIFF 1.2, XLIFF 2.0 y TMX
+  según la norma, probados con archivos armados a mano. No lee `.sdlxliff` ni `.mqxliff`.
 - Probar la herramienta con traductores que hagan post-edición técnica.

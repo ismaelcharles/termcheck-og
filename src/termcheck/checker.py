@@ -13,6 +13,11 @@ Pasos:
 3. Etiquetar con esta prioridad: PROHIBIDO > OK > VARIANTE > SIN_TRADUCIR > NO_ENCONTRADO.
    Lo que en la traducción ya usó un término no lo puede usar otro (así «pozo» dentro de «boca de pozo» no vale
    dos veces). Se resuelven primero los términos más largos.
+   De las formas libres se toma la más larga y, a igual largo, la que está más a la izquierda. Hay una excepción:
+   cuando el término también aparece dentro de un término más largo que no se encontró («casing» dentro de
+   «casing string»), esa mención compite por las mismas palabras de la traducción. Ahí se alinean por posición,
+   respetando el orden: cada mención con la aparición que le cae más cerca. Si no alcanzan para todas, la que
+   queda sin pareja es NO_ENCONTRADO.
 4. Si no se encontró nada, rapidfuzz SUGIERE lo más parecido a la preferida (nunca cambia la etiqueta).
 """
 from dataclasses import dataclass
@@ -58,6 +63,12 @@ def _formas_es(t):
 
 def detectar(palabras_en, terminos):
     """Los términos del glosario en el inglés: [(i, j, termino)] sin superposiciones, en orden de aparición."""
+    return _detectar(palabras_en, terminos)[0]
+
+
+def _detectar(palabras_en, terminos):
+    """Devuelve (apariciones, anidadas). anidadas: las menciones que perdieron contra un término más largo que las
+    contiene enteras, como [(i, j, termino, k)], donde k es el lugar del término largo en «apariciones»."""
     candidatos = []
     for t in terminos:
         for forma in t.en:
@@ -72,7 +83,56 @@ def detectar(palabras_en, terminos):
         if not tomadas & set(range(i, j)):
             tomadas |= set(range(i, j))
             salida.append((i, j, t))
-    return sorted(salida, key=lambda c: c[0])
+    salida.sort(key=lambda c: c[0])
+    anidadas, vistas = [], set()
+    for i, j, t in candidatos:
+        for k, (a, b, largo) in enumerate(salida):
+            if a <= i and j <= b and (j - i) < (b - a) and largo.id != t.id and (i, j, t.id) not in vistas:
+                vistas.add((i, j, t.id))
+                anidadas.append((i, j, t, k))
+    return salida, anidadas
+
+
+def _centro(palabras, i, j, largo_texto):
+    """Dónde cae el tramo palabras[i:j] dentro de su texto, de 0 (al principio) a 1 (al final)."""
+    return (palabras[i].inicio + palabras[j - 1].fin) / 2 / max(1, largo_texto)
+
+
+def _alinear(cortos, largos):
+    """Empareja en orden dos listas de posiciones ya ordenadas, len(cortos) <= len(largos).
+
+    Cada elemento de «cortos» recibe uno de «largos», sin cruzarse, de modo que la suma de distancias sea la menor
+    posible. Devuelve los índices de «largos» elegidos, uno por cada elemento de «cortos».
+    """
+    n, m = len(cortos), len(largos)
+    INF = float("inf")
+    # costo[a][b]: lo mejor para emparejar los primeros a de «cortos» usando solo los primeros b de «largos»
+    costo = [[0.0] * (m + 1)] + [[INF] * (m + 1) for _ in range(n)]
+    for a in range(1, n + 1):
+        for b in range(a, m + 1):
+            costo[a][b] = min(costo[a][b - 1], costo[a - 1][b - 1] + abs(cortos[a - 1] - largos[b - 1]))
+    elegidos, b = [], m
+    for a in range(n, 0, -1):
+        while costo[a][b] == costo[a][b - 1]:
+            b -= 1
+        elegidos.append(b - 1)
+        b -= 1
+    return elegidos[::-1]
+
+
+def _con_pareja(menciones, tramos):
+    """Qué tramos de la traducción quedan para las menciones propias cuando hay rivales.
+
+    menciones: [(posición en el inglés, es_propia)]. tramos: [(posición en la traducción, tramo)].
+    Devuelve los tramos que la alineación les da a las menciones propias.
+    """
+    menciones, tramos = sorted(menciones), sorted(tramos)
+    pm, pt = [m[0] for m in menciones], [t[0] for t in tramos]
+    if len(pm) <= len(pt):
+        parejas = list(zip(range(len(pm)), _alinear(pm, pt)))
+    else:
+        parejas = list(zip(_alinear(pt, pm), range(len(pt))))
+    return [tramos[x][1] for n, x in parejas if menciones[n][1]]
 
 
 def _sugerir(texto_es, palabras_es, preferida, usadas):
@@ -95,7 +155,8 @@ def verificar(texto_en, texto_es, terminos, seg_id="", system=""):
     """Etiqueta cada aparición de un término del glosario. Devuelve [Ocurrencia] en el orden del inglés."""
     palabras_en = analizar(texto_en, "en")
     palabras_es = analizar(texto_es or "", "es")
-    apariciones = detectar(palabras_en, terminos)
+    apariciones, anidadas = _detectar(palabras_en, terminos)
+    largo_en, largo_es = len(texto_en), len(texto_es or "")
     resultado = {}
     usadas = set()  # palabras de la traducción ya asignadas a algún término
 
@@ -109,11 +170,24 @@ def verificar(texto_en, texto_es, terminos, seg_id="", system=""):
             for lab, forma, sigla in _formas_es(t):
                 if lab == label:
                     tramos += [(a, b, forma) for a, b in buscar(palabras_es, analizar_forma(forma, "es"), "es", sigla)]
-            # la más larga primero, después la que está más a la izquierda
+            # Solo los tramos libres; de dos que se pisan queda el más largo
+            libres = []
             for a, b, forma in sorted(tramos, key=lambda x: (-(x[1] - x[0]), x[0])):
-                if not usadas & set(range(a, b)):
-                    encontrado = (label, a, b, forma)
-                    break
+                if not usadas & set(range(a, b)) and not any(a < d and c < b for c, d, _ in libres):
+                    libres.append((a, b, forma))
+            if not libres:
+                continue
+            # Menciones del término dentro de un término más largo que no se encontró: compiten por los tramos
+            rivales = [(_centro(palabras_en, a, b, largo_en), False) for a, b, t2, n in anidadas
+                       if t2.id == t.id and resultado[n].label == "NO_ENCONTRADO"]
+            if rivales:
+                propias = [(_centro(palabras_en, a, b, largo_en), True) for n, (a, b, t2) in enumerate(apariciones)
+                           if t2.id == t.id and (n == k or n not in resultado)]
+                libres = _con_pareja(propias + rivales,
+                                     [(_centro(palabras_es, a, b, largo_es), (a, b, forma)) for a, b, forma in libres])
+            if libres:
+                # la más larga primero, después la que está más a la izquierda
+                encontrado = (label, *min(libres, key=lambda x: (-(x[1] - x[0]), x[0])))
             if encontrado:
                 break
         o = Ocurrencia(seg_id, system, t.id, texto_en[palabras_en[i].inicio:palabras_en[j - 1].fin], "NO_ENCONTRADO",

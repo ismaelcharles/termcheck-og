@@ -113,3 +113,25 @@ def test_una_palabra_de_la_traduccion_no_vale_dos_veces():
 def test_del_no_es_de():
     # Decisión del dueño (S118 de desarrollo): «cabeza del pozo» es error para wellhead; el término es fijo
     assert etiquetas("Inspect the wellhead.", "Inspeccione la boca del pozo.") == [("G09", "NO_ENCONTRADO")]
+
+
+def test_mencion_dentro_de_un_termino_largo_no_encontrado():
+    # «pipe» aparece dos veces en el inglés: suelto y dentro de «drill pipe». Si «drill pipe» no se encontró, la
+    # «tubería» que está en su lugar es de él y no vale como traducción del «pipe» suelto.
+    en = "Check the drill pipe and then inspect the pipe."
+    oc = verificar(en, "Revise la tubería de sondeo y después inspeccione la tubería.", GLOSARIO)
+    assert [(o.term_id, o.label) for o in oc] == [("G04", "NO_ENCONTRADO"), ("G05", "VARIANTE")]
+    assert oc[1].start > 40  # tomó la segunda «tubería», la que está en el lugar del «pipe» suelto
+    oc = verificar(en, "Revise la tubería de sondeo y después inspecciónela.", GLOSARIO)
+    assert [(o.term_id, o.label) for o in oc] == [("G04", "NO_ENCONTRADO"), ("G05", "NO_ENCONTRADO")]
+    # Una sola «tubería», en el lugar del «pipe» suelto: es de él
+    oc = verificar(en, "Revise las barras y después inspeccione la tubería.", GLOSARIO)
+    assert [(o.term_id, o.label) for o in oc] == [("G04", "NO_ENCONTRADO"), ("G05", "VARIANTE")]
+
+
+def test_sin_menciones_anidadas_gana_la_forma_mas_larga_y_la_primera():
+    # Sin términos largos sin encontrar, se mantiene la regla de siempre
+    oc = verificar("Inspect the mast before raising the mast.", "Inspeccione el caño antes de izarlo.", GLOSARIO[4:5]
+                   + [T("G11", "mast", "caño")])
+    assert [(o.term_id, o.label, o.start) for o in oc][0][1:] == ("OK", 15)
+    assert oc[1].label == "NO_ENCONTRADO"
