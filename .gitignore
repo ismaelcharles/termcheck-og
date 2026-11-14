@@ -40,3 +40,4 @@ scripts/textos_originales.py
 scripts/avisar.py
 # Tandas crudas de DeepL (las filas ya están en data/mt/translations.tsv)
 data/mt/deepl/
+docs/articulo-linkedin.md
