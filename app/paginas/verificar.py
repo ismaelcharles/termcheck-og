@@ -44,9 +44,9 @@ st.html(vista.CSS + """<style>
 .vf-cab{font:600 .78rem ui-monospace,monospace;color:#7A7266;margin-bottom:.2rem}
 .vf-resumen{display:flex;flex-wrap:wrap;gap:.4rem;margin:.3rem 0 .6rem}
 </style>""")
-st.title(NOMBRE if DEMO else "Verificar")
+st.title(NOMBRE + " :small[:gray[· hecho por Ismael Charles]]" if DEMO else "Verificar")
 if DEMO:
-    st.caption("Hecho por Ismael Charles. Demo pública. Verificador de terminología para traducción automática inglés → español en Oil & Gas "
+    st.caption("Demo pública. Verificador de terminología para traducción automática inglés → español en Oil & Gas "
                "(español técnico de Argentina). Los textos que pegues o subas no se guardan. El código, el glosario y la "
                "evaluación están en [GitHub](https://github.com/ismaelcharles/termcheck-og).")
 st.markdown("Pegá un texto en inglés y su traducción automática. TermCheck busca cada término del glosario en el "
