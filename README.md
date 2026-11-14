@@ -15,8 +15,25 @@ bien. Los glosarios generales tampoco alcanzan: muchas formas que se usan en Esp
 que se usan en un yacimiento argentino.
 
 <!-- autor:ejemplos:inicio -->
-> **Pendiente, lo completa el autor.** Dos ejemplos reales del corpus: la oración en inglés, lo que tradujo el
-> sistema y la forma que se usa en Argentina.
+Dos ejemplos del conjunto de prueba. En los dos la frase se lee bien y los términos no son los que se usan en
+un equipo de perforación argentino.
+
+**1. DeepL**
+
+- Inglés: *The driller stops the drill string from rotating, and hoists the drill string with the drawworks
+  until the kelly is out of the rotary table.*
+- Traducción: «El perforador detiene la rotación de la sarta de perforación y la iza con el **cabrestante**
+  hasta que la **varilla Kelly** sale de la **mesa giratoria**.»
+- En Argentina se dice **malacate**, **kelly** y **mesa rotativa**.
+
+**2. Opus-MT**
+
+- Inglés: *After the casing is landed, drilling fluid is circulated through the casing and annulus to remove
+  any residual gases and to condition the mud.*
+- Traducción: «Una vez desembarcada la **carcasa**, el fluido de perforación circula a través de la
+  **carcasa** y el **anillo** para eliminar los gases residuales y acondicionar el barro.»
+- En Argentina se dice **casing** o **cañería**, y **espacio anular**. DeepL también puso «anillo» en esta
+  oración.
 <!-- autor:ejemplos:fin -->
 
 ## 2. Demo
@@ -124,8 +141,48 @@ IC 95 %: intervalo de Wilson. Con pocos casos es ancho: los números son orienta
 ### Hallazgos
 
 <!-- autor:hallazgos:inicio -->
-> **Pendiente, lo completa el autor** cuando esté la evaluación final: qué sistema maneja mejor la terminología,
-> qué tipos de error aparecen más y por qué falla el verificador cuando falla.
+Los números salen de 20 oraciones y 120 términos. Alcanzan para ver tendencias y no para afirmarlas.
+
+**Sistemas de traducción.** Claude tuvo 4 errores en 40 términos (10 %). DeepL tuvo 23 (57,5 %) y Opus-MT 25
+(62,5 %). Los tres recibieron las mismas oraciones y ninguno recibió el glosario.
+
+- Opus-MT traduce palabra por palabra: «obras de dibujo» por *drawworks*, «ascensores» por *elevators*,
+  «carcasa» por *casing*, «taladro» por *driller*.
+- DeepL escribe frases correctas con términos de español general: «cabrestante» por *drawworks*, «tenazas»
+  por *tongs*, «plataformas» por *rig*, «tubería» por *tubing*.
+- Los 4 errores de Claude son formas más generales que la del glosario: «equipo» por *rig*, «cable» por
+  *wireline*, «línea de suministro» por *flowline* y «reacondicionamiento» por *workover*.
+
+**Tipos de error.** De los 52 errores, 51 son un término equivocado y 1 es una omisión. Ningún sistema dejó un
+término sin traducir. Los términos con más errores fueron *wireline* y *workover* (5 cada uno), y *drawworks*,
+*tongs* y *tubing* (4 cada uno). En varios de ellos la forma que se usa en Argentina es la inglesa (wireline,
+workover, tubing, top drive, kelly) y el error del sistema fue traducirla.
+
+**El verificador.** Marcó 48 de los 52 errores y dio 8 falsas alarmas. El baseline marcó 51 y dio 19 falsas
+alarmas. La ganancia está en la precisión, porque el verificador acepta las formas válidas del glosario y los
+plurales. A cambio se le escapan 4 errores, y al baseline 1.
+
+Los 4 errores que no marcó:
+
+- 2 son *workover* en una misma oración. El glosario acepta «reparación» y el verificador la dio por
+  encontrada en «repararse» y «reparada», que estaban en otra parte de la oración y traducían *repaired*.
+- 1 es «varilla Kelly». El verificador encontró «kelly», que es una forma válida, y no mira las palabras que
+  la rodean.
+- 1 es «boca del pozo», que el glosario v1 lista como válida y el autor anotó como error. Ahí el que está mal
+  es el glosario.
+
+Las 8 falsas alarmas:
+
+- 3 son «pozo de petróleo o gas» por *oil or gas well*. El verificador busca «pozo de gas» con las palabras
+  juntas.
+- 2 son «perforación» por *perforating*. El autor la dio por buena en esa oración y el glosario solo lista
+  «punzado».
+- 1 es «gas-lift» escrito con guion.
+- 1 es «kely», una errata del sistema que el autor dio por buena en esa oración.
+- 1 es *kelly spinner* traducido como «enroscador del vástago». El glosario acepta «vástago de perforación» y
+  no «vástago» solo.
+
+El análisis por causa está en [`docs/findings.md`](docs/findings.md).
 <!-- autor:hallazgos:fin -->
 
 ## 5. Validación
