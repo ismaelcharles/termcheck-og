@@ -175,7 +175,7 @@ Las 8 falsas alarmas:
 
 - 3 son «pozo de petróleo o gas» por *oil or gas well*. El verificador busca «pozo de gas» con las palabras
   juntas.
-- 2 son «perforación» por *perforating*. El autor la dio por buena en esa oración y el glosario solo lista
+- 2 son «perforación» por *perforating*. El autor la considera aceptada y el glosario solo lista
   «punzado».
 - 1 es «gas-lift» escrito con guion.
 - 1 es «kely», una errata del sistema que el autor dio por buena en esa oración.
