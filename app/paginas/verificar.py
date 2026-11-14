@@ -44,6 +44,8 @@ st.html(vista.CSS + """<style>
 .vf-cab{font:600 .78rem ui-monospace,monospace;color:#7A7266;margin-bottom:.2rem}
 .vf-resumen{display:flex;flex-wrap:wrap;gap:.4rem;margin:.3rem 0 .6rem}
 </style>""")
+if DEMO:
+    vista.linkedin()
 st.title(NOMBRE + " :small[:gray[· hecho por Ismael Charles]]" if DEMO else "Verificar")
 if DEMO:
     st.caption("Demo pública. Verificador de terminología para traducción automática inglés → español en Oil & Gas "

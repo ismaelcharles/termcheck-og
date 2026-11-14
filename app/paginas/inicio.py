@@ -59,6 +59,7 @@ def leer_fases():
 
 
 vista.estilos()
+vista.linkedin()
 st.title(NOMBRE + " :small[:gray[· hecho por Ismael Charles]]")
 st.markdown("Revisa la **terminología** de una traducción automática inglés → español de Oil & Gas, "
             "contra un glosario en la variante técnica de Argentina. No traduce: marca qué término revisar y por qué.")

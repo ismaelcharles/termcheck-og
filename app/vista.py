@@ -60,6 +60,30 @@ def estilos():
     st.html(CSS)
 
 
+LINKEDIN = "https://www.linkedin.com/in/ismael-charles-546278264"
+
+
+_LOGO_LINKEDIN = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230A66C2' "
+                  "d='M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05"
+                  "c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 "
+                  "0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45"
+                  "c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z'/%3E%3C/svg%3E")
+
+
+def linkedin():
+    """El logo de LinkedIn con el enlace al perfil del autor, arriba a la derecha. Va justo antes del título y
+    queda en su mismo renglón (la caja mide 0 de alto). El logo va como fondo en la hoja de estilos porque st.html
+    saca los SVG y los estilos escritos dentro de la etiqueta."""
+    st.html(f'''<style>
+.tc-li-caja{{display:flex;justify-content:flex-end;height:0;position:relative;z-index:5}}
+.tc-li{{display:block;width:34px;height:34px;margin-top:.9rem;background:url("{_LOGO_LINKEDIN}") center/contain no-repeat}}
+.tc-li:hover{{opacity:.8}}
+@media (max-width:640px){{.tc-li{{width:28px;height:28px;margin-top:-1.9rem}}}}
+</style>
+<div class="tc-li-caja"><a class="tc-li" href="{LINKEDIN}" target="_blank" rel="noopener"
+title="Ismael Charles en LinkedIn" aria-label="Ismael Charles en LinkedIn"></a></div>''')
+
+
 def e(texto):
     return html.escape(str(texto))
 
