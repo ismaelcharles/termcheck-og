@@ -15,7 +15,7 @@ sale igual hoy que dentro de un mes, y otra persona podría repetirla. Es la var
 - Solo los términos del glosario. Otros errores de la traducción no se anotan. **[A DECIDIR]**: si se anota en
   `comment` un error grave que no es de terminología.
 - Se anota a ciegas, sin ver lo que diría el verificador.
-- Primero el conjunto de desarrollo (40 oraciones). El de prueba (80) recién cuando el glosario esté congelado.
+- Primero el conjunto de desarrollo (15 oraciones). El de prueba (20) recién cuando el glosario esté congelado.
 
 ## Etiquetas
 

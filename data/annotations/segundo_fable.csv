@@ -1,0 +1,232 @@
+seg_id,system,term_id,label,es_used,comment
+S004,opusmt,T008,SIN_TRADUCIR,derrick,préstamo no habitual en Argentina
+S004,claude,T008,CORRECTO,torre,
+S004,deepl,T008,CORRECTO,torre de perforación,
+S004,opusmt,T017,ERROR_TERMINO,bloque giratorio,
+S004,claude,T017,CORRECTO,cabeza de inyección,
+S004,deepl,T017,ERROR_TERMINO,pivote,
+S004,opusmt,T026,CORRECTO,bloque viajero,
+S004,claude,T026,CORRECTO,aparejo,uso de campo argentino
+S004,deepl,T026,CORRECTO,bloque móvil,
+S004,opusmt,T025,CORRECTO,bloque de la corona,
+S004,claude,T025,CORRECTO,bloque corona,
+S004,deepl,T025,CORRECTO,bloque de corona,
+S006,claude,T021,CORRECTO,columnas de cañería,
+S006,opusmt,T021,ERROR_TERMINO,cadenas de cubierta,
+S006,deepl,T021,CORRECTO,columnas de revestimiento,
+S006,claude,T031,CORRECTO,cañería,"aparece también suelto al final de la oración, lo anoto"
+S006,opusmt,T031,ERROR_TERMINO,carcasa,"aparece también suelto al final de la oración, lo anoto"
+S006,deepl,T031,CORRECTO,revestimiento,"aparece también suelto al final de la oración, lo anoto"
+S006,claude,T044,CORRECTO,liners,
+S006,opusmt,T044,ERROR_TERMINO,revestimientos,se confunde con casing
+S006,deepl,T044,ERROR_TERMINO,revestimientos interiores,dudoso: se distingue del casing pero no es forma usada
+S006,claude,T056,CORRECTO,cañería intermedia,
+S006,opusmt,T056,ERROR_TERMINO,cadena de cubierta intermedia,
+S006,deepl,T056,CORRECTO,columna de revestimiento intermedia,
+S006,claude,T051,CORRECTO,conjunto BOP,
+S006,opusmt,T051,ERROR_TERMINO,pila de superficie BOP,
+S006,deepl,T051,CORRECTO,conjunto de BOP,
+S009,opusmt,T054,CORRECTO,línea de estrangulamiento,
+S009,deepl,T054,CORRECTO,línea de estrangulamiento,
+S009,claude,T054,CORRECTO,línea del estrangulador,
+S009,opusmt,T018,CORRECTO,pozo de perforación,dudoso: redundante pero sentido correcto
+S009,deepl,T018,CORRECTO,pozo,
+S009,claude,T018,CORRECTO,pozo,
+S009,opusmt,T032,CORRECTO,colector de estrangulamiento,
+S009,deepl,T032,CORRECTO,colector de estrangulamiento,
+S009,claude,T032,CORRECTO,múltiple de estrangulación,
+S009,opusmt,T038,ERROR_TERMINO,patada,
+S009,deepl,T038,ERROR_TERMINO,golpe de presión,"dudoso: figura en glosarios generales, no se usa en Argentina"
+S009,claude,T038,CORRECTO,surgencia,
+S010,deepl,T030,CORRECTO,broca,
+S010,opusmt,T030,ERROR_TERMINO,broca de taladro,"dudoso: broca es válida, «de taladro» es calco"
+S010,claude,T030,CORRECTO,trépano,
+S010,deepl,T034,ERROR_TERMINO,collarín de perforación,
+S010,opusmt,T034,ERROR_TERMINO,cuello de taladro,
+S010,claude,T034,CORRECTO,portamechas,
+S010,deepl,T037,CORRECTO,kelly,
+S010,opusmt,T037,CORRECTO,kelly,
+S010,claude,T037,CORRECTO,vástago de perforación (kelly),
+S014,deepl,T047,CORRECTO,reflujo,dudoso: se usa a veces como «agua de reflujo»
+S014,opusmt,T047,CORRECTO,Flowback,préstamo aceptado
+S014,claude,T047,CORRECTO,flujo de retorno,
+S014,deepl,T073,CORRECTO,separador,
+S014,opusmt,T073,CORRECTO,separador,
+S014,claude,T073,CORRECTO,separador,
+S015,opusmt,T040,CORRECTO,empacadores,
+S015,claude,T040,CORRECTO,packers,
+S015,deepl,T040,CORRECTO,empacadores,
+S015,opusmt,T099,ERROR_TERMINO,enchufes de puente,
+S015,claude,T099,CORRECTO,tapones puente,
+S015,deepl,T099,CORRECTO,tapones de puente,
+S017,opusmt,T024,CORRECTO,MD,dudoso: sigla en inglés de uso corriente
+S017,deepl,T024,CORRECTO,MD,dudoso: sigla en inglés de uso corriente
+S017,claude,T024,CORRECTO,profundidad medida,
+S017,opusmt,T057,ERROR_TERMINO,zapato de la carcasa,"«zapato» vale, «carcasa» no; juzgo el término completo"
+S017,deepl,T057,CORRECTO,zapata de revestimiento,
+S017,claude,T057,CORRECTO,zapata de la cañería,
+S022,deepl,T079,CORRECTO,estimulación,
+S022,claude,T079,CORRECTO,estimulación,
+S022,opusmt,T079,CORRECTO,estimulación,
+S030,deepl,T011,ERROR_TERMINO,plataforma,
+S030,opusmt,T011,ERROR_TERMINO,plataforma,
+S030,claude,T011,CORRECTO,equipo,
+S030,deepl,T062,ERROR_TERMINO,calentadores de tratamiento,
+S030,opusmt,T062,ERROR_TERMINO,calentadores-tractores,
+S030,claude,T062,CORRECTO,calentadores-tratadores,dudoso: calco pero se entiende y circula
+S034,opusmt,T049,ERROR_TERMINO,batería del tanque central,"dudoso: «batería» está, pero cambia el sentido (un solo tanque)"
+S034,claude,T049,CORRECTO,batería central de tanques,
+S034,deepl,T049,ERROR_TERMINO,batería de depósitos,dudoso: «depósitos» no se usa por tanques
+S035,claude,T063,CORRECTO,pozo sumidero,
+S035,deepl,T063,ERROR_TERMINO,pozo de eliminación,"dudoso: sentido correcto, forma no usada"
+S035,opusmt,T063,ERROR_TERMINO,Eliminación bien,
+S036,opusmt,T052,ERROR_TERMINO,carneros ciegos,
+S036,deepl,T052,CORRECTO,obturadores ciegos,dudoso
+S036,claude,T052,CORRECTO,esclusas ciegas,uso argentino
+S037,claude,T031,CORRECTO,cañería,
+S037,opusmt,T031,ERROR_TERMINO,carcasa,
+S037,deepl,T031,CORRECTO,revestimiento,
+S037,claude,T019,CORRECTO,cabeza de pozo,
+S037,opusmt,T019,CORRECTO,cabeza del pozo,
+S037,deepl,T019,CORRECTO,cabeza de pozo,
+S037,claude,T044,CORRECTO,liner,
+S037,opusmt,T044,ERROR_TERMINO,revestimiento,
+S037,deepl,T044,ERROR_TERMINO,revestimiento interior,dudoso
+S037,claude,T045,CORRECTO,colgador de liner,
+S037,opusmt,T045,ERROR_TERMINO,percha del revestimiento,
+S037,deepl,T045,ERROR_TERMINO,colgador de revestimiento,"dudoso: «colgador» vale, pero así designa el casing hanger"
+S053,claude,T081,CORRECTO,pozo de petróleo/gas,
+S053,deepl,T081,CORRECTO,pozo de petróleo o gas,
+S053,opusmt,T081,CORRECTO,pozo de petróleo/gas,
+S053,claude,T038,CORRECTO,surgencia,
+S053,deepl,T038,ERROR_TERMINO,golpe de presión,dudoso
+S053,opusmt,T038,ERROR_TERMINO,patada,
+S053,claude,T002,CORRECTO,reventón,
+S053,deepl,T002,CORRECTO,erupción,"dudoso: forma antigua, se entiende"
+S053,opusmt,T002,ERROR_TERMINO,explosión,
+S118,claude,T008,CORRECTO,torre,
+S118,deepl,T008,CORRECTO,torre de perforación,
+S118,opusmt,T008,SIN_TRADUCIR,derrick,
+S118,claude,T019,CORRECTO,cabeza de pozo,
+S118,deepl,T019,CORRECTO,boca del pozo,
+S118,opusmt,T019,CORRECTO,cabeza del pozo,
+S005,opusmt,T068,ERROR_TERMINO,taladro,
+S005,deepl,T068,CORRECTO,perforador,
+S005,claude,T068,CORRECTO,perforador,
+S005,opusmt,T009,ERROR_TERMINO,obras de dibujo,
+S005,deepl,T009,ERROR_TERMINO,cabrestante,dudoso: es otro equipo (winch)
+S005,claude,T009,CORRECTO,malacate,
+S005,opusmt,T037,ERROR_TERMINO,kely,dudoso: préstamo mal escrito
+S005,deepl,T037,CORRECTO,varilla Kelly,dudoso: «varilla» no es lo habitual
+S005,claude,T037,CORRECTO,vástago de perforación (kelly),
+S005,opusmt,T094,CORRECTO,mesa rotativa,
+S005,deepl,T094,CORRECTO,mesa giratoria,dudoso
+S005,claude,T094,CORRECTO,mesa rotativa,
+S007,opusmt,T097,CORRECTO,cables,dudoso: genérico y en plural
+S007,claude,T097,CORRECTO,cable (wireline),
+S007,deepl,T097,CORRECTO,cable,
+S007,opusmt,T041,ERROR_TERMINO,perforación,
+S007,claude,T041,CORRECTO,punzado,
+S007,deepl,T041,ERROR_TERMINO,perforación,
+S007,opusmt,T069,CORRECTO,pesca,
+S007,claude,T069,CORRECTO,pesca,
+S007,deepl,T069,ERROR_TERMINO,recuperación de objetos,"dudoso: sentido correcto, no es el término"
+S012,deepl,T031,CORRECTO,tubería de revestimiento,
+S012,claude,T031,CORRECTO,cañería,
+S012,opusmt,T031,ERROR_TERMINO,carcasa,
+S012,deepl,T010,CORRECTO,fluido de perforación,
+S012,claude,T010,CORRECTO,fluido de perforación,
+S012,opusmt,T010,CORRECTO,fluido de perforación,
+S012,deepl,T004,ERROR_TERMINO,anillo,
+S012,claude,T004,CORRECTO,espacio anular,
+S012,opusmt,T004,ERROR_TERMINO,anillo,
+S016,claude,T036,CORRECTO,gas lift,
+S016,deepl,T036,CORRECTO,elevación por gas,dudoso
+S016,opusmt,T036,CORRECTO,gas-lift,
+S016,claude,T012,CORRECTO,línea,
+S016,deepl,T012,CORRECTO,línea,
+S016,opusmt,T012,ERROR_TERMINO,flujo,
+S025,claude,T011,CORRECTO,equipo,
+S025,opusmt,T011,ERROR_TERMINO,plataforma,
+S025,deepl,T011,ERROR_TERMINO,plataformas de perforación,dudoso: frecuente en traducciones generales
+S025,claude,T043,CORRECTO,top drive,
+S025,opusmt,T043,ERROR_TERMINO,unidad superior,
+S025,deepl,T043,ERROR_TERMINO,accionamiento superior,
+S026,claude,T098,CORRECTO,reacondicionamiento (workover),
+S026,opusmt,T098,ERROR_TERMINO,trabajo en marcha,
+S026,deepl,T098,CORRECTO,reacondicionamiento,
+S028,opusmt,T059,CORRECTO,Doghouse,
+S028,deepl,T059,CORRECTO,caseta de trabajo,dudoso: genérico
+S028,claude,T059,CORRECTO,casilla del perforador,
+S029,claude,T074,CORRECTO,varillas de bombeo,
+S029,opusmt,T074,ERROR_TERMINO,varilla aspirante,
+S029,deepl,T074,CORRECTO,varillas de bombeo,
+S044,claude,T069,CORRECTO,pesca,
+S044,opusmt,T069,CORRECTO,pesca,
+S044,deepl,T069,ERROR_TERMINO,recuperación,dudoso
+S044,claude,T018,CORRECTO,pozo,
+S044,opusmt,T018,CORRECTO,pozo,
+S044,deepl,T018,CORRECTO,pozo,
+S044,claude,T097,CORRECTO,cable,
+S044,opusmt,T097,ERROR_TERMINO,alambre,dudoso: en Argentina «alambre» es slickline
+S044,deepl,T097,CORRECTO,cable de servicio,dudoso
+S048,opusmt,T068,ERROR_TERMINO,taladro,
+S048,deepl,T068,CORRECTO,perforador,
+S048,claude,T068,CORRECTO,perforador,
+S048,opusmt,T037,CORRECTO,kelly,
+S048,deepl,T037,CORRECTO,kelly,
+S048,claude,T037,CORRECTO,vástago (kelly),
+S048,opusmt,T095,ERROR_TERMINO,pinzas,
+S048,deepl,T095,ERROR_TERMINO,tenazas,dudoso
+S048,claude,T095,CORRECTO,llaves,
+S050,opusmt,T066,CORRECTO,derrickman,préstamo admitido por el glosario
+S050,claude,T066,CORRECTO,enganchador,
+S050,deepl,T066,CORRECTO,operario de torre,"dudoso: descriptivo, no es el término de campo"
+S050,opusmt,T014,ERROR_TERMINO,tubos,
+S050,claude,T014,CORRECTO,tubing,
+S050,deepl,T014,CORRECTO,tubería,dudoso: hiperónimo
+S050,opusmt,T019,CORRECTO,cabeza del pozo,
+S050,claude,T019,CORRECTO,cabeza de pozo,
+S050,deepl,T019,CORRECTO,boca del pozo,
+S061,claude,T068,CORRECTO,perforador,
+S061,deepl,T068,CORRECTO,perforador,
+S061,opusmt,T068,ERROR_TERMINO,taladro,
+S061,claude,T009,CORRECTO,malacate,
+S061,deepl,T009,ERROR_TERMINO,cabrestante,dudoso
+S061,opusmt,T009,ERROR_TERMINO,obras de dibujo,
+S061,claude,T037,CORRECTO,vástago (kelly),
+S061,deepl,T037,CORRECTO,kelly,
+S061,opusmt,T037,ERROR_TERMINO,kely,dudoso: préstamo mal escrito
+S091,deepl,T098,CORRECTO,reacondicionación de pozos,dudoso: forma rara de «reacondicionamiento»
+S091,opusmt,T098,OMISION,,
+S091,claude,T098,CORRECTO,reacondicionamiento,
+S091,deepl,T031,CORRECTO,revestimiento,
+S091,opusmt,T031,ERROR_TERMINO,carcasa,
+S091,claude,T031,CORRECTO,cañería,
+S092,opusmt,T095,ERROR_TERMINO,pinzas eléctricas,
+S092,claude,T095,CORRECTO,llaves de potencia,
+S092,deepl,T095,ERROR_TERMINO,tenazas motorizadas,dudoso
+S092,opusmt,T014,ERROR_TERMINO,tubos,
+S092,claude,T014,CORRECTO,tubing,
+S092,deepl,T014,CORRECTO,tubería,dudoso: hiperónimo
+S101,claude,T081,CORRECTO,pozo de petróleo o gas,
+S101,opusmt,T081,CORRECTO,pozo de petróleo o gas,
+S101,deepl,T081,CORRECTO,pozo de petróleo o gas,
+S111,deepl,T031,CORRECTO,revestimiento,
+S111,opusmt,T031,ERROR_TERMINO,carcasa,
+S111,claude,T031,CORRECTO,cañería,
+S111,deepl,T091,CORRECTO,elevadores,
+S111,opusmt,T091,ERROR_TERMINO,ascensores,
+S111,claude,T091,CORRECTO,elevadores,
+S112,opusmt,T069,CORRECTO,pesca,
+S112,deepl,T069,ERROR_TERMINO,recuperación,dudoso
+S112,claude,T069,CORRECTO,pesca,
+S113,deepl,T064,CORRECTO,cementación,
+S113,opusmt,T064,CORRECTO,cementación,
+S113,claude,T064,CORRECTO,cementación,
+S114,deepl,T088,CORRECTO,cellar,
+S114,claude,T088,CORRECTO,antepozo,
+S114,opusmt,T088,ERROR_TERMINO,bodega,
+S115,opusmt,T006,CORRECTO,árbol de Navidad,
+S115,claude,T006,CORRECTO,árbol de navidad,
+S115,deepl,T006,CORRECTO,árbol de Navidad,

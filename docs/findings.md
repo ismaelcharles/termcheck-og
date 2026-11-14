@@ -6,9 +6,10 @@
 
 ## Con qué se midió
 
-- Conjunto de prueba: **[A COMPLETAR]** oraciones y **[A COMPLETAR]** términos anotados.
-- Glosario: `data/glossary/glossary_v1.csv`, congelado el **[A COMPLETAR]** antes de anotar la prueba.
-- Un solo anotador. La guía está en `docs/annotation_guidelines.md`.
+- Conjunto de prueba: 20 oraciones y 120 términos anotados (52 errores según la anotación).
+- Glosario: `data/glossary/glossary_v1.csv`, congelado el 2026-11-14 (99 términos, sha256 `5c7f9844eb4d7525`) antes de anotar la prueba.
+- Un solo anotador humano. La guía está en `docs/annotation_guidelines.md`. Un modelo de lenguaje anotó lo mismo
+  a ciegas para medir el acuerdo (punto 4).
 
 ## 1. Verificador frente al baseline
 
@@ -16,8 +17,11 @@ El baseline busca la traducción preferida como texto exacto en minúsculas.
 
 | Método | Precisión | Recall | F1 |
 |---|---|---|---|
-| Baseline | **[A COMPLETAR]** | | |
-| TermCheck | **[A COMPLETAR]** | | |
+| Baseline | 0,73 (0,61–0,82) | 0,98 (0,90–1,00) | 0,84 |
+| TermCheck | 0,86 (0,74–0,93) | 0,92 (0,82–0,97) | 0,89 |
+
+Entre paréntesis, el intervalo de confianza del 95 % (Wilson). El baseline da 19 falsos positivos y 1 falso
+negativo; TermCheck, 8 y 4.
 
 Qué muestra la diferencia: **[A COMPLETAR]**
 
@@ -25,9 +29,9 @@ Qué muestra la diferencia: **[A COMPLETAR]**
 
 | Sistema | Términos | Errores | Error de término | Omisión | Sin traducir |
 |---|---|---|---|---|---|
-| Opus-MT | **[A COMPLETAR]** | | | | |
-| Claude | **[A COMPLETAR]** | | | | |
-| DeepL | **[A COMPLETAR]** | | | | |
+| Opus-MT | 40 | 25 (62,5 %) | 24 | 1 | 0 |
+| Claude | 40 | 4 (10,0 %) | 4 | 0 | 0 |
+| DeepL | 40 | 23 (57,5 %) | 23 | 0 | 0 |
 
 Qué sistema maneja mejor la terminología y en qué términos falla cada uno: **[A COMPLETAR]**
 
@@ -65,8 +69,21 @@ Cada falso positivo (FP) y falso negativo (FN) de `salida/eval_prueba_casos.csv`
 
 ## 4. Acuerdo entre anotadores
 
-No se hizo. **[A COMPLETAR]** si hay un segundo anotador: cantidad de términos en común y los dos valores de
-kappa que da `scripts/kappa.py`.
+El segundo anotador fue un modelo de lenguaje (Claude Fable 5.2). Anotó a ciegas las mismas oraciones, sin ver
+qué sistema hizo cada traducción, ni la anotación del autor, ni el verificador. Su anotación está en
+`data/annotations/segundo_fable.csv` y solo se usó para medir el acuerdo: la referencia es la anotación del
+autor. Los números son de antes de revisar los desacuerdos (`scripts/kappa.py`).
+
+| Conjunto | Términos en común | Acuerdo observado | Kappa (cuatro etiquetas) | Kappa (correcto o error) | Desacuerdos |
+|---|---:|---:|---:|---:|---:|
+| Desarrollo | 111 | 0,77 | 0,55 | 0,54 | 25 |
+| Prueba | 120 | 0,82 | 0,62 | 0,61 | 22 |
+
+En 22 de los 25 desacuerdos de desarrollo y en 19 de los 22 de la prueba, el autor marcó error y el modelo,
+correcto. En desarrollo el autor revisó los desacuerdos y corrigió 3 etiquetas propias. En la prueba no se
+corrigió ninguna.
+
+Qué muestran los desacuerdos: **[A COMPLETAR]**
 
 ## Qué cambiaría en la versión 2
 

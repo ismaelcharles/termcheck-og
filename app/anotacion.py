@@ -1,7 +1,7 @@
 """Datos de la anotación a ciegas (plan 5.4). Lo usa app/paginas/anotar.py.
 
 - Dos conjuntos (decisión del dueño, 2026-11-11, para que la anotación entre en el tiempo): «desarrollo» son las
-  15 oraciones de data/splits/dev_anotar_ids.txt y «prueba» las 40 de data/splits/test_eval_ids.txt
+  15 oraciones de data/splits/dev_anotar_ids.txt y «prueba» las 20 de data/splits/test_eval_ids.txt
   (scripts/recortar_splits.py). La prueba se anota igual, a ciegas; el código del verificador nunca la lee.
 - Qué se anota: cada término del glosario que aparece en la oración en inglés, en cada una de las tres traducciones.
 - A ciegas: las traducciones se muestran como A, B y C, en un orden que depende de la oración (siempre el mismo

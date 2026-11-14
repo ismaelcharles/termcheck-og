@@ -1,7 +1,7 @@
 """Evaluación del verificador contra la anotación del dueño (plan 6.1–6.3).
 
     .venv/bin/python scripts/evaluate.py                    # desarrollo (lo que esté anotado)
-    .venv/bin/python scripts/evaluate.py --conjunto prueba  # la evaluación final (40 oraciones)
+    .venv/bin/python scripts/evaluate.py --conjunto prueba  # la evaluación final (20 oraciones)
 
 Unidad: cada término anotado (seg_id, system, term_id) en gold.csv. Las filas «No va» (descartes.csv) no cuentan.
 - «Error» según el dueño: ERROR_TERMINO, OMISION o SIN_TRADUCIR.

@@ -7,7 +7,7 @@ Cada etiqueta se guarda apenas se elige (no hay botón de guardar).
 Para ir rápido: «Lo que falta: Correcto» (por término o por oración) completa con Correcto lo que no tocaste; así
 solo hay que marcar los errores.
 
-No muestra nada del verificador ni qué sistema hizo cada traducción. Conjuntos: desarrollo (15) y prueba (40).
+No muestra nada del verificador ni qué sistema hizo cada traducción. Conjuntos: desarrollo (15) y prueba (20).
 La lógica y el guardado están en app/anotacion.py.
 """
 import streamlit as st
@@ -41,7 +41,7 @@ st.html(vista.CSS + """<style>
 </style>""")
 st.title("Anotar")
 
-CONJUNTOS = {"desarrollo": "Desarrollo (15)", "prueba": "Prueba (40)"}
+CONJUNTOS = {"desarrollo": "Desarrollo (15)", "prueba": "Prueba (20)"}
 conjunto = st.segmented_control("Conjunto", list(CONJUNTOS), format_func=CONJUNTOS.get, key="anot_conjunto",
                                 default="desarrollo", label_visibility="collapsed") or "desarrollo"
 oraciones = an.oraciones(conjunto)

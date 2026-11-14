@@ -7,6 +7,10 @@
   los imprime.
 
 dev_ids.txt y test_ids.txt no se tocan. Si los archivos nuevos ya existen, no los pisa (--forzar para rehacer).
+
+--prueba-20 (decisión del dueño, 2026-11-13): baja la prueba de 40 a 20. Guarda las 40 en
+data/splits/test_eval40_ids.txt y deja en test_eval_ids.txt 20 de ellas, al azar con la semilla 20261113.
+Tampoco mira el contenido ni imprime los ids.
 """
 import argparse
 import csv
@@ -18,6 +22,7 @@ SPLITS = RAIZ / "data" / "splits"
 GOLD = RAIZ / "data" / "annotations" / "gold.csv"
 SEMILLA = 20261111
 N_DEV, N_TEST = 15, 40
+SEMILLA_20, N_TEST_20 = 20261113, 20
 
 
 def leer_ids(ruta):
@@ -27,7 +32,10 @@ def leer_ids(ruta):
 def main():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--forzar", action="store_true")
+    p.add_argument("--prueba-20", action="store_true", help="bajar la prueba de 40 a 20 oraciones")
     args = p.parse_args()
+    if args.prueba_20:
+        return prueba_20()
     dev_out, test_out = SPLITS / "dev_anotar_ids.txt", SPLITS / "test_eval_ids.txt"
     if (dev_out.exists() or test_out.exists()) and not args.forzar:
         raise SystemExit("Los recortes ya existen; no se tocan.")
@@ -47,6 +55,20 @@ def main():
     test_out.write_text("\n".join(muestra) + "\n", encoding="utf-8")
     print(f"Desarrollo a anotar: {len(elegidas)} ({len(con_etiqueta & set(dev))} ya empezadas). "
           f"Prueba a evaluar: {len(muestra)} de {len(test)} (semilla {SEMILLA}).")
+
+
+def prueba_20():
+    actual, guardadas = SPLITS / "test_eval_ids.txt", SPLITS / "test_eval40_ids.txt"
+    if guardadas.exists():
+        raise SystemExit("La prueba ya se bajó a 20; no se toca.")
+    cuarenta = leer_ids(actual)
+    if len(cuarenta) != N_TEST:
+        raise SystemExit(f"test_eval_ids.txt tiene {len(cuarenta)} ids, se esperaban {N_TEST}.")
+    guardadas.write_text("\n".join(cuarenta) + "\n", encoding="utf-8")
+    muestra = sorted(random.Random(SEMILLA_20).sample(sorted(cuarenta), N_TEST_20))
+    actual.write_text("\n".join(muestra) + "\n", encoding="utf-8")
+    print(f"Prueba a evaluar: {len(muestra)} de {len(cuarenta)} (semilla {SEMILLA_20}). "
+          f"Las {len(cuarenta)} quedan en {guardadas.name}.")
 
 
 if __name__ == "__main__":

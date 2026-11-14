@@ -74,49 +74,49 @@ tradujeron 120 oraciones con tres sistemas (Opus-MT, Claude sin glosario y DeepL
   verificador es lo que aportan los lemas, las raíces y las formas válidas del glosario.
 
 <!-- resultados:inicio (lo escribe scripts/actualizar_readme.py; no editar a mano) -->
-> **Resultados provisorios.** Son del conjunto de desarrollo, que se usó para ajustar el código y el glosario. Sirven para ver que el verificador funciona, no para decir cuánto acierta. La evaluación final se calcula sobre el conjunto de prueba, que todavía no está anotado entero.
+Evaluación final sobre el conjunto de prueba, con el glosario v1 congelado. Calculada el 2026-11-14.
 
-33 términos anotados en 5 oraciones (10 errores según la anotación). El verificador no detectó 1 de ellos (cuentan como no marcados).
+120 términos anotados en 20 oraciones (52 errores según la anotación). El verificador no detectó 0 de ellos (cuentan como no marcados).
 
 ### Verificador frente al baseline
 
 | Método | Términos | TP | FP | FN | TN | Precisión (IC 95 %) | Recall (IC 95 %) | F1 |
 |---|---:|---:|---:|---:|---:|---|---|---:|
-| Baseline (texto exacto) | 33 | 10 | 11 | 0 | 12 | 0,48 (0,28–0,68) | 1,00 (0,72–1,00) | 0,65 |
-| TermCheck | 33 | 10 | 3 | 0 | 20 | 0,77 (0,50–0,92) | 1,00 (0,72–1,00) | 0,87 |
+| Baseline (texto exacto) | 120 | 51 | 19 | 1 | 49 | 0,73 (0,61–0,82) | 0,98 (0,90–1,00) | 0,84 |
+| TermCheck | 120 | 48 | 8 | 4 | 60 | 0,86 (0,74–0,93) | 0,92 (0,82–0,97) | 0,89 |
 
 ### Por sistema de traducción (TermCheck)
 
 | Sistema | Términos | TP | FP | FN | TN | Precisión (IC 95 %) | Recall (IC 95 %) | F1 |
 |---|---:|---:|---:|---:|---:|---|---|---:|
-| claude | 15 | 4 | 1 | 0 | 10 | 0,80 (0,38–0,96) | 1,00 (0,51–1,00) | 0,89 |
-| deepl | 9 | 2 | 2 | 0 | 5 | 0,50 (0,15–0,85) | 1,00 (0,34–1,00) | 0,67 |
-| opusmt | 9 | 4 | 0 | 0 | 5 | 1,00 (0,51–1,00) | 1,00 (0,51–1,00) | 1,00 |
+| claude | 40 | 3 | 2 | 1 | 34 | 0,60 (0,23–0,88) | 0,75 (0,30–0,95) | 0,67 |
+| deepl | 40 | 21 | 2 | 2 | 15 | 0,91 (0,73–0,98) | 0,91 (0,73–0,98) | 0,91 |
+| opusmt | 40 | 24 | 4 | 1 | 11 | 0,86 (0,69–0,94) | 0,96 (0,80–0,99) | 0,91 |
 
 ### Errores de terminología según la anotación, por sistema
 
 | Sistema | Términos | Errores | % | Error de término | Omisión | Sin traducir |
 |---|---:|---:|---:|---:|---:|---:|
-| claude | 15 | 4 | 26,67 | 4 | 0 | 0 |
-| deepl | 9 | 2 | 22,22 | 2 | 0 | 0 |
-| opusmt | 9 | 4 | 44,44 | 2 | 0 | 2 |
+| claude | 40 | 4 | 10,00 | 4 | 0 | 0 |
+| deepl | 40 | 23 | 57,50 | 23 | 0 | 0 |
+| opusmt | 40 | 25 | 62,50 | 24 | 1 | 0 |
 
 ### Recall por tipo de error (TermCheck)
 
 | Etiqueta del dueño | Casos | Detectados |
 |---|---:|---:|
-| ERROR_TERMINO | 8 | 8 |
-| OMISION | 0 | 0 |
-| SIN_TRADUCIR | 2 | 2 |
+| ERROR_TERMINO | 51 | 48 |
+| OMISION | 1 | 0 |
+| SIN_TRADUCIR | 0 | 0 |
 
 ### Qué etiqueta dio el verificador según la anotación
 
 | Anotación \ Verificador | OK | VARIANTE | PROHIBIDO | SIN_TRADUCIR | NO_ENCONTRADO | (no detectado) |
 |---|---:|---:|---:|---:|---:|---:|
-| CORRECTO | 12 | 7 | 0 | 0 | 3 | 1 |
-| ERROR_TERMINO | 0 | 0 | 0 | 0 | 8 | 0 |
-| OMISION | 0 | 0 | 0 | 0 | 0 | 0 |
-| SIN_TRADUCIR | 0 | 0 | 0 | 2 | 0 | 0 |
+| CORRECTO | 51 | 10 | 0 | 0 | 7 | 0 |
+| ERROR_TERMINO | 1 | 2 | 7 | 0 | 41 | 0 |
+| OMISION | 0 | 1 | 0 | 0 | 0 | 0 |
+| SIN_TRADUCIR | 0 | 0 | 0 | 0 | 0 | 0 |
 
 IC 95 %: intervalo de Wilson. Con pocos casos es ancho: los números son orientativos.
 <!-- resultados:fin -->
@@ -136,10 +136,13 @@ usó con textos propios.
 
 ## 6. Limitaciones
 
-- **Pocos datos.** La prueba tiene 40 oraciones (el plan preveía 80) y el conjunto de desarrollo 15. Los
+- **Pocos datos.** La prueba tiene 20 oraciones (el plan preveía 80) y el conjunto de desarrollo 15. Los
   intervalos de confianza son anchos y los números son orientativos.
-- **Un solo anotador.** No hay segundo anotador ni medida de acuerdo. La anotación refleja el criterio de una
-  persona.
+- **Un solo anotador humano.** La anotación refleja el criterio de una persona. El segundo anotador fue un
+  modelo de lenguaje (Claude Fable 5.2), que anotó a ciegas las mismas oraciones y solo se usó para medir el
+  acuerdo. En la prueba coincidieron en 98 de 120 términos (acuerdo 0,82; kappa de Cohen 0,62 con las cuatro
+  etiquetas y 0,61 con correcto o error). En desarrollo, sobre 111 términos, el kappa fue 0,55 y 0,54. En casi
+  todos los desacuerdos el autor marcó error y el modelo, correcto.
 - **«Correcto» por defecto.** La pantalla de anotación tiene un botón que pone «Correcto» en todo lo que falta
   de una oración. Ahorra tiempo y puede hacer que algún error pase como correcto.
 - **Fuentes del glosario.** El respaldo escrito es sobre todo un glosario general de español sin variedad
@@ -233,7 +236,7 @@ Las fuentes de cada término, lo que se excluyó por copyright y el método de c
 
 ## 9. Próximos pasos
 
-- Un segundo anotador sobre una parte de la prueba, para medir el acuerdo.
+- Un segundo anotador humano sobre una parte de la prueba, para medir el acuerdo entre personas.
 - Más formas prohibidas en el glosario, cada una con un error real que la respalde.
 - Probar la lectura de XLIFF y TMX con exportaciones reales de Trados y memoQ. Hoy lee XLIFF 1.2, XLIFF 2.0 y TMX
   según la norma, probados con archivos armados a mano. No lee `.sdlxliff` ni `.mqxliff`.

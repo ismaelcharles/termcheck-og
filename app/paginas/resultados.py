@@ -6,7 +6,7 @@ Las sugerencias salen de comparar la anotación del dueño con el verificador en
 - «Correcto» que el verificador marcó (falso positivo) → posible variante válida que falta.
 Nada entra al glosario sin que el dueño toque el botón (plan, regla 5).
 
-La prueba se evalúa con el glosario congelado (data/glossary/glossary_v1.csv), una vez anotadas las 40 oraciones.
+La prueba se evalúa con el glosario congelado (data/glossary/glossary_v1.csv), una vez anotadas las 20 oraciones.
 """
 import hashlib
 import sys
