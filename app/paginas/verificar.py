@@ -47,7 +47,8 @@ st.html(vista.CSS + """<style>
 st.title(NOMBRE if DEMO else "Verificar")
 if DEMO:
     st.caption("Demo pública. Verificador de terminología para traducción automática inglés → español en Oil & Gas "
-               "(español técnico de Argentina). Los textos que pegues o subas no se guardan.")
+               "(español técnico de Argentina). Los textos que pegues o subas no se guardan. El código, el glosario y la "
+               "evaluación están en [GitHub](https://github.com/ismaelcharles/termcheck-og).")
 st.markdown("Pegá un texto en inglés y su traducción automática. TermCheck busca cada término del glosario en el "
             "inglés y te dice cómo quedó en la traducción.")
 

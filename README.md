@@ -93,14 +93,14 @@ tradujeron 120 oraciones con tres sistemas (Opus-MT, Claude sin glosario y DeepL
 <!-- resultados:inicio (lo escribe scripts/actualizar_readme.py; no editar a mano) -->
 Evaluación final sobre el conjunto de prueba, con el glosario v1 congelado. Calculada el 2026-11-14.
 
-120 términos anotados en 20 oraciones (52 errores según la anotación). El verificador no detectó 0 de ellos (cuentan como no marcados).
+120 términos anotados en 20 oraciones (53 errores según la anotación). El verificador no detectó 0 de ellos (cuentan como no marcados).
 
 ### Verificador frente al baseline
 
 | Método | Términos | TP | FP | FN | TN | Precisión (IC 95 %) | Recall (IC 95 %) | F1 |
 |---|---:|---:|---:|---:|---:|---|---|---:|
-| Baseline (texto exacto) | 120 | 51 | 19 | 1 | 49 | 0,73 (0,61–0,82) | 0,98 (0,90–1,00) | 0,84 |
-| TermCheck | 120 | 48 | 8 | 4 | 60 | 0,86 (0,74–0,93) | 0,92 (0,82–0,97) | 0,89 |
+| Baseline (texto exacto) | 120 | 52 | 18 | 1 | 49 | 0,74 (0,63–0,83) | 0,98 (0,90–1,00) | 0,85 |
+| TermCheck | 120 | 49 | 7 | 4 | 60 | 0,88 (0,76–0,94) | 0,92 (0,82–0,97) | 0,90 |
 
 ### Por sistema de traducción (TermCheck)
 
@@ -108,7 +108,7 @@ Evaluación final sobre el conjunto de prueba, con el glosario v1 congelado. Cal
 |---|---:|---:|---:|---:|---:|---|---|---:|
 | claude | 40 | 3 | 2 | 1 | 34 | 0,60 (0,23–0,88) | 0,75 (0,30–0,95) | 0,67 |
 | deepl | 40 | 21 | 2 | 2 | 15 | 0,91 (0,73–0,98) | 0,91 (0,73–0,98) | 0,91 |
-| opusmt | 40 | 24 | 4 | 1 | 11 | 0,86 (0,69–0,94) | 0,96 (0,80–0,99) | 0,91 |
+| opusmt | 40 | 25 | 3 | 1 | 11 | 0,89 (0,73–0,96) | 0,96 (0,81–0,99) | 0,93 |
 
 ### Errores de terminología según la anotación, por sistema
 
@@ -116,13 +116,13 @@ Evaluación final sobre el conjunto de prueba, con el glosario v1 congelado. Cal
 |---|---:|---:|---:|---:|---:|---:|
 | claude | 40 | 4 | 10,00 | 4 | 0 | 0 |
 | deepl | 40 | 23 | 57,50 | 23 | 0 | 0 |
-| opusmt | 40 | 25 | 62,50 | 24 | 1 | 0 |
+| opusmt | 40 | 26 | 65,00 | 25 | 1 | 0 |
 
 ### Recall por tipo de error (TermCheck)
 
 | Etiqueta del dueño | Casos | Detectados |
 |---|---:|---:|
-| ERROR_TERMINO | 51 | 48 |
+| ERROR_TERMINO | 52 | 49 |
 | OMISION | 1 | 0 |
 | SIN_TRADUCIR | 0 | 0 |
 
@@ -130,8 +130,8 @@ Evaluación final sobre el conjunto de prueba, con el glosario v1 congelado. Cal
 
 | Anotación \ Verificador | OK | VARIANTE | PROHIBIDO | SIN_TRADUCIR | NO_ENCONTRADO | (no detectado) |
 |---|---:|---:|---:|---:|---:|---:|
-| CORRECTO | 51 | 10 | 0 | 0 | 7 | 0 |
-| ERROR_TERMINO | 1 | 2 | 7 | 0 | 41 | 0 |
+| CORRECTO | 51 | 10 | 0 | 0 | 6 | 0 |
+| ERROR_TERMINO | 1 | 2 | 7 | 0 | 42 | 0 |
 | OMISION | 0 | 1 | 0 | 0 | 0 | 0 |
 | SIN_TRADUCIR | 0 | 0 | 0 | 0 | 0 | 0 |
 
@@ -143,8 +143,8 @@ IC 95 %: intervalo de Wilson. Con pocos casos es ancho: los números son orienta
 <!-- autor:hallazgos:inicio -->
 Los números salen de 20 oraciones y 120 términos. Alcanzan para ver tendencias y no para afirmarlas.
 
-**Sistemas de traducción.** Claude tuvo 4 errores en 40 términos (10 %). DeepL tuvo 23 (57,5 %) y Opus-MT 25
-(62,5 %). Los tres recibieron las mismas oraciones y ninguno recibió el glosario.
+**Sistemas de traducción.** Claude tuvo 4 errores en 40 términos (10 %). DeepL tuvo 23 (57,5 %) y Opus-MT 26
+(65 %). Los tres recibieron las mismas oraciones y ninguno recibió el glosario.
 
 - Opus-MT traduce palabra por palabra: «obras de dibujo» por *drawworks*, «ascensores» por *elevators*,
   «carcasa» por *casing*, «taladro» por *driller*.
@@ -153,12 +153,12 @@ Los números salen de 20 oraciones y 120 términos. Alcanzan para ver tendencias
 - Los 4 errores de Claude son formas más generales que la del glosario: «equipo» por *rig*, «cable» por
   *wireline*, «línea de suministro» por *flowline* y «reacondicionamiento» por *workover*.
 
-**Tipos de error.** De los 52 errores, 51 son un término equivocado y 1 es una omisión. Ningún sistema dejó un
+**Tipos de error.** De los 53 errores, 52 son un término equivocado y 1 es una omisión. Ningún sistema dejó un
 término sin traducir. Los términos con más errores fueron *wireline* y *workover* (5 cada uno), y *drawworks*,
 *tongs* y *tubing* (4 cada uno). En varios de ellos la forma que se usa en Argentina es la inglesa (wireline,
 workover, tubing, top drive, kelly) y el error del sistema fue traducirla.
 
-**El verificador.** Marcó 48 de los 52 errores y dio 8 falsas alarmas. El baseline marcó 51 y dio 19 falsas
+**El verificador.** Marcó 49 de los 53 errores y dio 7 falsas alarmas. El baseline marcó 52 y dio 18 falsas
 alarmas. La ganancia está en la precisión, porque el verificador acepta las formas válidas del glosario y los
 plurales. A cambio se le escapan 4 errores, y al baseline 1.
 
@@ -171,16 +171,15 @@ Los 4 errores que no marcó:
 - 1 es «boca del pozo», que el glosario v1 lista como válida y el autor anotó como error. Ahí el que está mal
   es el glosario.
 
-Las 8 falsas alarmas:
+Las 7 falsas alarmas:
 
 - 3 son «pozo de petróleo o gas» por *oil or gas well*. El verificador busca «pozo de gas» con las palabras
   juntas.
 - 2 son «perforación» por *perforating*. El autor la considera aceptada y el glosario solo lista
   «punzado».
 - 1 es «gas-lift» escrito con guion.
-- 1 es «kely», una errata del sistema que el autor dio por buena en esa oración.
-- 1 es *kelly spinner* traducido como «enroscador del vástago». El glosario acepta «vástago de perforación» y
-  no «vástago» solo.
+- 1 es *kelly spinner* traducido como «enroscador del vástago». El autor acepta «vástago» solo y el glosario
+  lista «vástago de perforación».
 
 El análisis por causa está en [`docs/findings.md`](docs/findings.md).
 <!-- autor:hallazgos:fin -->
@@ -198,7 +197,7 @@ usó con textos propios.
 - **Un solo anotador humano.** La anotación refleja el criterio de una persona. El segundo anotador fue un
   modelo de lenguaje (Claude Fable 5.2), que anotó a ciegas las mismas oraciones y solo se usó para medir el
   acuerdo. En la prueba coincidieron en 98 de 120 términos (acuerdo 0,82; kappa de Cohen 0,62 con las cuatro
-  etiquetas y 0,61 con correcto o error). En desarrollo, sobre 111 términos, el kappa fue 0,55 y 0,54. En casi
+  etiquetas y 0,61 con correcto o error), medido antes de que el autor corrigiera una etiqueta. En desarrollo, sobre 111 términos, el kappa fue 0,55 y 0,54. En casi
   todos los desacuerdos el autor marcó error y el modelo, correcto.
 - **«Correcto» por defecto.** La pantalla de anotación tiene un botón que pone «Correcto» en todo lo que falta
   de una oración. Ahorra tiempo y puede hacer que algún error pase como correcto.

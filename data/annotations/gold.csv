@@ -20,7 +20,7 @@ S005,deepl,T037,ERROR_TERMINO,varilla Kelly,
 S005,deepl,T068,CORRECTO,,
 S005,deepl,T094,ERROR_TERMINO,mesa giratoria,
 S005,opusmt,T009,ERROR_TERMINO,obras de dibujo,
-S005,opusmt,T037,CORRECTO,,
+S005,opusmt,T037,ERROR_TERMINO,kely,Corregida el 2026-11-14: solo valen «kelly» o «vástago».
 S005,opusmt,T068,ERROR_TERMINO,taladro,
 S005,opusmt,T094,CORRECTO,,
 S006,claude,T003,CORRECTO,,

@@ -84,8 +84,8 @@ criterios distintos.
    `casing` dentro de `casing shoe`).
 9. **Variantes de escritura en inglés** (`flow line` / `flowline`). Van contra el mismo `term_id`; el glosario
    lista las dos escrituras.
-10. **Errores de forma.** **[A DECIDIR]**. La errata «kely» por *kelly* (Opus-MT) se anotó CORRECTO en S005 y
-    ERROR_TERMINO en S061. Falta elegir un criterio y corregir la otra.
+10. **Errores de forma.** Una errata en el término es ERROR_TERMINO. «kely» por *kelly* (Opus-MT, S005 y S061)
+    es error: valen «kelly» o «vástago».
 11. **«de» y «del» dentro del término.** No son lo mismo. «cabeza del pozo» es ERROR_TERMINO aunque «cabeza de
     pozo» sea válida.
 
@@ -98,6 +98,7 @@ criterios distintos.
 | 2026-11-13 | Revisión de desacuerdos en desarrollo | 3 etiquetas propias corregidas a CORRECTO (formas válidas del glosario marcadas como error) | S006 DeepL, S009 DeepL y Opus-MT |
 | 2026-11-13 | *wellhead* | «boca del pozo» entra al glosario como válida | — |
 | 2026-11-14 | *wellhead* | «boca del pozo» es inadecuada y hay que sacarla del glosario. El v1 ya estaba congelado y la conserva | S050, DeepL |
+| 2026-11-14 | *kelly* | Valen «kelly» o «vástago». «kely» es error; la etiqueta de S005 se corrigió después de la primera evaluación | S005 y S061, Opus-MT |
 | 2026-11-14 | *perforating* | «perforación» es aceptada; «punzado» es la preferida | S007 |
 
 ## Acuerdo entre anotadores

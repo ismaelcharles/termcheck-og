@@ -5,7 +5,7 @@
 
 ## Con qué se midió
 
-- Conjunto de prueba: 20 oraciones y 120 términos anotados (52 errores según la anotación).
+- Conjunto de prueba: 20 oraciones y 120 términos anotados (53 errores según la anotación).
 - Glosario: `data/glossary/glossary_v1.csv`, congelado el 2026-11-14 (99 términos, sha256 `5c7f9844eb4d7525`) antes de anotar la prueba.
 - Un solo anotador humano. La guía está en `docs/annotation_guidelines.md`. Un modelo de lenguaje anotó lo mismo
   a ciegas para medir el acuerdo (punto 4).
@@ -16,18 +16,18 @@ El baseline busca la traducción preferida como texto exacto en minúsculas.
 
 | Método | Precisión | Recall | F1 |
 |---|---|---|---|
-| Baseline | 0,73 (0,61–0,82) | 0,98 (0,90–1,00) | 0,84 |
-| TermCheck | 0,86 (0,74–0,93) | 0,92 (0,82–0,97) | 0,89 |
+| Baseline | 0,74 (0,63–0,83) | 0,98 (0,90–1,00) | 0,85 |
+| TermCheck | 0,88 (0,76–0,94) | 0,92 (0,82–0,97) | 0,90 |
 
-Entre paréntesis, el intervalo de confianza del 95 % (Wilson). El baseline da 19 falsos positivos y 1 falso
-negativo; TermCheck, 8 y 4.
+Entre paréntesis, el intervalo de confianza del 95 % (Wilson). El baseline da 18 falsos positivos y 1 falso
+negativo; TermCheck, 7 y 4.
 
 El baseline casi no deja pasar errores (recall 0,98) porque marca todo lo que no sea la forma preferida escrita
-igual. Por eso da 19 falsas alarmas sobre 68 términos correctos: marca plurales, formas válidas del glosario y
-variantes de escritura. TermCheck baja las falsas alarmas a 8, porque reconoce las formas válidas y los plurales,
-y a cambio deja pasar 4 errores. La precisión sube de 0,73 a 0,86 y el recall baja de 0,98 a 0,92.
+igual. Por eso da 18 falsas alarmas sobre 67 términos correctos: marca plurales, formas válidas del glosario y
+variantes de escritura. TermCheck baja las falsas alarmas a 7, porque reconoce las formas válidas y los plurales,
+y a cambio deja pasar 4 errores. La precisión sube de 0,74 a 0,88 y el recall baja de 0,98 a 0,92.
 
-Los intervalos de los dos métodos se pisan. Con 120 términos la diferencia de F1 (0,89 contra 0,84) no alcanza
+Los intervalos de los dos métodos se pisan. Con 120 términos la diferencia de F1 (0,90 contra 0,85) no alcanza
 para decir que uno es mejor que el otro. Lo que sí se ve es de dónde sale cada error, y eso está en el punto 3.
 
 En desarrollo la diferencia fue mayor (F1 0,95 contra 0,72). Ese número es optimista, porque el glosario se
@@ -37,7 +37,7 @@ ajustó con esas mismas oraciones.
 
 | Sistema | Términos | Errores | Error de término | Omisión | Sin traducir |
 |---|---|---|---|---|---|
-| Opus-MT | 40 | 25 (62,5 %) | 24 | 1 | 0 |
+| Opus-MT | 40 | 26 (65,0 %) | 25 | 1 | 0 |
 | Claude | 40 | 4 (10,0 %) | 4 | 0 | 0 |
 | DeepL | 40 | 23 (57,5 %) | 23 | 0 | 0 |
 
@@ -68,14 +68,14 @@ Cada falso positivo (FP) y falso negativo (FN) de `salida/eval_prueba_casos.csv`
 | Causa | FP | FN |
 |---|---|---|
 | Morfología | 0 | 0 |
-| Sinónimo que falta en el glosario | 2 | 0 |
+| Sinónimo que falta en el glosario | 3 | 0 |
 | Préstamo | 1 | 0 |
 | Ambigüedad | 0 | 3 |
-| Término dentro de otro o no detectado | 1 | 0 |
-| Error de la anotación | 1 | 0 |
+| Término dentro de otro o no detectado | 0 | 0 |
+| Error de la anotación | 0 | 0 |
 | Coordinación | 3 | 0 |
 | Forma del glosario que el autor rechaza | 0 | 1 |
-| Total | 8 | 4 |
+| Total | 7 | 4 |
 
 Las dos últimas causas no estaban en la lista original y se agregaron porque los casos no entraban en las otras.
 
@@ -86,6 +86,11 @@ Ningún caso. Los plurales y los cambios de género se reconocieron bien en la p
 S007, DeepL y Opus-MT. *perforating* → «la perforación». El autor la anotó como correcta, con este comentario
 en la misma oración: «perforación es un término aceptado, pero "punzado" es preferido». El glosario solo lista
 «punzado» y el verificador marcó `NO_ENCONTRADO`. Se arregla agregando «perforación» como forma válida.
+
+S048, Claude. *the kelly using the kelly spinner* → «el vástago (kelly) con el enroscador del vástago». *kelly*
+aparece dos veces en inglés, la segunda dentro de *kelly spinner*, que no está en el glosario. La primera se
+encontró. Para la segunda, el autor acepta «vástago» solo («es kelly o vástago») y el glosario lista «vástago de
+perforación», así que el verificador marcó `NO_ENCONTRADO`.
 
 ### Préstamo
 S016, Opus-MT. *gas-lift* → «gas-lift», con guion. El glosario lista «gas lift» y el verificador no iguala las
@@ -100,15 +105,14 @@ dos escrituras, así que marcó `NO_ENCONTRADO`.
   `OK`. El autor rechaza la expresión entera. El verificador no mira las palabras que rodean al término.
 
 ### Término dentro de otro o no detectado
-S048, Claude. *the kelly using the kelly spinner* → «el vástago (kelly) con el enroscador del vástago». *kelly*
-aparece dos veces en inglés, la segunda dentro de *kelly spinner*, que no está en el glosario. La primera se
-encontró. Para la segunda, «vástago» solo no es una forma válida (el glosario lista «vástago de perforación») y
-el verificador marcó `NO_ENCONTRADO`.
+Ningún caso.
 
 ### Error de la anotación
-S005, Opus-MT. *kelly* → «kely». Se anotó «Correcto». La misma errata del mismo sistema se anotó «Error de
-término» en S061. Una de las dos etiquetas es un descuido; falta que el autor diga cuál. Si la de S005 pasa a
-error, el verificador gana un acierto y pierde una falsa alarma.
+Ningún caso en la evaluación final. Hubo uno antes: en S005 la errata «kely» (Opus-MT) se había anotado
+«Correcto», y en S061 la misma errata, «Error de término». El 14/11, después de la primera evaluación, el autor
+fijó el criterio (valen «kelly» o «vástago») y la etiqueta de S005 pasó a error. Es la única etiqueta de la
+prueba que se cambió después de ver resultados. Antes del cambio los números eran: TermCheck, precisión 0,86,
+recall 0,92 y F1 0,89; baseline, 0,73, 0,98 y 0,84.
 
 ### Coordinación
 S101, los tres sistemas. *An oil or gas well* → «Un pozo de petróleo o gas». El verificador busca «pozo de gas»
@@ -133,8 +137,8 @@ autor. Los números son de antes de revisar los desacuerdos (`scripts/kappa.py`)
 | Prueba | 120 | 0,82 | 0,62 | 0,61 | 22 |
 
 En 22 de los 25 desacuerdos de desarrollo y en 19 de los 22 de la prueba, el autor marcó error y el modelo,
-correcto. En desarrollo el autor revisó los desacuerdos y corrigió 3 etiquetas propias. En la prueba no se
-corrigió ninguna.
+correcto. En desarrollo el autor revisó los desacuerdos y corrigió 3 etiquetas propias. En la prueba corrigió 1
+(«kely», S005); con ese cambio el kappa de la prueba queda en 0,64 y 0,63.
 
 Un kappa de 0,62 es un acuerdo moderado. Los desacuerdos no son al azar: casi todos van para el mismo lado.
 
@@ -156,7 +160,7 @@ Propuestas que salen de los casos de arriba. El orden y la decisión son del aut
 
 En el glosario:
 - Sacar «boca del pozo» de las formas válidas de *wellhead*.
-- Agregar «perforación» como forma válida de *perforating*.
+- Agregar «perforación» como forma válida de *perforating* y «vástago» como forma válida de *kelly*.
 - Revisar «reparación» como forma válida de *workover*, o pedir que coincida la palabra entera.
 
 En el verificador:
