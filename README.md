@@ -1,4 +1,4 @@
-# TermCheck O&G
+# TermCheck O&G · hecho por Ismael Charles
 
 Verificador de terminología para traducción automática inglés → español en Oil & Gas upstream, con el español
 técnico de Argentina como variante. Está pensado para quien post-edita o revisa traducciones técnicas y hoy
