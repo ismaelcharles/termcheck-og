@@ -41,8 +41,8 @@ un equipo de perforación argentino.
 Se puede probar sin cuenta en **https://termcheck.aval.site/demo**
 
 La demo abre con tres oraciones de desarrollo traducidas con Opus-MT y su reporte. «Vaciar» permite pegar un
-texto propio; «Verificar» lo analiza cuando lo pedís. También se puede subir un archivo de dos columnas. También acepta un glosario propio en
-CSV. Corre en un servidor compartido, así que tiene límites: archivos de hasta 1 MB, 200 segmentos y 20.000
+texto propio; «Verificar» lo analiza cuando lo pedís. También acepta archivos TSV/CSV, XLIFF y TMX, y un
+glosario propio en CSV. Corre en un servidor compartido, así que tiene límites: archivos de hasta 1 MB, 200 segmentos y 20.000
 letras por lado. Los textos no se guardan.
 
 ![La demo con el ejemplo cargado: el texto en inglés, la traducción y el reporte con los términos resaltados](docs/img/demo.png)
