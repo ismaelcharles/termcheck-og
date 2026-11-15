@@ -57,13 +57,17 @@ def test_html_resalta_los_tramos():
     html = a_html({"S1": en}, [{"seg_id": "S1", "system": "mt", "target_es": es}], oc)
     assert '<mark class="tc-prohibido"' in html
     assert ">plataforma de perforación</mark>" in html and ">rig</mark>" in html
-    assert "Prohibida: 1" in html
+    assert "1 prohibida" in html
+    assert 'name="viewport"' in html and "TermCheck 0.2.0" in html
 
 
 def test_resaltar_no_pisa_tramos_y_saltea_los_no_encontrados():
     texto = "uno dos tres"
     salida = resaltar(texto, [(0, 7, "OK", "a"), (4, 7, "VARIANTE", "b"), (-1, -1, "NO_ENCONTRADO", "c")])
-    assert salida.count("<mark") == 1 and ">uno dos</mark> tres" in salida
+    import re
+    from html import unescape
+    assert unescape(re.sub(r"<[^>]+>", "", salida)) == texto
+    assert 'title="a · b"' in salida
 
 
 def test_run_check_con_src_y_tgt(tmp_path):
@@ -95,3 +99,29 @@ def test_run_check_avisa_si_las_lineas_no_coinciden(tmp_path):
                         "--out", str(tmp_path / "rep")], capture_output=True, text=True)
     assert r.returncode != 0 and "misma cantidad de líneas" in r.stderr
     assert not (tmp_path / "rep.csv").exists()
+
+
+def test_superposicion_conserva_la_advertencia_y_el_texto():
+    import re
+    from html import unescape
+    texto = "pozo de petróleo o gas"
+    salida = resaltar(texto, [(0, 16, "OK", "oil well"), (0, len(texto), "PROHIBIDO", "gas well")])
+    assert unescape(re.sub(r"<[^>]+>", "", salida)) == texto
+    assert 'class="tc-prohibido"' in salida and "oil well · gas well" in salida
+
+
+def test_reporte_agrupa_repeticiones_sin_perder_las_filas_csv():
+    from termcheck.report import bloque_segmento
+    oc = verificar("Move the rig and stop the rig.", "Mueva el equipo y detenga el equipo.", GLOSARIO)
+    pieza = bloque_segmento("Move the rig and stop the rig.", "Mueva el equipo y detenga el equipo.", oc)
+    assert "rig, 2 veces" in pieza
+    assert len(list(csv.DictReader(io.StringIO(a_csv_texto(oc))))) == 2
+
+
+def test_filtro_muestra_solo_los_detalles_para_revisar():
+    from termcheck.report import bloque_segmento
+    en, es = "Move the rig to the wellhead.", "Mueva la plataforma de perforación a la boca de pozo."
+    oc = verificar(en, es, GLOSARIO)
+    pieza = bloque_segmento(en, es, oc, solo=True)
+    assert "Prohibida. La preferida" in pieza
+    assert "Preferida.</td>" not in pieza

@@ -171,6 +171,8 @@ def test_la_pagina_verificar_procesa_un_xliff(monkeypatch):
     subir = [f for f in at.get("file_uploader") if f.key == "vf_archivo"][0]
     subir.upload("proyecto.xliff", XLIFF_12.encode("utf-8"), "application/xml").run()
     assert not at.exception, at.exception
+    [b for b in at.button if b.label == "Verificar"][0].click().run()
+    assert not at.exception, at.exception
     assert any("Reporte" in s.value for s in at.subheader)
-    assert any("en 5 segmento(s)" in m.value for m in at.markdown)
-    assert any("1 segmento(s) sin traducción" in c.value for c in at.caption)
+    assert any("en 5 segmentos" in m.value for m in at.markdown)
+    assert any("Se salteó 1 segmento sin traducción" in c.value for c in at.caption)

@@ -9,24 +9,22 @@ import streamlit as st
 
 from datos import CATEGORIAS, faltantes, variantes
 
-# Las etiquetas del verificador (sección 3.2 del plan): color de letra, color de fondo y qué quieren decir.
-ETIQUETAS = {
-    "OK": ("#1F6B43", "#DCEFE2", "Aparece la traducción preferida."),
-    "VARIANTE": ("#24527D", "#DDE8F3", "Aparece una variante aceptada, no la preferida."),
-    "PROHIBIDO": ("#9C3324", "#F6DCD6", "Aparece una traducción que el glosario marca como error."),
-    "SIN_TRADUCIR": ("#7A5300", "#F5E8C8", "Quedó en inglés y no es un préstamo aceptado."),
-    "NO_ENCONTRADO": ("#5E4682", "#E8E0F1", "No aparece ninguna traducción conocida: revisar."),
-    "INCONSISTENTE": ("#8D4510", "#F4E2D1", "El mismo término se tradujo de dos formas en el documento."),
-}
+from termcheck.etiquetas import ETIQUETAS as DEFINICIONES, INCONSISTENTE, NOMBRES
+from termcheck.report import COLORES
+
+# Compatibilidad con las páginas internas; nombres y significados vienen de una sola definición.
+ETIQUETAS = {c: (COLORES[c][1] if et.nivel != "bien" else "#4A453D",
+                 COLORES[c][0], et.significado) for c, et in DEFINICIONES.items()}
+ETIQUETAS["INCONSISTENTE"] = ("#7A5300", "#F5E8C8", INCONSISTENTE.significado)
 
 CSS = """
 <style>
-.tc-chip{display:inline-block;padding:.12rem .55rem;margin:.12rem .25rem .12rem 0;border-radius:999px;
-  font-size:.86rem;line-height:1.5;border:1px solid transparent;white-space:nowrap}
-.tc-en{background:#14120F;color:#F6F3ED;font-weight:500}
-.tc-mute{background:#ECE6DB;color:#4A453D}
+.tc-chip{display:inline-block;padding:.12rem .55rem;margin:.12rem .25rem .12rem 0;border-radius:0;
+  font-size:.86rem;line-height:1.5;border:1px solid transparent;white-space:normal;overflow-wrap:anywhere}
+.tc-en{background:transparent;color:#14120F;font-weight:500}
+.tc-mute{background:transparent;color:#4A453D}
 .tc-tachado{text-decoration:line-through;text-decoration-thickness:1.5px}
-.tc-ficha{background:#FBF9F5;border:1px solid #D8D0C2;border-radius:.6rem;padding:.9rem 1rem .8rem;margin-bottom:.2rem}
+.tc-ficha{background:transparent;border:0;border-top:1px solid #D8D0C2;border-radius:0;padding:.9rem 1rem .8rem;margin-bottom:.2rem}
 .tc-ficha-cab{display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;margin-bottom:.45rem}
 .tc-id{font:500 .78rem ui-monospace,monospace;color:#7A7266}
 .tc-meta{font-size:.78rem;color:#7A7266}
@@ -38,10 +36,10 @@ CSS = """
 .tc-falta{font-size:.78rem;color:#7A5300;background:#F5E8C8;border-radius:.3rem;padding:.1rem .45rem;margin-top:.45rem;
   display:inline-block}
 .tc-oracion{font-size:1.06rem;line-height:2.1;margin:.1rem 0 .5rem}
-.tc-idioma{font:600 .72rem Inter,sans-serif;letter-spacing:.06em;color:#7A7266;text-transform:uppercase}
+.tc-idioma{font:500 .82rem Inter,sans-serif;color:#6A6257}
 .tc-marca{padding:.1rem .3rem;border-radius:.3rem;border-bottom:2px solid}
 .tc-apagado{color:#9A9286;border-bottom:1px dashed #9A9286}
-.tc-etiqueta{display:inline-block;font:600 .74rem ui-monospace,monospace;padding:.15rem .5rem;border-radius:.3rem;
+.tc-etiqueta{display:inline-block;font:500 .82rem Inter,sans-serif;padding:.15rem .5rem;border-radius:.3rem;
   letter-spacing:.02em}
 .tc-leyenda{display:grid;grid-template-columns:auto 1fr;gap:.35rem .8rem;align-items:center;font-size:.9rem}
 .tc-flujo{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;font-size:.88rem;margin:.3rem 0 1rem}
@@ -51,7 +49,7 @@ CSS = """
 .tc-cita{font-size:.8rem;color:#4A453D;line-height:1.45;margin:.2rem 0 0 .2rem}
 .tc-cita a{color:#24527D}
 .tc-nivel{display:inline-block;font:600 .68rem Inter,sans-serif;padding:.05rem .4rem;border-radius:.3rem;margin-right:.3rem;
-  white-space:nowrap}
+  white-space:normal;overflow-wrap:anywhere}
 </style>
 """
 
@@ -70,18 +68,17 @@ _LOGO_LINKEDIN = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
                   "c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z'/%3E%3C/svg%3E")
 
 
-def linkedin():
-    """El logo de LinkedIn con el enlace al perfil del autor, arriba a la derecha. Va justo antes del título y
-    queda en su mismo renglón (la caja mide 0 de alto). El logo va como fondo en la hoja de estilos porque st.html
-    saca los SVG y los estilos escritos dentro de la etiqueta."""
+def cabecera(titulo):
     st.html(f'''<style>
-.tc-li-caja{{display:flex;justify-content:flex-end;height:0;position:relative;z-index:5}}
-.tc-li{{display:block;width:34px;height:34px;margin-top:.9rem;background:url("{_LOGO_LINKEDIN}") center/contain no-repeat}}
-.tc-li:hover{{opacity:.8}}
-@media (max-width:640px){{.tc-li{{width:28px;height:28px;margin-top:-1.9rem}}}}
-</style>
-<div class="tc-li-caja"><a class="tc-li" href="{LINKEDIN}" target="_blank" rel="noopener"
-title="Ismael Charles en LinkedIn" aria-label="Ismael Charles en LinkedIn"></a></div>''')
+.tc-cabecera{{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}}
+.tc-cabecera h1{{font-family:Newsreader,Georgia,serif;font-size:2.7rem;font-weight:500;margin:0;line-height:1.2}}
+.tc-autor{{font-size:.85rem;color:#6A6257}}
+.tc-cabecera a{{margin-left:auto;align-self:center;width:30px;height:30px;flex-shrink:0;
+background:url("{_LOGO_LINKEDIN}") center/contain no-repeat}}
+@media(max-width:640px){{.tc-cabecera h1{{font-size:2rem}}.tc-autor{{font-size:.75rem}}}}
+</style><div class="tc-cabecera"><h1>{e(titulo)}</h1><span class="tc-autor">· hecho por Ismael Charles</span>
+<a href="{LINKEDIN}" target="_blank" rel="noopener" title="Ismael Charles en LinkedIn"
+aria-label="Ismael Charles en LinkedIn"></a></div>''')
 
 
 def e(texto):
@@ -96,7 +93,7 @@ def plegar(texto):
 
 def etiqueta(nombre):
     color, fondo, _ = ETIQUETAS[nombre]
-    return f'<span class="tc-etiqueta" style="color:{color};background:{fondo}">{nombre}</span>'
+    return f'<span class="tc-etiqueta" style="color:{color};background:{fondo}">{e(NOMBRES[nombre])}</span>'
 
 
 def chip(texto, nombre=None, tachado=False):
@@ -160,10 +157,10 @@ def probar(fila, traduccion):
 
 
 def nivel(texto, color_de):
-    """Etiqueta de confiabilidad: «uso AR alta» en verde, media en ámbar, baja en rojo; lo demás, gris."""
+    """Confiabilidad alta en gris, media en ocre y baja en rojo."""
     nombre = color_de.get(texto)
     if not nombre:
-        return f'<span class="tc-nivel" style="background:#ECE6DB;color:#4A453D">{e(texto)}</span>'
+        return f'<span class="tc-nivel" style="background:transparent;color:#4A453D">{e(texto)}</span>'
     color, fondo, _ = ETIQUETAS[nombre]
     return f'<span class="tc-nivel" style="background:{fondo};color:{color}">{e(texto)}</span>'
 

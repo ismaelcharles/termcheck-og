@@ -30,7 +30,7 @@ modo = st.segmented_control("Vista", list(VISTAS), format_func=VISTAS.get, key="
 modo = modo or "fichas"
 
 if "aviso_guardado" in st.session_state:
-    st.toast(st.session_state.pop("aviso_guardado"), icon=":material/check:")
+    st.toast(st.session_state.pop("aviso_guardado"))
 
 
 # ─────────────── Fichas ───────────────
@@ -78,7 +78,7 @@ def ver_fichas():
     for n, (_, fila) in enumerate(filas.iterrows()):
         with columnas[n % 3]:
             st.html(vista.ficha(fila))
-            if st.button("Editar", key=f"ed_{fila['id']}_{n}", icon=":material/edit:", type="tertiary"):
+            if st.button("Editar", key=f"ed_{fila['id']}_{n}", type="tertiary"):
                 editar(fila["id"])
 
 
@@ -136,7 +136,7 @@ def ver_tabla():
         datos.guardar(nuevo)
         st.session_state.guardado = nuevo
         st.session_state.fecha = datos.fecha_archivo()
-        st.toast(f"Guardado a las {time.strftime('%H:%M:%S')}", icon=":material/check:")
+        st.toast(f"Guardado a las {time.strftime('%H:%M:%S')}")
         # Si se le puso id a una fila nueva, se recarga la tabla para que se vea. Las filas vacías no fuerzan
         # recarga: puede ser una que acabás de agregar y vas a completar.
         sin_id = editado["id"].fillna("").astype(str).str.strip() == ""
@@ -181,7 +181,7 @@ def boton_deshacer():
     ultimo = st.session_state.get("cand_deshacer")
     if not ultimo:
         return
-    if st.button(f"Deshacer: «{ultimo['en']}» {ultimo['que']}", icon=":material/undo:", type="tertiary",
+    if st.button(f"Deshacer: «{ultimo['en']}» {ultimo['que']}", type="tertiary",
                  key="cand_deshacer_btn", shortcut="z"):
         candidatos.marcar(ultimo["id"], "pendiente")
         if ultimo["termino"]:
@@ -265,16 +265,15 @@ def ver_candidatos():
     total = len(cand)
     aprobados = int((cand["estado"] == "aprobado").sum())
     descartados = int((cand["estado"] == "descartado").sum())
-    st.progress((aprobados + descartados) / total,
-                text=f"{aprobados + descartados} de {total} revisados · {aprobados} agregados · {descartados} rechazados")
+    st.write(f"{aprobados + descartados} de {total} revisados · {aprobados} agregados · {descartados} rechazados")
     boton_deshacer()
     st.download_button("Bajar los pendientes (.md)", data=candidatos.markdown_pendientes().encode("utf-8"),
-                       file_name="candidatos-pendientes.md", mime="text/markdown", icon=":material/download:",
+                       file_name="candidatos-pendientes.md", mime="text/markdown",
                        type="tertiary", key="bajar_pendientes")
     metodo = datos.RAIZ / "docs" / "revision-previa.pdf"
     if metodo.exists():
         st.download_button("Cómo se hizo la revisión previa (PDF)", data=metodo.read_bytes(),
-                           file_name="revision-previa.pdf", mime="application/pdf", icon=":material/picture_as_pdf:",
+                           file_name="revision-previa.pdf", mime="application/pdf",
                            type="tertiary", key="bajar_revision")
     pend = cand[cand["estado"] == "pendiente"].copy()
     if pend.empty:
@@ -322,12 +321,12 @@ def ver_candidatos():
     k = c["id"]
 
     nav_izq, nav_txt, nav_der = st.columns([1, 2, 1])
-    if nav_izq.button("Anterior", icon=":material/arrow_back:", disabled=i == 0, width="stretch"):
+    if nav_izq.button("Anterior", disabled=i == 0, width="stretch"):
         st.session_state.cand_i = i - 1
         st.rerun()
     nav_txt.markdown(f"<div style='text-align:center;padding-top:.45rem'>{i + 1} de {len(lista)}</div>",
                      unsafe_allow_html=True)
-    if nav_der.button("Siguiente", icon=":material/arrow_forward:", icon_position="right",
+    if nav_der.button("Siguiente",
                       disabled=i >= len(lista) - 1, width="stretch"):
         st.session_state.cand_i = i + 1
         st.rerun()
@@ -397,20 +396,20 @@ def ver_candidatos():
         st.html(vista.casos(fila))
 
     b1, b2, b3, b4 = st.columns(4)
-    if b1.button("Aceptar", icon=":material/check:", type="secondary" if ya else "primary", key=f"ok_{k}",
+    if b1.button("Aceptar", type="secondary" if ya else "primary", key=f"ok_{k}",
                  shortcut="a", disabled=not preferida, width="stretch"):
         id_termino = datos.guardar_fila(fila)
         candidatos.marcar(k, "aprobado", id_termino)
         recordar(k, c["en"], "agregado", id_termino)
         st.rerun()
-    if b2.button("Editar todo", icon=":material/edit:", key=f"ed_{k}", width="stretch"):
+    if b2.button("Editar todo", key=f"ed_{k}", width="stretch"):
         agregar_candidato(k, fila)
-    if b3.button("Rechazar", icon=":material/close:", type="primary" if ya else "secondary", key=f"no_{k}",
+    if b3.button("Rechazar", type="primary" if ya else "secondary", key=f"no_{k}",
                  shortcut="x", width="stretch"):
         candidatos.marcar(k, "descartado")
         recordar(k, c["en"], "rechazado")
         st.rerun()
-    if b4.button("Después", icon=":material/skip_next:", key=f"luego_{k}", shortcut="d", disabled=len(lista) < 2,
+    if b4.button("Después", key=f"luego_{k}", shortcut="d", disabled=len(lista) < 2,
                  width="stretch"):
         st.session_state.cand_i = (i + 1) % len(lista)
         st.rerun()
@@ -541,11 +540,10 @@ def ver_fuentes():
     a, b, _ = st.columns([1, 1.3, 1.5])
     if doc.exists():
         a.download_button("Criterios y teoría (PDF)", data=doc.read_bytes(), file_name="fuentes-y-confiabilidad.pdf",
-                          mime="application/pdf", icon=":material/picture_as_pdf:", key="bajar_fuentes_pdf")
+                          mime="application/pdf", key="bajar_fuentes_pdf")
     if reaud.exists():
         b.download_button("Reauditoría contra los originales (PDF)", data=reaud.read_bytes(),
-                          file_name="reauditoria-fuentes.pdf", mime="application/pdf",
-                          icon=":material/picture_as_pdf:", key="bajar_reauditoria_pdf")
+                          file_name="reauditoria-fuentes.pdf", mime="application/pdf", key="bajar_reauditoria_pdf")
 
 
 {"fichas": ver_fichas, "agregar": ver_agregar, "candidatos": ver_candidatos, "tabla": ver_tabla,
@@ -555,7 +553,7 @@ st.divider()
 ESTRUCTURA = datos.RAIZ / "docs" / "estructura-glosario.pdf"
 csv_col, pdf_col, _ = st.columns([1, 1.4, 2])
 csv_col.download_button("Bajar el CSV", data=datos.GLOSARIO.read_bytes() if datos.GLOSARIO.exists() else b"",
-                        file_name="glossary_en_es.csv", mime="text/csv", icon=":material/download:")
+                        file_name="glossary_en_es.csv", mime="text/csv")
 if ESTRUCTURA.exists():
     pdf_col.download_button("Cómo está armado (PDF)", data=ESTRUCTURA.read_bytes(), file_name="estructura-glosario.pdf",
-                            mime="application/pdf", icon=":material/picture_as_pdf:")
+                            mime="application/pdf")

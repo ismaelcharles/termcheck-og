@@ -25,7 +25,7 @@ def demo(monkeypatch):
 def test_abre_sin_login_y_sin_corpus(demo):
     assert not [b for b in demo.button if "Google" in b.label]
     assert any("Demo pública" in c.value for c in demo.caption)
-    assert not any("Reporte" in s.value for s in demo.subheader)   # sin texto, no hay reporte
+    assert any("Reporte" in s.value for s in demo.subheader)  # ejemplo precargado
     assert demo.text_area[0].proto.max_chars == 20000
 
 
@@ -33,21 +33,23 @@ def test_el_ejemplo_muestra_un_reporte(demo):
     [b for b in demo.button if "ejemplo" in b.label][0].click().run()
     assert not demo.exception, demo.exception
     assert any("Reporte" in s.value for s in demo.subheader)
-    assert any("términos encontrados en 3 segmento(s)" in m.value for m in demo.markdown)
+    assert any("términos encontrados en 3 segmentos" in m.value for m in demo.markdown)
 
 
 def test_corta_en_el_maximo_de_segmentos(demo):
     demo.text_area[0].set_value("\n".join(["Check the wellhead."] * 201))
-    demo.text_area[1].set_value("\n".join(["Revise la boca de pozo."] * 201)).run()
+    demo.text_area[1].set_value("\n".join(["Revise la boca de pozo."] * 201))
+    [b for b in demo.button if b.label == "Verificar"][0].click().run()
     assert not demo.exception, demo.exception
     assert any("verifica los primeros 200" in w.value for w in demo.warning)
-    assert any("en 200 segmento(s)" in m.value for m in demo.markdown)
+    assert any("en 200 segmentos" in m.value for m in demo.markdown)
 
 
 def test_el_cuadro_de_texto_corta_en_el_maximo_de_letras(demo):
     largo = "\n".join(["The drilling rig was moved to the new location near the wellhead again. " * 3] * 150)
     demo.text_area[0].set_value(largo)
-    demo.text_area[1].set_value(largo).run()
+    demo.text_area[1].set_value(largo)
+    [b for b in demo.button if b.label == "Verificar"][0].click().run()
     assert not demo.exception, demo.exception
     assert len(largo) > 20000 and len(demo.text_area[0].value) == 20000
 
@@ -62,3 +64,22 @@ def test_limites_de_un_archivo():
     pares, aviso, seguir = limites.aplicar(largos)
     assert pares == [] and "demasiado largo" in aviso and not seguir
     assert limites.aplicar(cortos[:3]) == (cortos[:3], "", True)
+
+
+def test_vaciar_y_verificar_solo_al_pedirlo(demo, monkeypatch):
+    import termcheck.checker as checker
+    llamadas = []
+    original = checker.verificar
+    def contar(*args, **kwargs):
+        llamadas.append(1)
+        return original(*args, **kwargs)
+    monkeypatch.setattr(checker, "verificar", contar)
+    [b for b in demo.button if b.label == "Vaciar"][0].click().run()
+    assert not any("Reporte" in s.value for s in demo.subheader)
+    demo.text_area[0].set_value("Check the wellhead.")
+    demo.text_area[1].set_value("Revise la boca de pozo.")
+    assert not llamadas
+    [b for b in demo.button if b.label == "Verificar"][0].click().run()
+    assert len(llamadas) == 1 and not demo.exception
+    demo.checkbox[0].check().run()
+    assert len(llamadas) == 1 and not demo.exception

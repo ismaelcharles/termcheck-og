@@ -56,7 +56,7 @@ if puerta():
         st.Page("paginas/anotar.py", title="Anotar", icon=":material/edit_note:", url_path="anotar"),
         st.Page("paginas/resultados.py", title="Resultados", icon=":material/analytics:", url_path="resultados"),
     ])
-    if st.user.is_logged_in:
+    if os.environ.get("TERMCHECK_SIN_LOGIN") != "1" and st.user.is_logged_in:
         with st.sidebar:
             st.caption(st.user.get("email", ""))
             st.button("Salir", on_click=st.logout, type="tertiary", icon=":material/logout:")

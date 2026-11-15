@@ -1,14 +1,11 @@
 """Página de inicio: qué hace TermCheck, ejemplos interactivos de cada etiqueta y en qué fase está el proyecto."""
-import re
-
 import streamlit as st
 
 import datos
 import vista
-from termcheck import NOMBRE
+from termcheck import NOMBRE, VERSION, report
+from termcheck.checker import Ocurrencia
 
-PROGRESO = datos.RAIZ / "PROGRESO.md"
-META_TERMINOS = 100  # tamaño del glosario v1 según el plan
 
 # Ejemplos ilustrativos con los términos del plan (sección 3). Entre [[ ]] va el término; entre (( )), lo que el
 # verificador ve pero no cuenta como término. No son datos del glosario: el glosario lo decide el dueño.
@@ -49,54 +46,37 @@ EJEMPLOS = [
 ]
 
 
-def leer_fases():
-    fases = []
-    for linea in PROGRESO.read_text(encoding="utf-8").splitlines():
-        m = re.match(r"- \[( |x|~)\] (Fase .+)", linea)  # [~] = en curso
-        if m:
-            fases.append((m.group(1), m.group(2)))
-    return fases
-
-
 vista.estilos()
-vista.linkedin()
-st.title(NOMBRE + " :small[:gray[· hecho por Ismael Charles]]")
-st.markdown("Revisa la **terminología** de una traducción automática inglés → español de Oil & Gas, "
-            "contra un glosario en la variante técnica de Argentina. No traduce: marca qué término revisar y por qué.")
-
-st.html('<div class="tc-flujo">'
-        '<span class="tc-paso"><b>Texto en inglés</b></span><span class="tc-flecha">+</span>'
-        '<span class="tc-paso"><b>Traducción automática</b></span><span class="tc-flecha">+</span>'
-        '<span class="tc-paso"><b>Glosario</b></span><span class="tc-flecha">→</span>'
-        '<span class="tc-paso">Busca cada término en el inglés</span><span class="tc-flecha">→</span>'
-        '<span class="tc-paso">Mira cómo quedó en la traducción</span><span class="tc-flecha">→</span>'
-        '<span class="tc-paso"><b>Etiqueta</b> y reporte</span></div>')
-
-st.page_link("paginas/verificar.py", label="Probalo con tu propio texto", icon=":material/fact_check:")
-
+st.html("<style>" + report.CSS + "</style>")
+vista.cabecera(NOMBRE)
+st.markdown("Revisá la terminología de una traducción inglés → español de Oil & Gas con un glosario de español "
+            "técnico de Argentina.")
+st.markdown("1. Pegá el inglés y la traducción, o subí un archivo.\n"
+            "2. Usá el glosario del proyecto o cargá el tuyo.\n"
+            "3. Verificá y revisá los términos señalados. Podés descargar el reporte en HTML o CSV.")
+st.page_link("paginas/verificar.py", label="Probalo con tu propio texto")
 st.subheader("Cómo marca cada caso")
 titulos = [x["titulo"] for x in EJEMPLOS]
-elegido = st.pills("Ejemplo", titulos, default=titulos[0], label_visibility="collapsed") or titulos[0]
+elegido = st.selectbox("Ejemplo", titulos, label_visibility="collapsed")
 ej = EJEMPLOS[titulos.index(elegido)]
-with st.container(border=True):
-    st.html(f'<div class="tc-idioma">Inglés</div>{vista.oracion(ej["en"], ej["etiqueta"], ej.get("apagado"))}'
-            f'<div class="tc-idioma">Traducción automática</div>{vista.oracion(ej["es"], ej["etiqueta"])}'
-            f'<div style="margin:.2rem 0 .4rem">{vista.etiqueta(ej["etiqueta"])}</div>')
-    st.markdown(ej["porque"])
-st.caption("Ejemplos ilustrativos con los términos del plan. Lo que vale en cada caso lo decide el glosario.")
-
+def quitar_marcas(texto):
+    return texto.replace("[[", "").replace("]]", "").replace("((", "").replace("))", "")
+def tramo(texto):
+    antes, resto = texto.split("[[", 1)
+    dentro = resto.split("]]", 1)[0]
+    return len(quitar_marcas(antes)), dentro
+ini_en, term = tramo(ej["en"])
+ini_es, encontrada = tramo(ej["es"])
+# Ejemplos ilustrativos ya escritos: se muestran sin agregar contenido al glosario.
+o = Ocurrencia("Ejemplo", "", "Ejemplo", term, ej["etiqueta"], encontrada,
+               ini_es, ini_es + len(encontrada), ini_en, ini_en + len(term), "")
+st.html(report.bloque_segmento(quitar_marcas(ej["en"]), quitar_marcas(ej["es"]), [o], cabecera="Ejemplo ilustrativo"))
+st.markdown(ej["porque"])
+st.caption("Ejemplos ilustrativos. En tus textos, las formas preferidas y válidas las decide el glosario.")
 with st.expander("Las seis etiquetas"):
-    st.html(vista.leyenda())
-
-st.subheader("Avance")
-n = len(datos.leer())
-fases = leer_fases()
-hechas = sum(1 for marca, _ in fases if marca == "x")
-c1, c2 = st.columns(2)
-c1.metric("Términos en el glosario", n, help=f"La versión 1 apunta a unos {META_TERMINOS}.")
-c2.metric("Fases terminadas", f"{hechas} de {len(fases)}")
-st.progress(min(n / META_TERMINOS, 1.0), text=f"Glosario: {n} de {META_TERMINOS}")
-st.page_link("paginas/glosario.py", label="Ir al glosario", icon=":material/arrow_forward:")
-with st.expander("Fases del proyecto"):
-    for marca, texto in fases:
-        st.markdown(f"{ {'x': '✓', '~': '◐'}.get(marca, '○') }&nbsp;&nbsp;{texto}")
+    st.html(report.leyenda())
+st.subheader("Estado del proyecto")
+st.write(f"Versión {VERSION}. El glosario de trabajo tiene {len(datos.leer())} términos. "
+         "La evaluación publicada corresponde a la versión 0.1; los resultados de 0.2 se informan aparte en el README. "
+         "Falta probar la herramienta con traductores y ampliar la anotación.")
+st.page_link("paginas/glosario.py", label="Ir al glosario")

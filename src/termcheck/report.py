@@ -1,24 +1,43 @@
-"""Reportes del verificador: CSV (una fila por aparición) y HTML con los términos resaltados por color.
-
-    escribir_csv(ocurrencias, "salida/reporte.csv")
-    html = a_html(segmentos, traducciones, ocurrencias, advertencias)
-"""
+"""Un mismo reporte para la pantalla y el archivo HTML; CSV por aparición."""
 import csv
 import html as _html
+from collections import Counter
+from datetime import datetime, timezone
 
-from termcheck.etiquetas import NOMBRES
+from termcheck import VERSION
+from termcheck.etiquetas import ETIQUETAS, INCONSISTENTE, NOMBRES, orden
 
 COLUMNAS = ["seg_id", "system", "term_id", "term_en", "label", "es_found", "start", "end", "es_expected",
             "suggestion"]
+COLORES = {c: (("#F6DCD6", "#9C3324") if e.nivel == "error" else
+               ("#F5E8C8", "#7A5300") if e.nivel == "aviso" else ("transparent", "inherit"))
+           for c, e in ETIQUETAS.items()}
+e = _html.escape
 
-# Colores por etiqueta (fondo, texto). Los que se marcan para revisar en tonos cálidos.
-COLORES = {  # los mismos de la app (app/vista.py)
-    "OK": ("#DCEFE2", "#1F6B43"),
-    "VARIANTE": ("#DDE8F3", "#24527D"),
-    "PROHIBIDO": ("#F6DCD6", "#9C3324"),
-    "SIN_TRADUCIR": ("#F5E8C8", "#7A5300"),
-    "NO_ENCONTRADO": ("#E8E0F1", "#5E4682"),
-}
+CSS = """
+.tc-report{color:#14120F;font:inherit;line-height:1.65;overflow-wrap:anywhere}
+.tc-report .tc-seg{border-top:1px solid #D8D0C2;padding:1.25rem 0;margin-top:1rem;break-inside:avoid}
+.tc-report .tc-seg-id{font-size:.82rem;color:#6A6257;margin:0 0 .65rem}
+.tc-report .tc-par{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5rem}
+.tc-report .tc-par p{margin:.25rem 0 .9rem;white-space:pre-wrap}
+.tc-report .tc-lengua{font-size:.82rem;color:#6A6257;font-weight:600}
+.tc-report mark{background:transparent;color:inherit;padding:0;border-radius:0;text-decoration:underline;
+ text-decoration-color:#AAA296;text-underline-offset:3px;text-decoration-thickness:1px}
+.tc-report mark.tc-prohibido{background:#F6DCD6;color:#9C3324;text-decoration:none}
+.tc-report mark.tc-sin_traducir,.tc-report mark.tc-no_encontrado{background:#F5E8C8;color:#7A5300;text-decoration:none}
+.tc-report table{width:100%;border-collapse:collapse;font-size:.88rem;line-height:1.55;margin:.35rem 0}
+.tc-report th,.tc-report td{text-align:left;vertical-align:top;padding:.5rem .65rem;border-bottom:1px solid #E3DCD0}
+.tc-report th{font-weight:500;color:#6A6257;font-size:.82rem}
+.tc-report th:first-child,.tc-report td:first-child{padding-left:0;width:22%}
+.tc-report td:nth-child(2){width:25%}
+.tc-report .tc-error{color:#9C3324}.tc-report .tc-aviso{color:#7A5300}
+.tc-report .tc-report-note{font-size:.84rem;color:#6A6257}
+.tc-report code{font-size:.78rem;background:transparent;color:#6A6257}
+@media(max-width:640px){.tc-report .tc-par{grid-template-columns:minmax(0,1fr);gap:0}
+ .tc-report table{font-size:.8rem}.tc-report th,.tc-report td{padding:.4rem .3rem}}
+@media print{.tc-report .tc-seg{break-inside:auto}.tc-report mark{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ body{background:white!important;margin:0!important}details{display:block}}
+"""
 
 
 def filas(ocurrencias):
@@ -42,59 +61,113 @@ def a_csv_texto(ocurrencias):
 
 
 def resaltar(texto, tramos):
-    """Texto con <mark> en los tramos [(inicio, fin, label, titulo)]. Los tramos no se pisan."""
-    partes, pos = [], 0
-    for inicio, fin, label, titulo in sorted(t for t in tramos if t[0] >= 0):
-        if inicio < pos:
-            continue
-        fondo, letra = COLORES[label]
-        partes.append(_html.escape(texto[pos:inicio]))
-        partes.append(f'<mark class="tc-{label.lower()}" style="background:{fondo};color:{letra};border-radius:3px;'
-                      f'padding:0 2px" title="{_html.escape(titulo)}">{_html.escape(texto[inicio:fin])}</mark>')
-        pos = fin
-    partes.append(_html.escape(texto[pos:]))
-    return "".join(partes)
+    """Divide las superposiciones sin repetir ni perder texto. Gana la etiqueta de mayor aviso.
+
+    Las formas coordinadas pueden compartir el principio. Los títulos conservan ambas lecturas.
+    """
+    tramos = [(a, min(b, len(texto)), c, t) for a, b, c, t in tramos if 0 <= a < b and a < len(texto)]
+    bordes = sorted({0, len(texto)} | {p for a, b, _, _ in tramos for p in (a, b)})
+    piezas = []
+    for a, b in zip(bordes, bordes[1:]):
+        activos = [t for t in tramos if t[0] < b and a < t[1]]
+        label = min((t[2] for t in activos), key=orden) if activos else None
+        titulo = " · ".join(dict.fromkeys(t[3] for t in activos))
+        if piezas and piezas[-1][2:] == (label, titulo):
+            piezas[-1] = (piezas[-1][0], b, label, titulo)
+        else:
+            piezas.append((a, b, label, titulo))
+    return "".join(f'<mark class="tc-{c.lower()}" title="{e(t)}">{e(texto[a:b])}</mark>' if c else e(texto[a:b])
+                   for a, b, c, t in piezas)
 
 
-def bloque_segmento(texto_en, texto_es, ocurrencias):
-    """HTML de un segmento: inglés y español resaltados, y la lista de términos."""
-    en = resaltar(texto_en, [(o.src_start, o.src_end, o.label, f"{o.term_id} · {NOMBRES[o.label]}")
-                             for o in ocurrencias])
+def detalle(o):
+    if not o.es_expected:
+        return NOMBRES[o.label] + "."
+    preferida = f"«{o.es_expected}»"
+    if o.label == "OK":
+        return "Preferida."
+    if o.label == "VARIANTE":
+        return f"Variante aceptada. La preferida es {preferida}."
+    if o.label == "PROHIBIDO":
+        return f"Prohibida. La preferida es {preferida}."
+    if o.label == "SIN_TRADUCIR":
+        return f"Sin traducir. La preferida es {preferida}."
+    conocidas = ", ".join(f"«{x}»" for x in dict.fromkeys((o.es_expected, *o.es_allowed)) if x)
+    texto = f"No encontrada. El glosario tiene {conocidas}."
+    if o.suggestion:
+        texto += f" Lo más parecido en la traducción: «{o.suggestion}»."
+    return texto
+
+
+def resumen(ocurrencias, segmentos):
+    n = len(ocurrencias)
+    return (f"{n} {'término encontrado' if n == 1 else 'términos encontrados'} en {segmentos} "
+            f"{'segmento' if segmentos == 1 else 'segmentos'}; {sum(o.marcada for o in ocurrencias)} para revisar.")
+
+
+def recuento(ocurrencias):
+    cuenta = Counter(o.label for o in ocurrencias)
+    return " · ".join(et.contar(cuenta[c]) for c, et in ETIQUETAS.items() if cuenta[c])
+
+
+def bloque_segmento(texto_en, texto_es, ocurrencias, solo=False, cabecera=""):
+    """Pieza compartida por Inicio, Verificar y la descarga. Agrupa filas iguales, conserva cada resaltado."""
+    en = resaltar(texto_en, [(o.src_start, o.src_end, o.label, f"{o.term_id} · {NOMBRES[o.label]}") for o in ocurrencias])
     es = resaltar(texto_es, [(o.start, o.end, o.label, f"{o.term_id} · {NOMBRES[o.label]}") for o in ocurrencias])
+    grupos = {}
+    for o in sorted(ocurrencias, key=lambda o: orden(o.label)):
+        if solo and not o.marcada:
+            continue
+        clave = (o.term_id, o.term_en.casefold(), o.es_found, o.label, o.es_expected, o.es_allowed, o.suggestion)
+        if clave not in grupos:
+            grupos[clave] = [o, 0]
+        grupos[clave][1] += 1
+    rows = []
+    for o, n in grupos.values():
+        veces = f", {n} veces" if n > 1 else ""
+        rows.append(f'<tr><td title="{e(o.term_id)}">{e(o.term_en)}{veces}</td>'
+                    f'<td>{e(o.es_found) if o.es_found else "—"}</td>'
+                    f'<td class="tc-{ETIQUETAS[o.label].nivel}">{e(detalle(o))}</td></tr>')
+    tabla = ('<table><thead><tr><th>Término</th><th>En la traducción</th><th>Resultado</th></tr></thead>'
+             f'<tbody>{"".join(rows)}</tbody></table>' if rows else
+             '<p class="tc-report-note">Ningún término para revisar en este segmento.</p>' if solo else
+             '<p class="tc-report-note">Ningún término del glosario en este segmento.</p>')
+    return (f'<section class="tc-report"><div class="tc-seg"><p class="tc-seg-id">{e(cabecera)}</p>'
+            f'<div class="tc-par"><div><span class="tc-lengua">Inglés</span><p>{en}</p></div>'
+            f'<div><span class="tc-lengua">Traducción</span><p>{es}</p></div></div>{tabla}</div></section>')
+
+
+def avisos_html(advertencias):
     items = []
-    for o in ocurrencias:
-        fondo, letra = COLORES[o.label]
-        detalle = f"«{_html.escape(o.es_found)}»" if o.es_found else "nada"
-        if o.label != "OK":
-            detalle += f" · preferida: «{_html.escape(o.es_expected)}»"
-        if o.suggestion:
-            detalle += f" · ¿quizás «{_html.escape(o.suggestion)}»?"
-        items.append(f'<li><span style="background:{fondo};color:{letra};border-radius:3px;padding:0 4px;'
-                     f'font-size:.8em">{NOMBRES[o.label]}</span> <b>{_html.escape(o.term_en)}</b> '
-                     f'<code>{_html.escape(o.term_id)}</code> → {detalle}</li>')
-    return (f'<div class="tc-seg"><p class="tc-en">{en}</p><p class="tc-es">{es}</p>'
-            f'<ul class="tc-items">{"".join(items)}</ul></div>')
+    for a in advertencias:
+        formas = "; ".join(f"«{f}» en {', '.join(s)}" for f, s in a.formas.items())
+        items.append(f'<li><b>{e(a.term_en or a.term_id)}</b>{" · " + e(a.system) if a.system else ""}: {e(formas)}</li>')
+    return ('<section class="tc-report"><h3>El mismo término, traducido de formas distintas</h3><ul>'
+            + "".join(items) + '</ul></section>') if items else ""
+
+
+def leyenda():
+    rows = "".join(f'<tr><td>{e(et.nombre)}</td><td><code>{et.codigo}</code></td><td>{e(et.significado)}</td></tr>'
+                   for et in (*ETIQUETAS.values(), INCONSISTENTE))
+    return ('<section class="tc-report"><table><thead><tr><th>Resultado</th><th>Código del CSV</th>'
+            f'<th>Qué significa</th></tr></thead><tbody>{rows}</tbody></table></section>')
 
 
 def a_html(segmentos, traducciones, ocurrencias, advertencias=(), titulo="Reporte de TermCheck"):
-    """Reporte completo. segmentos: {seg_id: en}. traducciones: [{seg_id, system, target_es}]."""
     por_clave = {}
     for o in ocurrencias:
         por_clave.setdefault((o.seg_id, o.system), []).append(o)
-    cuenta = {}
-    for o in ocurrencias:
-        cuenta[o.label] = cuenta.get(o.label, 0) + 1
-    resumen = " · ".join(f"{NOMBRES[k]}: {cuenta[k]}" for k in COLORES if k in cuenta)
     cuerpo = []
     for f in traducciones:
         oc = por_clave.get((f["seg_id"], f["system"]), [])
-        cuerpo.append(f'<h3>{_html.escape(f["seg_id"])} · {_html.escape(f["system"])}</h3>'
-                      + bloque_segmento(segmentos[f["seg_id"]], f["target_es"], oc))
-    avisos = "".join(f"<li>{_html.escape(str(a))}</li>" for a in advertencias)
-    return f"""<!doctype html><html lang="es"><meta charset="utf-8"><title>{_html.escape(titulo)}</title>
-<style>body{{font:16px/1.6 system-ui,sans-serif;max-width:60rem;margin:2rem auto;padding:0 1rem;color:#14120F;
-background:#FBF9F5}} .tc-es{{border-left:3px solid #D8D0C2;padding-left:.8rem}} h3{{margin-top:2rem;font-size:1rem}}
-code{{color:#7A7266}}</style>
-<h1>{_html.escape(titulo)}</h1><p>{resumen}</p>
-{"<h2>Advertencias de consistencia</h2><ul>" + avisos + "</ul>" if avisos else ""}
-{"".join(cuerpo)}</html>"""
+        cuerpo.append(bloque_segmento(segmentos[f["seg_id"]], f["target_es"], oc,
+                                     cabecera=" · ".join(x for x in (f["seg_id"], f["system"]) if x)))
+    fecha = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    return f'''<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>{e(titulo)}</title>
+<style>body{{font:16px/1.65 Inter,system-ui,sans-serif;max-width:72rem;margin:2rem auto;padding:0 1rem;
+color:#14120F;background:#F6F3ED}}h1,h2,h3{{font-family:Newsreader,Georgia,serif;font-weight:500}}{CSS}</style></head>
+<body><h1>{e(titulo)}</h1><p>{e(resumen(ocurrencias, len(traducciones)))}</p><p>{e(recuento(ocurrencias))}</p>
+{avisos_html(advertencias)}{"".join(cuerpo)}<h2>Qué significa cada resultado</h2>{leyenda()}
+<p>Las sugerencias se basan en el parecido de letras. Nunca cambian la etiqueta.</p>
+<footer>TermCheck {VERSION} · {fecha} UTC</footer></body></html>'''

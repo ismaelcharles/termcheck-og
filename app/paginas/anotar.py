@@ -76,12 +76,11 @@ completas = sum(1 for a, b in cuentas if a == b)
 
 st.markdown(f"Conjunto de **{conjunto}**: {len(oraciones)} oraciones. Las tres traducciones de cada oración "
             f"aparecen como A, B y C, sin decir de qué sistema son y en otro orden en cada oración.")
-st.progress(listas / total if total else 0,
-            text=f"{listas} de {total} anotaciones · {completas} de {len(oraciones)} oraciones completas")
+st.write(f"{listas} de {total} anotaciones · {completas} de {len(oraciones)} oraciones completas")
 
 st.caption("Lo más rápido: marcá solo los errores y después tocá «Lo que falta: Correcto». Lo que ya marcaste "
            "no se toca.")
-with st.expander("Qué significa cada etiqueta", icon=":material/help:"):
+with st.expander("Qué significa cada etiqueta"):
     st.markdown(AYUDA)
     st.caption("Los casos dudosos y las decisiones van en docs/annotation_guidelines.md.")
 
@@ -112,7 +111,7 @@ c1, c2, c3, c4 = st.columns([3, .6, .6, 2.4], vertical_alignment="bottom")
 c1.selectbox("Oración", ids, key="anot_seg", format_func=marca)
 c2.button("", on_click=mover, args=(-1,), icon=":material/chevron_left:", width="stretch", help="Anterior")
 c3.button("", on_click=mover, args=(1,), icon=":material/chevron_right:", width="stretch", help="Siguiente")
-c4.button("Próxima sin terminar", on_click=proxima, type="primary", icon=":material/skip_next:", width="stretch",
+c4.button("Próxima sin terminar", on_click=proxima, type="primary", width="stretch",
           disabled=completas == len(oraciones))
 
 seg = next(o for o in oraciones if o["seg_id"] == st.session_state.anot_seg)
@@ -209,10 +208,8 @@ def completar(lista_aps, y_seguir=False):
 
 faltan_oracion = sum(1 for s, t in celdas_de(aps) if not hechas.get((seg_id, s, t), {}).get("label"))
 b1, b2 = st.columns(2)
-b1.button(f"Lo que falta en la oración: Correcto ({faltan_oracion})", on_click=completar, args=(aps,),
-          icon=":material/done_all:", width="stretch", disabled=not faltan_oracion)
-b2.button("Lo que falta: Correcto, y a la próxima", on_click=completar, args=(aps, True), type="primary",
-          icon=":material/fast_forward:", width="stretch", disabled=not faltan_oracion)
+b1.button(f"Lo que falta en la oración: Correcto ({faltan_oracion})", on_click=completar, args=(aps,), width="stretch", disabled=not faltan_oracion)
+b2.button("Lo que falta: Correcto, y a la próxima", on_click=completar, args=(aps, True), type="primary", width="stretch", disabled=not faltan_oracion)
 
 
 # Guardado inmediato
@@ -308,10 +305,9 @@ for n, a in enumerate(aps, start=1):
         faltan_t = sum(1 for f in filas.values() if not f.get("label"))
         if faltan_t and faltan_t < len(orden):
             st.button(f"Las que faltan de este término: Correcto ({faltan_t})", key=f"ct_{clave_t}",
-                      on_click=completar, args=([a],), icon=":material/done_all:", type="tertiary")
+                      on_click=completar, args=([a],), type="tertiary")
         con_comentario = sum(bool(f.get("comment")) for f in filas.values())
-        with st.popover(f"Comentario{f' ({con_comentario})' if con_comentario else ''}",
-                        icon=":material/edit_note:"):
+        with st.popover(f"Comentario{f' ({con_comentario})' if con_comentario else ''}"):
             for letra, sistema in orden:
                 fila = filas[sistema]
                 clave = f"{seg_id}_{sistema}_{a['id']}"

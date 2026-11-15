@@ -96,7 +96,7 @@ if pestana == "sug":
                 st.caption("Tu comentario: " + " · ".join(comentarios))
             b1, b2, _ = st.columns([1.3, 1, 2])
             b1.button("Agregar como prohibida", key=f"ap_{term_id}_{forma}", on_click=agregar,
-                      args=(term_id, "es_forbidden", forma), icon=":material/block:", width="stretch")
+                      args=(term_id, "es_forbidden", forma), width="stretch")
             b2.button("No", key=f"np_{term_id}_{forma}", on_click=descartar, args=(clave,), width="stretch")
 
     st.subheader(f"Posibles variantes válidas ({len(validas)})")
@@ -120,8 +120,7 @@ if pestana == "sug":
             a1, a2, a3 = st.columns([2, 1.3, .7], vertical_alignment="bottom")
             forma = a1.text_input("Forma a agregar", value=sug, key=k, placeholder="Copiá las palabras de la traducción")
             a2.button("Agregar como válida", key=f"av_{k}", on_click=agregar, args=(c["term_id"], "es_allowed",
-                      forma.strip()), disabled=not forma.strip() or normalizar(forma) in formas_de(f),
-                      icon=":material/add:", width="stretch")
+                      forma.strip()), disabled=not forma.strip() or normalizar(forma) in formas_de(f), width="stretch")
             a3.button("No", key=f"nv_{k}", on_click=descartar, args=(clave,), width="stretch")
 
     hechas = st.session_state.get("res_hechas", [])
@@ -143,8 +142,7 @@ if pestana == "sug":
             REGISTRO.write_text(f"glossary-v1 · {datetime.now():%Y-%m-%d %H:%M} · {n} términos · sha256 "
                                 f"{hashlib.sha256(contenido).hexdigest()[:16]}\n", encoding="utf-8")
 
-        st.button("Congelar glosario v1", on_click=congelar, disabled=not confirmar, type="primary",
-                  icon=":material/lock:")
+        st.button("Congelar glosario v1", on_click=congelar, disabled=not confirmar, type="primary")
 
 # --- Evaluación -------------------------------------------------------------------------------------------------
 elif pestana == "dev":
@@ -153,10 +151,9 @@ elif pestana == "dev":
         st.info("Todavía no hay anotaciones de desarrollo.")
         st.stop()
     texto, v, b = ev.informe(casos, "desarrollo")
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Recall de TermCheck", ev.fmt(v["recall"]), f"{ev.fmt(v['recall'] - b['recall'])} vs. baseline")
-    c2.metric("Precisión de TermCheck", ev.fmt(v["precision"]), f"{ev.fmt(v['precision'] - b['precision'])} vs. baseline")
-    c3.metric("Términos anotados", v["n"])
+    st.write(f"Versión {VERSION} · {v['n']} términos anotados. Recall {ev.fmt(v['recall'])}; "
+             f"precisión {ev.fmt(v['precision'])}. Baseline: recall {ev.fmt(b['recall'])}, "
+             f"precisión {ev.fmt(b['precision'])}.")
     st.caption("Desarrollo: con estas oraciones se ajustan el código y el glosario. Sirve para ver que todo funciona; "
                "el resultado que vale es el de la prueba.")
     st.markdown(texto.split("\n", 2)[2])
@@ -176,7 +173,7 @@ elif pestana == "pub":
         ar.refrescar_desarrollo()
         st.session_state.res_readme = ar.actualizar(datos.DATOS / "README.md", ev.DATOS / "salida")
 
-    st.button("Actualizar el README", on_click=actualizar_readme, icon=":material/description:")
+    st.button("Actualizar el README", on_click=actualizar_readme)
     if st.session_state.get("res_readme"):
         bien, texto = st.session_state.res_readme
         (st.success if bien else st.error)(texto)
@@ -195,7 +192,7 @@ elif pestana == "pub":
                      help="Sección de resultados. Qué sistema maneja mejor la terminología, qué tipos de error "
                           "aparecen más y por qué falla el verificador cuando falla. Se escribe con la "
                           "evaluación final.")
-        if st.form_submit_button("Guardar en el README", icon=":material/save:"):
+        if st.form_submit_button("Guardar en el README"):
             st.session_state.res_autor_msj = [ar.escribir_autor(readme, n, st.session_state[f"res_txt_{n}"])
                                               for n in ar.AUTOR]
     for bien, texto in st.session_state.get("res_autor_msj", []):
@@ -216,7 +213,7 @@ elif pestana == "pub":
     def publicar():
         st.session_state.res_publicado = pub.publicar(datos.RAIZ)
 
-    st.button("Publicar en GitHub", on_click=publicar, type="primary", icon=":material/cloud_upload:")
+    st.button("Publicar en GitHub", on_click=publicar, type="primary")
     if st.session_state.get("res_publicado"):
         bien, texto = st.session_state.res_publicado
         (st.success if bien else st.error)(texto)
@@ -233,7 +230,7 @@ else:
             for a in aps:
                 total += 1
                 listas += bool(hechas.get((o["seg_id"], s, a["id"]), {}).get("label"))
-    st.progress(listas / total if total else 0, text=f"Prueba anotada: {listas} de {total}")
+    st.write(f"Prueba anotada: {listas} de {total}")
     if not CONGELADO.exists():
         st.warning("Primero congelá el glosario v1 (en «Sugerencias para el glosario»).")
     elif listas < total:
@@ -245,8 +242,7 @@ else:
             st.info(f"La evaluación guardada se calculó con la versión {version} del verificador. El de hoy es la "
                     f"versión {VERSION}. Si la volvés a calcular, la anterior queda guardada en salida/v{version}/ "
                     "y el README no cambia.")
-        if st.button("Calcular la evaluación final", type="primary" if not version else "secondary",
-                     icon=":material/analytics:"):
+        if st.button("Calcular la evaluación final", type="primary" if not version else "secondary"):
             casos = ev.evaluar("prueba", CONGELADO)
             texto, v, b = ev.escribir(casos, "prueba")  # tablas y lista de FP y FN, en salida/
             st.session_state.res_prueba = texto

@@ -40,8 +40,8 @@ un equipo de perforación argentino.
 
 Se puede probar sin cuenta en **https://termcheck.aval.site/demo**
 
-Se pega el texto en inglés y su traducción, o se sube un archivo de dos columnas, y devuelve el reporte. El botón
-«Cargar un ejemplo» pone tres oraciones del corpus traducidas con Opus-MT. También acepta un glosario propio en
+La demo abre con tres oraciones de desarrollo traducidas con Opus-MT y su reporte. «Vaciar» permite pegar un
+texto propio; «Verificar» lo analiza cuando lo pedís. También se puede subir un archivo de dos columnas. También acepta un glosario propio en
 CSV. Corre en un servidor compartido, así que tiene límites: archivos de hasta 1 MB, 200 segmentos y 20.000
 letras por lado. Los textos no se guardan.
 
@@ -266,8 +266,9 @@ python3 -m venv .venv
 .venv/bin/python -m spacy download es_core_news_sm
 ```
 
-`requirements.txt` incluye `torch` y `transformers`, que solo hacen falta para volver a traducir con Opus-MT
-(`scripts/translate_opusmt.py`). Para verificar no se usan.
+`requirements.txt` alcanza para verificar y usar la app. Para volver a traducir con Opus-MT
+(`scripts/translate_opusmt.py`), instalá además `requirements-mt.txt`. Para torch sin GPU, seguí la indicación
+en ese archivo.
 
 Verificar un par de archivos de texto, con una oración por línea y en el mismo orden:
 

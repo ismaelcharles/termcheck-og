@@ -12,10 +12,10 @@ import streamlit as st
 import datos
 import vista
 
-SEGMENTOS = datos.RAIZ / "data" / "corpus" / "segments.tsv"
-TRADUCCIONES = datos.RAIZ / "data" / "mt" / "translations.tsv"
-VERSIONES = datos.RAIZ / "data" / "mt" / "versiones.csv"
-CARPETA_DEEPL = datos.RAIZ / "data" / "mt" / "deepl"
+SEGMENTOS = datos.DATOS / "data" / "corpus" / "segments.tsv"
+TRADUCCIONES = datos.DATOS / "data" / "mt" / "translations.tsv"
+VERSIONES = datos.DATOS / "data" / "mt" / "versiones.csv"
+CARPETA_DEEPL = datos.DATOS / "data" / "mt" / "deepl"
 LIMITE = 1400  # caracteres por tanda (DeepL web acepta 1.500)
 SISTEMAS = {"opusmt": "Opus-MT", "claude": "Claude (sin glosario)", "deepl": "DeepL"}
 
@@ -81,7 +81,7 @@ hechas = leer(TRADUCCIONES)
 columnas = st.columns(len(SISTEMAS))
 for col, (clave, nombre) in zip(columnas, SISTEMAS.items()):
     cuantas = sum(1 for f in hechas if f["system"] == clave)
-    col.metric(nombre, f"{cuantas} de {len(segmentos)}")
+    col.write(f"**{nombre}** · {cuantas} de {len(segmentos)} oraciones")
 
 st.subheader("DeepL")
 lista = tandas(segmentos)
@@ -93,15 +93,14 @@ st.markdown(
     f"y pegala en el campo de abajo.\n"
     f"3. Guardá la tanda. La app controla que vuelvan tantas líneas como oraciones mandaste.\n\n"
     f"Van **{len(listas)} de {len(lista)}** tandas guardadas.")
-st.progress(len(listas) / len(lista))
+
 
 CARPETA_DEEPL.mkdir(parents=True, exist_ok=True)
 for n, tanda in enumerate(lista, start=1):
     guardada = archivo_tanda(n).exists()
     titulo = f"Tanda {n}: {tanda[0]['seg_id']} a {tanda[-1]['seg_id']} ({len(tanda)} oraciones)"
     with st.expander(titulo, expanded=not guardada and n == min(set(range(1, len(lista) + 1)) - set(listas),
-                                                                     default=0),
-                     icon=":material/check_circle:" if guardada else ":material/radio_button_unchecked:"):
+                                                                     default=0)):
         st.code("\n".join(s["source_en"] for s in tanda), language=None, wrap_lines=True)
         previo = archivo_tanda(n).read_text(encoding="utf-8") if guardada else ""
         pegado = st.text_area("Traducción de DeepL", value=previo, key=f"deepl_{n}", height=220,
@@ -110,11 +109,11 @@ for n, tanda in enumerate(lista, start=1):
         if pegado and len(recibidas) != len(tanda):
             st.warning(f"Llegaron {len(recibidas)} líneas y la tanda tiene {len(tanda)} oraciones. Revisá que DeepL "
                        "no haya unido o partido alguna.")
-        if st.button("Guardar tanda", key=f"guardar_{n}", type="primary", icon=":material/save:",
+        if st.button("Guardar tanda", key=f"guardar_{n}", type="primary",
                      disabled=len(recibidas) != len(tanda)):
             archivo_tanda(n).write_text("\n".join(recibidas) + "\n", encoding="utf-8")
             st.rerun()
 
 if len(listas) == len(lista):
-    if st.button("Unir las tandas en el archivo de traducciones", type="primary", icon=":material/merge:"):
+    if st.button("Unir las tandas en el archivo de traducciones", type="primary"):
         st.success(f"Listo: {unir(lista)} traducciones de DeepL en data/mt/translations.tsv.")
