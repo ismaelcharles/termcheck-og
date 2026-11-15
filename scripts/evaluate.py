@@ -11,7 +11,9 @@ Unidad: cada término anotado (seg_id, system, term_id) en gold.csv. Las filas �
 - Baseline: scripts/baseline.py (la preferida como texto exacto).
 
 Escribe salida/eval_<conjunto>.md (tablas para el README) y salida/eval_<conjunto>_casos.csv (todos los FP y FN,
-con el inglés y la traducción, para el análisis de errores).
+con el inglés y la traducción, para el análisis de errores). La última línea del .md dice con qué versión del
+verificador se calculó. Si ya había una evaluación guardada de otra versión, antes de pisarla la copia a
+salida/v<versión>/, así no se pierde (ni las tablas ni la columna «causa» que llenó el dueño).
 
 En ese archivo, «causa_sugerida» es una pista automática, hecha con reglas simples (causa_sugerida(), más abajo).
 No es el análisis: la causa la decide el dueño y la escribe en la columna «causa», que sale vacía. Las reglas para
@@ -21,6 +23,8 @@ import argparse
 import csv
 import math
 import os
+import re
+import shutil
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -30,6 +34,7 @@ sys.path.insert(0, str(RAIZ / "src"))
 sys.path.insert(0, str(RAIZ / "scripts"))
 
 from baseline import marca as marca_baseline  # noqa: E402
+from termcheck import VERSION  # noqa: E402
 from termcheck.checker import verificar  # noqa: E402
 from termcheck.glossary import cargar  # noqa: E402
 from termcheck.normalize import normalizar  # noqa: E402
@@ -224,8 +229,32 @@ def informe(casos, conjunto):
         cs = [c for c in casos if c["label"] == lab]
         cuenta = Counter((c["etiquetas_verificador"].split("|")[0] or "(no detectado)") for c in cs)
         lineas.append(f"| {lab} | " + " | ".join(str(cuenta[e]) for e in ETIQ) + " |")
-    lineas += ["", "IC 95 %: intervalo de Wilson. Con pocos casos es ancho: los números son orientativos."]
+    lineas += ["", "IC 95 %: intervalo de Wilson. Con pocos casos es ancho: los números son orientativos.",
+               "", f"Calculado con la versión {VERSION} del verificador."]
     return "\n".join(lineas) + "\n", v, b
+
+
+def version_de(ruta):
+    """Con qué versión del verificador se calculó una evaluación guardada. None si el archivo no existe.
+    Las de la versión 0.1.0 no llevan la línea que lo dice: si falta, es esa."""
+    ruta = Path(ruta)
+    if not ruta.exists():
+        return None
+    dice = re.search(r"^Calculado con la versión (\S+) del verificador\.$", ruta.read_text(encoding="utf-8"), re.M)
+    return dice.group(1) if dice else "0.1.0"
+
+
+def _guardar_la_anterior(salida, conjunto):
+    """Si la evaluación guardada es de otra versión del verificador, la copia a salida/v<versión>/ antes de
+    pisarla. Lo que ya está en esa carpeta no se toca."""
+    anterior = version_de(salida / f"eval_{conjunto}.md")
+    if anterior in (None, VERSION):
+        return
+    carpeta = salida / f"v{anterior}"
+    carpeta.mkdir(exist_ok=True)
+    for nombre in (f"eval_{conjunto}.md", f"eval_{conjunto}_casos.csv"):
+        if (salida / nombre).exists() and not (carpeta / nombre).exists():
+            shutil.copy2(salida / nombre, carpeta / nombre)
 
 
 ETIQ = ["OK", "VARIANTE", "PROHIBIDO", "SIN_TRADUCIR", "NO_ENCONTRADO", "(no detectado)"]
@@ -241,6 +270,7 @@ def escribir(casos, conjunto):
     texto, v, b = informe(casos, conjunto)
     salida = DATOS / "salida"
     salida.mkdir(exist_ok=True)
+    _guardar_la_anterior(salida, conjunto)
     (salida / f"eval_{conjunto}.md").write_text(texto, encoding="utf-8")
     with open(salida / f"eval_{conjunto}_casos.csv", "w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=COLUMNAS_CASOS, extrasaction="ignore", lineterminator="\n")

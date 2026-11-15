@@ -64,6 +64,11 @@ def test_camino_final_completo(proyecto):
     assert casos.count("\n") == 2 and "FP,P1,deepl,G3" in casos       # encabezado + el único falso positivo
     assert any("TermCheck" in m.value for m in at.markdown)           # la tabla se ve en la página
 
+    # 5. Al volver otro día, la evaluación guardada se ve sin volver a calcularla
+    at = abrir("prueba")
+    assert any("| TermCheck | 9 | 3 | 1 | 0 | 5 |" in m.value for m in at.markdown)
+    assert any("Calculada el" in c.value for c in at.caption) and not at.info
+
 
 def test_la_evaluacion_final_usa_el_glosario_congelado(proyecto):
     """Si el glosario de trabajo cambia después de congelar, el resultado de la prueba no cambia."""

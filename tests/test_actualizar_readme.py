@@ -71,10 +71,37 @@ def test_sin_marcadores_no_cambia_nada(tmp_path):
     assert readme.read_text(encoding="utf-8") == "# Proyecto\n\nSin marcadores.\n"
 
 
-def test_el_readme_del_proyecto_tiene_los_marcadores_y_los_huecos():
+def test_los_resultados_fijos_no_se_tocan(tmp_path):
+    readme, salida = armar(tmp_path, prueba=True)
+    fijo = README.replace(ar.INICIO, ar.FIJOS + " (evaluación final, versión 0.1) -->")
+    readme.write_text(fijo, encoding="utf-8")
+    bien, mensaje = ar.actualizar(readme, salida)
+    assert bien and "fijos" in mensaje
+    assert readme.read_text(encoding="utf-8") == fijo
+    assert ar.fijos(readme) and not ar.fijos(tmp_path / "no_existe.md")
+
+
+def test_el_readme_del_proyecto_tiene_fija_la_evaluacion_publicada():
+    """La evaluación final se hizo con la versión 0.1 y esas tablas no se vuelven a escribir."""
     texto = (RAIZ / "README.md").read_text(encoding="utf-8")
-    assert texto.count(ar.INICIO) == 1 and texto.count(ar.FIN) == 1
+    assert ar.fijos(RAIZ / "README.md") and ar.INICIO not in texto and texto.count(ar.FIN) == 1
+    assert "| TermCheck | 120 | 49 | 7 | 4 | 60 | 0,88 (0,76–0,94) | 0,92 (0,82–0,97) | 0,90 |" in texto
+    assert "| Baseline (texto exacto) | 120 | 52 | 18 | 1 | 49 | 0,74 (0,63–0,83) | 0,98 (0,90–1,00) | 0,85 |" in texto
     assert all(texto.count(m) == 1 for n in ar.AUTOR for m in ar.marcas_autor(n))
+
+
+def test_el_boton_no_cambia_un_readme_con_los_resultados_fijos(proyecto):
+    fijo = README.replace(ar.INICIO, ar.FIJOS + " (evaluación final, versión 0.1) -->")
+    (proyecto / "README.md").write_text(fijo, encoding="utf-8")
+    anotar(ANOTACION_DEV)
+    at = AppTest.from_file(str(RAIZ / "app/paginas/resultados.py"), default_timeout=120)
+    at.session_state["res_vista"] = "pub"
+    at.run()
+    assert any("quedaron fijas" in m.value for m in at.markdown)
+    [b for b in at.button if "Actualizar el README" in b.label][0].click().run()
+    assert not at.exception, at.exception
+    assert (proyecto / "README.md").read_text(encoding="utf-8") == fijo
+    assert any("quedaron fijos" in x.value for x in at.success)
 
 
 def test_el_boton_de_resultados_actualiza_el_readme(proyecto):

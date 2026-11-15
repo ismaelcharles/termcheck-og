@@ -53,7 +53,7 @@ letras por lado. Los textos no se guardan.
  glosario.csv ─┐
                ├─► [1] Normalizar ─► [2] Detectar términos ─► [3] Buscar traducción ─► [4] Clasificar ─► [5] Reporte
  origen (EN) ──┤     (minúsculas,       en el inglés             en el español           (etiqueta por     (HTML y CSV)
- destino (ES) ─┘      tildes, guiones)  (lemas y categoría)      (lemas y raíces)         aparición)
+ destino (ES) ─┘      tildes, guiones)  (lemas y categoría)      (lemas, número y género) aparición)
 ```
 
 1. **Normalizar.** Se comparan los textos en minúsculas, sin tildes y con los guiones unificados. El reporte
@@ -63,7 +63,9 @@ letras por lado. Los textos no se guardan.
    sustantivo «well» con «as well as». Si dos términos se pisan, gana el más largo.
 3. **Buscar la traducción.** Para cada término detectado se buscan en la traducción la forma preferida, las
    formas válidas y las prohibidas. El español cambia en género y número, así que se compara por lema y, como
-   respaldo, por raíz (Snowball).
+   respaldo, se igualan el plural y el género. Una palabra con guion cuenta como sus partes («gas-lift» es
+   «gas lift»). Una forma de varias palabras también vale cuando va coordinada con otra y comparten el principio
+   («pozo de petróleo o gas» por «pozo de gas»).
 4. **Clasificar** cada aparición con una etiqueta.
 5. **Reportar.** Un HTML con los términos resaltados por color y un CSV con una fila por aparición.
 
@@ -77,7 +79,8 @@ letras por lado. Los textos no se guardan.
 | `INCONSISTENTE` | En el mismo documento, el término se tradujo de más de una manera | Advertencia |
 
 Los casos difíciles (plural y género, tildes, «as well as», términos que se pisan, préstamos aceptados, siglas,
-variantes de escritura en inglés) están cubiertos con pruebas automáticas en `tests/test_hard_cases.py`.
+variantes de escritura en inglés, guiones, formas coordinadas) están cubiertos con pruebas automáticas en
+`tests/test_hard_cases.py` y `tests/test_version_02.py`.
 
 ## 4. Resultados
 
@@ -88,10 +91,11 @@ tradujeron 120 oraciones con tres sistemas (Opus-MT, Claude sin glosario y DeepL
 - **Recall:** de los errores que anotó el autor, qué parte marca el verificador. Es la medida que más importa.
 - **Precisión:** de lo que marca el verificador, qué parte era un error.
 - **Baseline:** el método ingenuo, que busca la forma preferida como texto exacto. La diferencia con el
-  verificador es lo que aportan los lemas, las raíces y las formas válidas del glosario.
+  verificador es lo que aporta comparar por lema y aceptar las formas válidas del glosario.
 
-<!-- resultados:inicio (lo escribe scripts/actualizar_readme.py; no editar a mano) -->
-Evaluación final sobre el conjunto de prueba, con el glosario v1 congelado. Calculada el 2026-11-14.
+<!-- resultados:fijos (evaluación final, hecha con la versión 0.1; scripts/actualizar_readme.py ya no cambia estas tablas) -->
+Evaluación final sobre el conjunto de prueba, con el glosario v1 congelado. Calculada el 2026-11-14 con la
+versión 0.1 del verificador.
 
 120 términos anotados en 20 oraciones (53 errores según la anotación). El verificador no detectó 0 de ellos (cuentan como no marcados).
 
@@ -184,6 +188,36 @@ Las 7 falsas alarmas:
 El análisis por causa está en [`docs/findings.md`](docs/findings.md).
 <!-- autor:hallazgos:fin -->
 
+### Versión 0.2
+
+Después de la evaluación final se arreglaron en el verificador tres de las causas de error que aparecen arriba.
+
+- **Guion.** «gas-lift» se lee igual que «gas lift».
+- **Coordinación.** «pozo de petróleo o gas» vale por «pozo de gas». Una forma de varias palabras se reconoce
+  cuando va coordinada con otra y las dos comparten el principio.
+- **Familia de palabras.** «repararse» y «reparada» ya no pasan por «reparación». El respaldo dejó de comparar
+  por raíz y solo iguala el plural y el género.
+
+La versión 0.2 se midió una sola vez sobre la misma prueba, con el mismo glosario y la misma anotación.
+
+| Versión | TP | FP | FN | TN | Precisión (IC 95 %) | Recall (IC 95 %) | F1 |
+|---|---:|---:|---:|---:|---|---|---:|
+| 0.1, la evaluación final | 49 | 7 | 4 | 60 | 0,88 (0,76–0,94) | 0,92 (0,82–0,97) | 0,90 |
+| 0.2 | 51 | 3 | 2 | 64 | 0,94 (0,85–0,98) | 0,96 (0,87–0,99) | 0,95 |
+
+**El número de la 0.2 es optimista y no reemplaza al de la 0.1.** Los tres arreglos salieron de leer los errores
+de esta misma prueba, así que para la 0.2 la prueba ya no es un conjunto que el código no vio. Cambiaron los seis
+casos que se buscaba arreglar y ningún otro. La medida del proyecto sigue siendo la de la 0.1.
+
+Para no ajustar de más, cada regla se escribió como regla general y se probó con oraciones inventadas
+(`tests/test_version_02.py`). Los cambios se miraron solo en el conjunto de desarrollo: ahí desaparecieron las 3
+falsas alarmas de «pozo de petróleo o gas» y no cambió ninguna otra etiqueta (F1 de 0,96 a 0,99). La detección de
+términos en inglés salió idéntica en las 120 oraciones. El código se cerró antes de correr la prueba.
+
+Siguen igual las 3 falsas alarmas y los 2 errores sin marcar que dependen del glosario o de mirar las palabras
+que rodean al término: «perforación» por *perforating*, «vástago» por *kelly*, «varilla Kelly» y «boca del pozo».
+Quedan 60 oraciones del conjunto de prueba sin anotar. Anotarlas daría una medida de la 0.2 sin este sesgo.
+
 ## 5. Validación
 
 No hubo entrevistas ni pruebas con traductores. El plan original preveía mostrarle la herramienta a entre 3 y 5
@@ -215,6 +249,8 @@ usó con textos propios.
   aparece dos veces y una sola está bien traducida, puede no verlo.
 - **Términos dentro de otros.** Si un término del glosario queda dentro de otro más largo, solo se evalúa el
   largo.
+- **La coordinación se reconoce de un solo lado.** Vale «pozo de petróleo o gas» por «pozo de gas». No vale
+  «lodo o fluido de perforación» por «lodo de perforación».
 - **Una sola variante y un solo par de lenguas.** Inglés → español técnico de Argentina.
 - **Las traducciones no se pueden repetir igual.** Claude y DeepL pueden contestar distinto otro día. La fecha
   y la versión de cada sistema están en `data/mt/versiones.csv`.
@@ -292,6 +328,7 @@ Las fuentes de cada término, lo que se excluyó por copyright y el método de c
 
 ## 9. Próximos pasos
 
+- Anotar las 60 oraciones de prueba que faltan, para medir la versión 0.2 con oraciones que el código no vio.
 - Un segundo anotador humano sobre una parte de la prueba, para medir el acuerdo entre personas.
 - Más formas prohibidas en el glosario, cada una con un error real que la respalde.
 - Probar la lectura de XLIFF y TMX con exportaciones reales de Trados y memoQ. Hoy lee XLIFF 1.2, XLIFF 2.0 y TMX

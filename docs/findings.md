@@ -175,3 +175,75 @@ En la medición:
 - Más oraciones. Con 20 los intervalos son anchos.
 - Un segundo anotador humano que trabaje en el rubro.
 - Textos operativos de empresas argentinas, además de normas de EE. UU.
+
+## Versión 0.2
+
+> Agregado por Claude el 2026-11-15, a pedido del autor. Los números salen de una sola corrida de
+> `scripts/evaluate.py --conjunto prueba` con el código de la versión 0.2 ya cerrado.
+
+De las propuestas de arriba para el verificador se hicieron tres. El glosario v1 y la anotación no se tocaron.
+
+| Propuesta | Qué se hizo | Casos de la prueba |
+|---|---|---|
+| Guion | Una palabra con guion cuenta como sus partes: «gas-lift» es «gas lift» | S016, Opus-MT (1 FP) |
+| Coordinación | Una forma de varias palabras vale cuando va coordinada con otra y comparten el principio: «pozo de petróleo o gas» por «pozo de gas» | S101, los tres sistemas (3 FP) |
+| Clase de palabra | El respaldo ya no compara por raíz. Solo iguala el plural y el género, así que «repararse» y «reparada» no pasan por «reparación» | S091, Claude y Opus-MT (2 FN) |
+
+### El resultado y cuánto vale
+
+| Versión | TP | FP | FN | TN | Precisión | Recall | F1 |
+|---|---:|---:|---:|---:|---|---|---:|
+| 0.1 | 49 | 7 | 4 | 60 | 0,88 (0,76–0,94) | 0,92 (0,82–0,97) | 0,90 |
+| 0.2 | 51 | 3 | 2 | 64 | 0,94 (0,85–0,98) | 0,96 (0,87–0,99) | 0,95 |
+
+Cambiaron los seis casos de la tabla de arriba y ningún otro. El baseline no cambia (0,74, 0,98 y 0,85).
+
+Este número de la 0.2 es optimista. Las tres reglas salieron de leer los errores de esta prueba, y medirlas
+sobre la misma prueba solo muestra que arreglan lo que se quería arreglar y que no rompen otra cosa en esas 20
+oraciones. No dice cuánto acierta la 0.2 con oraciones nuevas. La medida del proyecto es la de la 0.1.
+
+Lo que se cuidó para no ajustar de más:
+
+- Cada regla se escribió como regla general y se probó con oraciones inventadas y un glosario mínimo propio
+  (`tests/test_version_02.py`). Ninguna prueba automática lee la prueba real.
+- Los cambios se miraron solo en desarrollo. Ahí desaparecieron las 3 falsas alarmas de S053 («pozo de petróleo
+  o gas», la misma causa) y no cambió ninguna otra etiqueta: 3 FP y 1 FN pasaron a 0 FP y 1 FN, y el F1 de 0,96
+  a 0,99.
+- La detección de términos en inglés se comparó antes y después en las 120 oraciones y salió idéntica.
+- El código se cerró en un commit antes de correr la prueba, y la prueba se corrió una vez.
+
+Con los errores sintéticos de `scripts/inject_errors.py` (desarrollo) no empeoró nada. Los términos en inglés
+puestos a propósito se marcan 40 de 40, todos con la etiqueta esperada. Antes eran 37 de 37 y 2 salían como
+`NO_ENCONTRADO` en vez de `SIN_TRADUCIR`: era «bridge plugs», un plural inglés que la raíz no igualaba con
+«bridge plug» y que la regla del plural sí reconoce.
+
+### Por causa, con la versión 0.2
+
+| Causa | FP | FN |
+|---|---|---|
+| Sinónimo que falta en el glosario | 3 | 0 |
+| Préstamo | 0 | 0 |
+| Ambigüedad | 0 | 1 |
+| Coordinación | 0 | 0 |
+| Forma del glosario que el autor rechaza | 0 | 1 |
+| Total | 3 | 2 |
+
+Lo que queda es del glosario o pide mirar las palabras que rodean al término: «perforación» por *perforating*
+(S007, 2 FP), «vástago» por *kelly* (S048, 1 FP), «varilla Kelly» (S005, 1 FN) y «boca del pozo» (S050, 1 FN).
+
+### Límites de las reglas nuevas
+
+- La coordinación se reconoce cuando las formas comparten el principio. No se reconoce del otro lado: «lodo o
+  fluido de perforación» no vale por «lodo de perforación».
+- En una forma coordinada, el principio («pozo de») queda libre para otro término. Si en la oración hay otro
+  término que se traduce con esa misma palabra y falta, el verificador puede darlo por encontrado.
+- La regla acepta hasta tres palabras entre el principio y la conjunción. Con más, no la reconoce.
+- El respaldo iguala el género, así que «zapato» se lee como «zapata». Para *casing shoe* el glosario lista las
+  dos, una como preferida y otra como válida, y el verificador responde con la preferida.
+- Las formas verbales dependen del lema de spaCy. Si spaCy no reconoce un verbo conjugado, ya no hay raíz que lo
+  rescate. El glosario v1 solo tiene sustantivos, así que esto no se midió.
+- Sigue sin haber alineación de palabras. El caso S091 se arregló porque «repararse» ya no coincide con
+  «reparación», no porque el verificador sepa qué palabra traduce a *workover*.
+
+Para medir la 0.2 sin sesgo quedan 60 oraciones del conjunto de prueba que no se anotaron ni se usaron para
+ajustar nada.

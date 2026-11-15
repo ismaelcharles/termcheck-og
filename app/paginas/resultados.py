@@ -17,6 +17,7 @@ import streamlit as st
 import anotacion as an
 import datos
 import vista
+from termcheck import VERSION
 from termcheck.normalize import normalizar
 
 sys.path.insert(0, str(datos.RAIZ / "scripts"))
@@ -163,9 +164,13 @@ elif pestana == "dev":
 elif pestana == "pub":
     st.subheader("1. Actualizar el README")
     final = (ev.DATOS / "salida" / "eval_prueba.md").exists()
-    st.markdown("Copia las tablas de resultados al README. " + (
-        "Ya está la evaluación final: copia esas tablas." if final else
-        "Todavía no está la evaluación final: copia las de desarrollo, con el aviso de que son provisorias."))
+    if ar.fijos(datos.DATOS / "README.md"):
+        st.markdown("Las tablas del README son las de la evaluación final que se publicó y quedaron fijas. Este "
+                    "botón ya no las cambia: lo que se mida con otra versión del verificador va en su propia sección.")
+    else:
+        st.markdown("Copia las tablas de resultados al README. " + (
+            "Ya está la evaluación final: copia esas tablas." if final else
+            "Todavía no está la evaluación final: copia las de desarrollo, con el aviso de que son provisorias."))
 
     def actualizar_readme():
         ar.refrescar_desarrollo()
@@ -234,7 +239,14 @@ else:
     elif listas < total:
         st.info("La evaluación final se calcula cuando la prueba esté anotada entera.")
     else:
-        if st.button("Calcular la evaluación final", type="primary", icon=":material/analytics:"):
+        guardada = ev.DATOS / "salida" / "eval_prueba.md"
+        version = ev.version_de(guardada)  # None si todavía no se calculó
+        if version and version != VERSION:
+            st.info(f"La evaluación guardada se calculó con la versión {version} del verificador. El de hoy es la "
+                    f"versión {VERSION}. Si la volvés a calcular, la anterior queda guardada en salida/v{version}/ "
+                    "y el README no cambia.")
+        if st.button("Calcular la evaluación final", type="primary" if not version else "secondary",
+                     icon=":material/analytics:"):
             casos = ev.evaluar("prueba", CONGELADO)
             texto, v, b = ev.escribir(casos, "prueba")  # tablas y lista de FP y FN, en salida/
             st.session_state.res_prueba = texto
@@ -242,3 +254,8 @@ else:
             st.success("Guardado en salida/eval_prueba.md (tablas) y salida/eval_prueba_casos.csv (falsos positivos "
                        "y falsos negativos, para el análisis de errores).")
             st.markdown(st.session_state.res_prueba.split("\n", 2)[2])
+        elif version:
+            # La que ya está guardada se ve sin tener que volver a calcularla
+            st.caption(f"Calculada el {datetime.fromtimestamp(guardada.stat().st_mtime):%d/%m/%Y} con la versión "
+                       f"{version} del verificador.")
+            st.markdown(guardada.read_text(encoding="utf-8").split("\n", 2)[2])

@@ -11,6 +11,10 @@ Nunca calcula la evaluación de la prueba: eso se hace una sola vez, con el bot�
 Solo cambia lo que está entre los marcadores; el resto del README no se toca. Correrlo dos veces deja el archivo
 igual.
 
+Cuando la evaluación final ya se publicó, sus tablas quedan fijas: el marcador de inicio del README pasa a ser
+«<!-- resultados:fijos …» y este script ya no las cambia. Así, lo que se mida después con otra versión del
+verificador no reemplaza a lo publicado; va en su propia sección del README.
+
 También guarda los dos textos que escribe el autor (los ejemplos de errores reales y los hallazgos), cada uno entre
 sus propios marcadores. Los usa la app (Resultados → Publicar → «Tus textos del README»), para que el autor no
 tenga que editar el archivo a mano. Este script nunca escribe el contenido de esos textos.
@@ -23,6 +27,8 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 INICIO = "<!-- resultados:inicio (lo escribe scripts/actualizar_readme.py; no editar a mano) -->"
 FIN = "<!-- resultados:fin -->"
+# El marcador de inicio cuando las tablas ya no se vuelven a escribir (alcanza con que empiece así)
+FIJOS = "<!-- resultados:fijos"
 
 # Los textos que escribe el autor: nombre → (título para la app, recuadro que queda mientras no haya texto)
 AUTOR = {
@@ -109,12 +115,21 @@ def bloque(salida):
     return "Todavía no hay resultados: falta la anotación."
 
 
+def fijos(readme):
+    """True si los resultados del README quedaron fijos (ya se publicó la evaluación final)."""
+    readme = Path(readme)
+    return readme.exists() and FIJOS in readme.read_text(encoding="utf-8")
+
+
 def actualizar(readme, salida):
     """Reemplaza lo que hay entre los marcadores del README. Devuelve (salió bien, texto para mostrar)."""
     readme = Path(readme)
     if not readme.exists():
         return False, f"No existe {readme.name}."
     texto = readme.read_text(encoding="utf-8")
+    if FIJOS in texto:
+        return True, ("Los resultados del README son los de la evaluación final que se publicó y quedaron fijos. "
+                      "No se cambió nada.")
     if texto.count(INICIO) != 1 or texto.count(FIN) != 1 or texto.index(INICIO) > texto.index(FIN):
         return False, "El README no tiene los marcadores de resultados (o están repetidos). No se cambió nada."
     antes, resto = texto.split(INICIO)

@@ -83,6 +83,35 @@ def test_escribir_guarda_tablas_y_casos(proyecto):
     assert filas[0]["target_es"] == "Inspeccione la cabeza del pozo."
 
 
+def test_la_evaluacion_guardada_dice_con_que_version_se_calculo(proyecto):
+    import evaluate as ev
+    from termcheck import VERSION
+    anotar(ANOTACION_PRUEBA)
+    ev.escribir(ev.evaluar("prueba"), "prueba")
+    assert ev.version_de(proyecto / "salida/eval_prueba.md") == VERSION
+    assert ev.version_de(proyecto / "salida/no_existe.md") is None
+
+
+def test_no_pisa_una_evaluacion_de_otra_version(proyecto):
+    # La evaluación final se publicó con la versión 0.1.0 (sin la línea de la versión) y el dueño llenó a mano la
+    # columna «causa». Volver a calcular con otra versión no puede borrar nada de eso.
+    import evaluate as ev
+    anotar(ANOTACION_PRUEBA)
+    salida = proyecto / "salida"
+    salida.mkdir()
+    (salida / "eval_prueba.md").write_text("# Evaluación · conjunto de prueba\n\nla publicada\n", encoding="utf-8")
+    (salida / "eval_prueba_casos.csv").write_text("tipo,causa\nFP,la escribió el dueño\n", encoding="utf-8")
+    assert ev.version_de(salida / "eval_prueba.md") == "0.1.0"
+    ev.escribir(ev.evaluar("prueba"), "prueba")
+    assert (salida / "v0.1.0/eval_prueba.md").read_text(encoding="utf-8").endswith("la publicada\n")
+    assert "la escribió el dueño" in (salida / "v0.1.0/eval_prueba_casos.csv").read_text(encoding="utf-8")
+    assert "| TermCheck | 9 | 3 | 1 | 0 | 5 |" in (salida / "eval_prueba.md").read_text(encoding="utf-8")
+    # Con la misma versión no hace otra copia ni toca la que ya está
+    ev.escribir(ev.evaluar("prueba"), "prueba")
+    assert sorted(x.name for x in salida.iterdir()) == ["eval_prueba.md", "eval_prueba_casos.csv", "v0.1.0"]
+    assert (salida / "v0.1.0/eval_prueba.md").read_text(encoding="utf-8").endswith("la publicada\n")
+
+
 def test_la_prueba_no_se_evalua_sin_glosario_congelado(proyecto, monkeypatch):
     import evaluate as ev
     anotar(ANOTACION_PRUEBA)
