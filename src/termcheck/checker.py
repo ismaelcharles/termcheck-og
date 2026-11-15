@@ -10,6 +10,8 @@ Pasos:
 1. Detectar los términos en el inglés (matcher.buscar). Si dos se superponen («drill pipe» y «pipe»), gana el más
    largo. Cada aparición cuenta aparte (el mismo término dos veces = dos filas).
 2. Para cada aparición, buscar en la traducción la preferida, las válidas, las prohibidas y las formas en inglés.
+   Una forma de varias palabras también vale si va coordinada con otra y comparten el principio: «pozo de
+   petróleo o gas» por «pozo de gas» (matcher.buscar_coordinada, desde la versión 0.2).
 3. Etiquetar con esta prioridad: PROHIBIDO > OK > VARIANTE > SIN_TRADUCIR > NO_ENCONTRADO.
    Lo que en la traducción ya usó un término no lo puede usar otro (así «pozo» dentro de «boca de pozo» no vale
    dos veces). Se resuelven primero los términos más largos.
@@ -23,7 +25,7 @@ Pasos:
 from dataclasses import dataclass
 
 from termcheck.etiquetas import MARCAN  # lo que se marca para revisar: PROHIBIDO, SIN_TRADUCIR, NO_ENCONTRADO
-from termcheck.matcher import analizar, analizar_forma, buscar, es_sigla, pos_aceptable
+from termcheck.matcher import analizar, analizar_forma, buscar, buscar_coordinada, es_sigla, pos_aceptable
 from termcheck.normalize import normalizar
 
 # El orden en que se decide la etiqueta (no es el orden en que se muestran: ese está en etiquetas.py)
@@ -168,15 +170,23 @@ def verificar(texto_en, texto_es, terminos, seg_id="", system=""):
         i, j, t = apariciones[k]
         encontrado = None
         for label in PRIORIDAD:
+            # Un tramo es (a, b, forma, largo, propias): la forma ocupa palabras_es[a:b], tiene «largo» palabras y
+            # «propias» son las que usa solo ella. En una coincidencia seguida son todas; en una coordinada
+            # («pozo de petróleo o gas»), las del final: el principio lo comparte con la otra alternativa.
             tramos = []
             for lab, forma, sigla in _formas_es(t):
-                if lab == label:
-                    tramos += [(a, b, forma) for a, b in buscar(palabras_es, analizar_forma(forma, "es"), "es", sigla)]
+                if lab != label:
+                    continue
+                palabras_forma = analizar_forma(forma, "es")
+                tramos += [(a, b, forma, b - a, frozenset(range(a, b)))
+                           for a, b in buscar(palabras_es, palabras_forma, "es", sigla)]
+                tramos += [(a, b, forma, len(palabras_forma), frozenset(propias))
+                           for a, b, propias in buscar_coordinada(palabras_es, palabras_forma)]
             # Solo los tramos libres; de dos que se pisan queda el más largo
             libres = []
-            for a, b, forma in sorted(tramos, key=lambda x: (-(x[1] - x[0]), x[0])):
-                if not usadas & set(range(a, b)) and not any(a < d and c < b for c, d, _ in libres):
-                    libres.append((a, b, forma))
+            for tramo in sorted(tramos, key=lambda x: (-x[3], x[0])):
+                if not usadas & tramo[4] and not any(tramo[4] & otro[4] for otro in libres):
+                    libres.append(tramo)
             if not libres:
                 continue
             # Menciones del término dentro de un término más largo que no se encontró: compiten por los tramos
@@ -186,18 +196,18 @@ def verificar(texto_en, texto_es, terminos, seg_id="", system=""):
                 propias = [(_centro(palabras_en, a, b, largo_en), True) for n, (a, b, t2) in enumerate(apariciones)
                            if t2.id == t.id and (n == k or n not in resultado)]
                 libres = _con_pareja(propias + rivales,
-                                     [(_centro(palabras_es, a, b, largo_es), (a, b, forma)) for a, b, forma in libres])
+                                     [(_centro(palabras_es, tramo[0], tramo[1], largo_es), tramo) for tramo in libres])
             if libres:
                 # la más larga primero, después la que está más a la izquierda
-                encontrado = (label, *min(libres, key=lambda x: (-(x[1] - x[0]), x[0])))
+                encontrado = (label, min(libres, key=lambda x: (-x[3], x[0])))
             if encontrado:
                 break
         o = Ocurrencia(seg_id, system, t.id, texto_en[palabras_en[i].inicio:palabras_en[j - 1].fin], "NO_ENCONTRADO",
                        "", -1, -1, palabras_en[i].inicio, palabras_en[j - 1].fin, t.es_preferred,
                        es_allowed=tuple(t.es_allowed))
         if encontrado:
-            label, a, b, forma = encontrado
-            usadas |= set(range(a, b))
+            label, (a, b, forma, _, propias) = encontrado
+            usadas |= propias
             o.label, o.start, o.end, o.es_form = label, palabras_es[a].inicio, palabras_es[b - 1].fin, forma
             o.es_found = texto_es[o.start:o.end]
         resultado[k] = o
