@@ -38,11 +38,18 @@ class Palabra:
     fin: int        # posición siguiente al último carácter
 
 
+# Partes de spaCy que el verificador no usa: el reconocedor de nombres propios (ner) y, en español, el analizador
+# sintáctico (parser). Sin ellas analiza en la mitad del tiempo y los lemas y las categorías salen iguales
+# (comprobado palabra por palabra sobre todo el corpus y el glosario). En inglés el analizador sintáctico se queda:
+# la categoría de algunas palabras («after», «that») depende de él.
+SIN_USAR = {"en": ["ner"], "es": ["parser", "ner"]}
+
+
 @lru_cache(maxsize=None)
 def modelo(idioma):
     """El modelo de spaCy del idioma ("en" o "es"). Se carga una sola vez."""
     import spacy
-    return spacy.load("en_core_web_sm" if idioma == "en" else "es_core_news_sm")
+    return spacy.load("en_core_web_sm" if idioma == "en" else "es_core_news_sm", exclude=SIN_USAR[idioma])
 
 
 @lru_cache(maxsize=None)

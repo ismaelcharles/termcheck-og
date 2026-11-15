@@ -13,9 +13,7 @@ existe, no ofrece el corpus y tiene límites de tamaño, porque el servidor es c
 import csv
 import io
 import os
-import tempfile
 from collections import Counter
-from pathlib import Path
 
 import streamlit as st
 
@@ -25,7 +23,7 @@ from limites import MAX_LETRAS, MAX_SEGMENTOS, MAX_TERMINOS, aplicar
 from termcheck.checker import verificar
 from termcheck.consistency import inconsistencias
 from termcheck.formatos import ErrorDeFormato, es_de_traduccion, leer as leer_formato
-from termcheck.glossary import ErrorDeGlosario, cargar, validar
+from termcheck.glossary import ErrorDeGlosario, cargar, cargar_bytes, validar
 from termcheck import NOMBRE
 from termcheck.report import NOMBRES, a_csv_texto, a_html
 
@@ -74,15 +72,11 @@ with st.sidebar:
                               help="Columnas: id, en, pos, es_preferred, es_allowed, es_forbidden, subdomain, note, "
                                    "source. Variantes separadas por «|».")
 if propio:
-    with tempfile.NamedTemporaryFile("wb", suffix=".csv", delete=False) as f:
-        f.write(propio.getvalue())
     try:
-        terminos = cargar(f.name)
+        terminos = cargar_bytes(propio.getvalue())
     except ErrorDeGlosario as e:
         st.error(f"No se pudo usar ese glosario: {e}")
         st.stop()
-    finally:
-        Path(f.name).unlink(missing_ok=True)
     errores = [p for p in validar(terminos) if p.tipo == "error"]
     if errores:
         st.warning(f"El glosario subido tiene {len(errores)} errores; el resultado puede fallar.  \n"
@@ -257,7 +251,7 @@ for (seg_id, sistema, en, es), oc in resultado:
             det = "no aparece ninguna traducción conocida: " + ", ".join(f"«{vista.e(x)}»" for x in conocidas)
             if o.suggestion:
                 det += f' <span class="vf-sug">¿quizás «{vista.e(o.suggestion)}»?</span>'
-        items.append(f'<li>{vista.etiqueta(o.label)} <b>{vista.e(o.term_en)}</b> <code>{o.term_id}</code> → {det}'
+        items.append(f'<li>{vista.etiqueta(o.label)} <b>{vista.e(o.term_en)}</b> <code>{vista.e(o.term_id)}</code> → {det}'
                      f'</li>')
     cab = " · ".join(x for x in [seg_id, sistema] if x)
     st.html(f'<div class="vf-seg"><div class="vf-cab">{vista.e(cab)}</div>'

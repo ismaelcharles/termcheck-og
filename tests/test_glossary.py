@@ -6,7 +6,7 @@ Usan un glosario mínimo propio, escrito en cada prueba (las filas de ejemplo de
 """
 import pytest
 
-from termcheck.glossary import ErrorDeGlosario, cargar, separar, validar
+from termcheck.glossary import ErrorDeGlosario, cargar, cargar_bytes, separar, validar
 from termcheck.normalize import normalizar
 
 ENCABEZADO = "id,en,pos,es_preferred,es_allowed,es_forbidden,subdomain,note,source\n"
@@ -79,6 +79,31 @@ def test_cargar_falta_columna(tmp_path):
     ruta = escribir(tmp_path, ['T005,well,NOUN,pozo'], encabezado="id,en,pos,es_preferred\n")
     with pytest.raises(ErrorDeGlosario, match="es_allowed"):
         cargar(ruta)
+
+
+def test_cargar_bytes_lee_lo_mismo_que_cargar(tmp_path):
+    # Lo usa la app con un glosario subido: el contenido llega ya leído, sin pasar por un archivo
+    ruta = escribir(tmp_path, ['T001,wellhead|well-head,NOUN,boca de pozo,cabeza de pozo,,producción,,x'], bom=True)
+    assert cargar_bytes(ruta.read_bytes()) == cargar(ruta)
+
+
+def test_cargar_bytes_con_punto_y_coma(tmp_path):
+    # Excel en castellano guarda los CSV separados por punto y coma
+    datos = (ENCABEZADO.replace(",", ";") + "T001;drilling rig|rig;NOUN;equipo de perforación;equipo;;;;x\n")
+    [t] = cargar_bytes(datos.encode("utf-8"))
+    assert (t.en, t.es_preferred, t.es_allowed) == (["drilling rig", "rig"], "equipo de perforación", ["equipo"])
+
+
+def test_cargar_bytes_que_no_es_utf8():
+    # Excel en Windows guarda en otra codificación si no se elige «CSV UTF-8»: tiene que avisar, no romperse
+    datos = (ENCABEZADO + "T001,rig,NOUN,equipo de perforación,,,,,x\n").encode("latin-1")
+    with pytest.raises(ErrorDeGlosario, match="UTF-8"):
+        cargar_bytes(datos)
+
+
+def test_cargar_bytes_falta_columna():
+    with pytest.raises(ErrorDeGlosario, match="faltan columnas: es_forbidden"):
+        cargar_bytes("id,en,pos,es_preferred,es_allowed,subdomain,note,source\nT001,rig,NOUN,equipo,,,,x\n".encode())
 
 
 def test_cargar_archivo_que_no_existe(tmp_path):

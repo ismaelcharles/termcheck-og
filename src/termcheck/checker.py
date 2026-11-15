@@ -22,11 +22,12 @@ Pasos:
 """
 from dataclasses import dataclass
 
+from termcheck.etiquetas import MARCAN  # lo que se marca para revisar: PROHIBIDO, SIN_TRADUCIR, NO_ENCONTRADO
 from termcheck.matcher import analizar, analizar_forma, buscar, es_sigla, pos_aceptable
 from termcheck.normalize import normalizar
 
+# El orden en que se decide la etiqueta (no es el orden en que se muestran: ese está en etiquetas.py)
 PRIORIDAD = ["PROHIBIDO", "OK", "VARIANTE", "SIN_TRADUCIR"]
-MARCAN = {"PROHIBIDO", "SIN_TRADUCIR", "NO_ENCONTRADO"}  # lo que se marca para revisar (plan 6.1)
 
 
 @dataclass
@@ -45,6 +46,7 @@ class Ocurrencia:
     es_expected: str = ""  # la preferida del glosario
     es_form: str = ""      # la forma del glosario que coincidió (para la consistencia)
     suggestion: str = ""   # solo en NO_ENCONTRADO: lo más parecido a la preferida, para revisar
+    es_allowed: tuple = ()  # las otras formas que el glosario acepta (para que el reporte pueda nombrarlas)
 
     @property
     def marcada(self):
@@ -191,7 +193,8 @@ def verificar(texto_en, texto_es, terminos, seg_id="", system=""):
             if encontrado:
                 break
         o = Ocurrencia(seg_id, system, t.id, texto_en[palabras_en[i].inicio:palabras_en[j - 1].fin], "NO_ENCONTRADO",
-                       "", -1, -1, palabras_en[i].inicio, palabras_en[j - 1].fin, t.es_preferred)
+                       "", -1, -1, palabras_en[i].inicio, palabras_en[j - 1].fin, t.es_preferred,
+                       es_allowed=tuple(t.es_allowed))
         if encontrado:
             label, a, b, forma = encontrado
             usadas |= set(range(a, b))

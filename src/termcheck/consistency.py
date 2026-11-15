@@ -16,6 +16,7 @@ class Inconsistencia:
     system: str
     term_id: str
     formas: dict = field(default_factory=dict)  # forma tal como apareció la primera vez → [seg_id]
+    term_en: str = ""                           # el término en inglés, como apareció la primera vez
 
     def __str__(self):
         partes = "; ".join(f"«{f}» en {', '.join(s)}" for f, s in self.formas.items())
@@ -24,11 +25,12 @@ class Inconsistencia:
 
 def inconsistencias(ocurrencias):
     """[Ocurrencia] → [Inconsistencia], una por (sistema, término) con más de una forma aceptada."""
-    grupos = {}
+    grupos, en_ingles = {}, {}
     for o in ocurrencias:
         if o.label not in ("OK", "VARIANTE"):
             continue
         formas = grupos.setdefault((o.system, o.term_id), {})
+        en_ingles.setdefault((o.system, o.term_id), o.term_en)
         clave = o.es_form or o.es_found
         nombre, segs = formas.get(clave, (o.es_found, []))
         if o.seg_id not in segs:
@@ -37,5 +39,6 @@ def inconsistencias(ocurrencias):
     salida = []
     for (system, term_id), formas in sorted(grupos.items()):
         if len(formas) > 1:
-            salida.append(Inconsistencia(system, term_id, {n: s for n, s in formas.values()}))
+            salida.append(Inconsistencia(system, term_id, {n: s for n, s in formas.values()},
+                                         en_ingles[(system, term_id)]))
     return salida

@@ -11,6 +11,7 @@ Desde la terminal, para revisar el glosario:
 Cada fila del CSV es un concepto. Las columnas con variantes (en, es_allowed, es_forbidden) separan las formas con «|».
 """
 import csv
+import io
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -64,27 +65,43 @@ def cargar(ruta):
     ruta = Path(ruta)
     if not ruta.exists():
         raise ErrorDeGlosario(f"No existe el archivo {ruta}")
-    with open(ruta, encoding="utf-8-sig", newline="") as archivo:
-        lector = csv.DictReader(archivo)
-        faltan = [c for c in COLUMNAS if c not in (lector.fieldnames or [])]
-        if faltan:
-            raise ErrorDeGlosario(f"Al archivo le faltan columnas: {', '.join(faltan)}")
-        terminos = []
-        for numero, fila in enumerate(lector, start=2):  # la fila 1 es el encabezado
-            fila = {c: (fila.get(c) or "").strip() for c in COLUMNAS}
-            if not any(fila.values()):
-                continue  # fila vacía al final del archivo
-            terminos.append(Termino(
-                id=fila["id"] or f"fila {numero}",
-                en=separar(fila["en"]),
-                pos=fila["pos"],
-                es_preferred=fila["es_preferred"],
-                es_allowed=separar(fila["es_allowed"]),
-                es_forbidden=separar(fila["es_forbidden"]),
-                subdomain=fila["subdomain"],
-                note=fila["note"],
-                source=fila["source"],
-            ))
+    return cargar_bytes(ruta.read_bytes())
+
+
+def cargar_bytes(datos):
+    """Lo mismo que cargar(), con el contenido del archivo ya leído (por ejemplo, un glosario subido desde la app).
+
+    Las columnas pueden venir separadas por coma, por punto y coma (así guarda Excel en castellano) o por tabulación.
+    """
+    try:
+        texto = datos.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        raise ErrorDeGlosario("El archivo no está en UTF-8. En Excel: Guardar como → «CSV UTF-8 (delimitado por "
+                              "comas)».")
+    encabezado = texto.split("\n", 1)[0]
+    separador = max(",;\t", key=encabezado.count)  # el que más aparece en la primera línea; si empatan, la coma
+    lector = csv.DictReader(io.StringIO(texto, newline=""), delimiter=separador)
+    nombres = [(n or "").strip() for n in (lector.fieldnames or [])]
+    faltan = [c for c in COLUMNAS if c not in nombres]
+    if faltan:
+        raise ErrorDeGlosario(f"Al archivo le faltan columnas: {', '.join(faltan)}")
+    lector.fieldnames = nombres
+    terminos = []
+    for numero, fila in enumerate(lector, start=2):  # la fila 1 es el encabezado
+        fila = {c: (fila.get(c) or "").strip() for c in COLUMNAS}
+        if not any(fila.values()):
+            continue  # fila vacía al final del archivo
+        terminos.append(Termino(
+            id=fila["id"] or f"fila {numero}",
+            en=separar(fila["en"]),
+            pos=fila["pos"],
+            es_preferred=fila["es_preferred"],
+            es_allowed=separar(fila["es_allowed"]),
+            es_forbidden=separar(fila["es_forbidden"]),
+            subdomain=fila["subdomain"],
+            note=fila["note"],
+            source=fila["source"],
+        ))
     return terminos
 
 

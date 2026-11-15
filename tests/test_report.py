@@ -42,6 +42,15 @@ def test_html_escapa_el_texto():
     assert "&lt;script&gt;" in html and "&amp; go." in html
 
 
+def test_html_escapa_lo_que_viene_del_glosario():
+    # Un glosario subido puede traer cualquier cosa en el id o en las formas: no tiene que llegar como HTML
+    malo = [Termino(id='<img src=x onerror=alert(1)>', en=["rig"], pos="NOUN", es_preferred="<b>equipo</b>")]
+    oc = verificar("Move the rig.", "Mueva la torre.", malo, "S1", "mt")
+    html = a_html({"S1": "Move the rig."}, [{"seg_id": "S1", "system": "mt", "target_es": "Mueva la torre."}], oc)
+    assert "<img" not in html and "<b>equipo" not in html
+    assert "&lt;img" in html and "&lt;b&gt;equipo" in html
+
+
 def test_html_resalta_los_tramos():
     en, es = "Move the rig.", "Mueva la plataforma de perforación."
     oc = verificar(en, es, GLOSARIO, "S1", "mt")

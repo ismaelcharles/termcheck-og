@@ -6,6 +6,8 @@
 import csv
 import html as _html
 
+from termcheck.etiquetas import NOMBRES
+
 COLUMNAS = ["seg_id", "system", "term_id", "term_en", "label", "es_found", "start", "end", "es_expected",
             "suggestion"]
 
@@ -17,8 +19,6 @@ COLORES = {  # los mismos de la app (app/vista.py)
     "SIN_TRADUCIR": ("#F5E8C8", "#7A5300"),
     "NO_ENCONTRADO": ("#E8E0F1", "#5E4682"),
 }
-NOMBRES = {"OK": "Preferida", "VARIANTE": "Variante aceptada", "PROHIBIDO": "Prohibida",
-           "SIN_TRADUCIR": "Sin traducir", "NO_ENCONTRADO": "No encontrada", "INCONSISTENTE": "Inconsistente"}
 
 
 def filas(ocurrencias):
@@ -71,7 +71,7 @@ def bloque_segmento(texto_en, texto_es, ocurrencias):
             detalle += f" · ¿quizás «{_html.escape(o.suggestion)}»?"
         items.append(f'<li><span style="background:{fondo};color:{letra};border-radius:3px;padding:0 4px;'
                      f'font-size:.8em">{NOMBRES[o.label]}</span> <b>{_html.escape(o.term_en)}</b> '
-                     f'<code>{o.term_id}</code> → {detalle}</li>')
+                     f'<code>{_html.escape(o.term_id)}</code> → {detalle}</li>')
     return (f'<div class="tc-seg"><p class="tc-en">{en}</p><p class="tc-es">{es}</p>'
             f'<ul class="tc-items">{"".join(items)}</ul></div>')
 

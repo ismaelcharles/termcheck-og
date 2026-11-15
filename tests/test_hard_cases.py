@@ -135,3 +135,34 @@ def test_sin_menciones_anidadas_gana_la_forma_mas_larga_y_la_primera():
                    + [T("G11", "mast", "caño")])
     assert [(o.term_id, o.label, o.start) for o in oc][0][1:] == ("OK", 15)
     assert oc[1].label == "NO_ENCONTRADO"
+
+
+def test_la_aparicion_lleva_lo_que_acepta_el_glosario():
+    # El reporte nombra las formas válidas sin volver a abrir el glosario
+    [o] = verificar("Inspect the drill pipe.", "Inspeccione el caño.", GLOSARIO[3:4])
+    assert (o.label, o.es_expected, o.es_allowed) == ("NO_ENCONTRADO", "tubería de perforación", ("barra de sondeo",))
+
+
+def test_la_inconsistencia_lleva_el_termino_en_ingles():
+    oc = verificar("Mix the drilling mud.", "Mezcle el lodo de perforación.", GLOSARIO, "S3", "x")
+    oc += verificar("Pump the mud.", "Bombee el fluido de perforación.", GLOSARIO, "S7", "x")
+    [adv] = inconsistencias(oc)
+    assert adv.term_en == "drilling mud"
+
+
+def test_etiquetas_una_sola_definicion():
+    from termcheck import checker, etiquetas
+    assert set(etiquetas.ETIQUETAS) == set(checker.PRIORIDAD) | {"NO_ENCONTRADO"}
+    assert etiquetas.MARCAN == {"PROHIBIDO", "SIN_TRADUCIR", "NO_ENCONTRADO"}
+    assert list(etiquetas.ETIQUETAS)[:3] == ["PROHIBIDO", "SIN_TRADUCIR", "NO_ENCONTRADO"]  # primero lo que se marca
+    o = verificar("Move the drilling rig.", "Mueva la plataforma de perforación.", GLOSARIO)[0]
+    assert o.marcada and etiquetas.ETIQUETAS[o.label].nombre == "Prohibida"
+
+
+def test_spacy_sin_las_partes_que_no_se_usan():
+    from termcheck.matcher import modelo
+    assert "ner" not in modelo("en").pipe_names and "ner" not in modelo("es").pipe_names
+    assert "parser" in modelo("en").pipe_names   # en inglés hace falta: la categoría de «after» depende de él
+    assert "parser" not in modelo("es").pipe_names
+    for idioma in ("en", "es"):
+        assert "lemmatizer" in modelo(idioma).pipe_names
