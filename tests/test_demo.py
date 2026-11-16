@@ -25,7 +25,7 @@ def demo(monkeypatch):
 def test_abre_sin_login_y_sin_corpus(demo):
     assert not [b for b in demo.button if "Google" in b.label]
     assert any("Demo pública" in c.value for c in demo.caption)
-    assert not demo.subheader
+    assert not any(s.value == "Revisión" for s in demo.subheader)
     assert [t.value for t in demo.text_area] == ["", ""]
     assert "vf_resultado" not in demo.session_state
     assert demo.text_area[0].proto.max_chars == 20000
@@ -116,5 +116,6 @@ def test_texto_correcto_se_puede_consultar_sin_falsos_avisos(demo):
     bloques = [m.proto.body for m in demo.get("html") if 'class="tc-seg"' in m.proto.body]
     assert len(bloques) == 1 and "boca de pozo" in bloques[0]
     [b for b in demo.button if b.label == "Vaciar"][0].click().run()
-    assert "vf_resultado" not in demo.session_state and not demo.subheader
+    assert "vf_resultado" not in demo.session_state
+    assert not any(s.value == "Revisión" for s in demo.subheader)
     assert demo.session_state.vf_editor_abierto is True

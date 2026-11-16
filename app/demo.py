@@ -1,4 +1,4 @@
-"""La demo pública de TermCheck O&G: solo la página Verificar, sin inicio de sesión.
+"""TermCheck público: verificador, glosario de consulta y ejemplos, sin inicio de sesión.
 
     .venv/bin/streamlit run app/demo.py --server.port 8502
 
@@ -21,5 +21,20 @@ os.environ["TERMCHECK_DEMO"] = "1"  # este proceso es solo la demo
 from termcheck import NOMBRE  # noqa: E402
 
 st.set_page_config(page_title=f"{NOMBRE} · demo", layout="wide", page_icon=":material/fact_check:")
-st.navigation([st.Page("paginas/verificar.py", title="Verificar", icon=":material/fact_check:", default=True)],
-              position="hidden").run()
+import vista  # noqa: E402
+
+paginas = [st.Page("paginas/verificar.py", title="Verificar", default=True),
+           st.Page("paginas/glosario_publico.py", title="Glosario", url_path="glosario"),
+           st.Page("paginas/inicio.py", title="Ejemplos", url_path="ejemplos")]
+pagina = st.navigation(paginas, position="hidden")
+# Consultar el glosario no debe borrar el texto ni las preferencias de revisión.
+for clave in ("vf_en", "vf_es", "vf_modo", "vf_editor_abierto", "vf_solo", "vf_segmento"):
+    if clave in st.session_state:
+        st.session_state[clave] = st.session_state[clave]
+vista.estilos()
+vista.cabecera(NOMBRE)
+st.html('<p class="tc-brand-description">Terminología de Oil &amp; Gas, en español de Argentina.</p>')
+with st.container(horizontal=True, gap="medium", key="public_nav"):
+    for p in paginas:
+        st.page_link(p)
+pagina.run()

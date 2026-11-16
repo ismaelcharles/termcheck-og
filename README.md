@@ -46,7 +46,11 @@ podés consultar también las formas aceptadas y descargar el reporte completo. 
 XLIFF y TMX, y un glosario propio en CSV. Corre en un servidor compartido, así que tiene límites: archivos de hasta 1 MB, 200 segmentos y 20.000
 letras por lado. Los textos no se guardan.
 
-![La revisión de un segmento: inglés y traducción resaltados, observaciones y descarga del reporte completo](docs/img/demo.png)
+El [glosario completo](https://termcheck.aval.site/demo/glosario) también se consulta sin cuenta: búsqueda en
+inglés o español, filtro por área, fichas con variantes, notas y fuentes, y descarga del CSV que usa la demo.
+La sección Ejemplos explica las etiquetas del verificador. Podés recorrer ambas sin perder la revisión en curso.
+
+![La portada del verificador con acceso al glosario, ejemplos y fichas de términos](docs/img/demo.png)
 
 ## 3. Cómo funciona
 

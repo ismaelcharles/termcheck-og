@@ -33,11 +33,9 @@ DEMO = os.environ.get("TERMCHECK_DEMO") == "1"
 
 vista.estilos()
 st.html("<style>" + report.CSS + "</style>")
-if DEMO:
-    vista.cabecera(NOMBRE)
-else:
+if not DEMO:
     st.title("Verificar")
-st.html('<p class="tc-descripcion">Revisión terminológica de Oil &amp; Gas · Inglés → español de Argentina</p>')
+    st.html('<p class="tc-descripcion">Revisión terminológica de Oil &amp; Gas · Inglés → español de Argentina</p>')
 
 
 @st.cache_data(show_spinner=False)
@@ -71,6 +69,15 @@ def vaciar():
     st.session_state.vf_editor_abierto = True
 
 
+def recordar_archivo(widget, memoria):
+    """Conserva la carga al navegar; una eliminación explícita también borra la copia de sesión."""
+    actual = st.session_state.get(widget)
+    if actual is None:
+        st.session_state.pop(memoria, None)
+    else:
+        st.session_state[memoria] = actual
+
+
 MODOS = {"pegar": "Pegar texto", "tsv": "Subir archivo", "corpus": "Corpus (desarrollo)"}
 if DEMO:
     del MODOS["corpus"]
@@ -84,12 +91,19 @@ with st.container(key="vf_editor"):
             modo = st.segmented_control("Entrada", list(MODOS), format_func=MODOS.get,
                                         default="pegar", required=True, key="vf_modo",
                                         label_visibility="collapsed")
-            with st.popover("Glosario"):
+            with st.popover("Glosario propio"):
                 st.caption("Se usa el glosario O&G del proyecto. Podés reemplazarlo por uno propio.")
-                propio = st.file_uploader("Glosario propio (CSV)", type=["csv"], key="vf_glosario",
+                nuevo_glosario = st.file_uploader("Glosario propio (CSV)", type=["csv"], key="vf_glosario",
                                           max_upload_size=1 if DEMO else None,
+                                          on_change=recordar_archivo, args=("vf_glosario", "vf_glosario_memoria"),
                                           help="Columnas: id, en, pos, es_preferred, es_allowed, es_forbidden, "
                                                "subdomain, note, source. Variantes separadas por |.")
+                propio = nuevo_glosario or st.session_state.get("vf_glosario_memoria")
+                if propio and not nuevo_glosario:
+                    st.caption(f"Glosario en uso: {propio.name}")
+                    if st.button("Volver al glosario del proyecto"):
+                        st.session_state.pop("vf_glosario_memoria", None)
+                        st.rerun()
             if modo == "pegar":
                 st.button("Usar ejemplo", on_click=cargar_ejemplo, type="tertiary")
                 st.button("Vaciar", on_click=vaciar, type="tertiary")
@@ -139,8 +153,15 @@ with st.container(key="vf_editor"):
 
         elif modo == "tsv":
             st.caption("Subí un archivo bilingüe en TSV, CSV, XLIFF o TMX.")
-            archivo = st.file_uploader("Archivo", type=["tsv", "csv", "txt", "xliff", "xlf", "tmx"],
-                                       label_visibility="collapsed", key="vf_archivo", max_upload_size=1 if DEMO else None)
+            nuevo_archivo = st.file_uploader("Archivo", type=["tsv", "csv", "txt", "xliff", "xlf", "tmx"],
+                                       label_visibility="collapsed", key="vf_archivo", max_upload_size=1 if DEMO else None,
+                                       on_change=recordar_archivo, args=("vf_archivo", "vf_archivo_memoria"))
+            archivo = nuevo_archivo or st.session_state.get("vf_archivo_memoria")
+            if archivo and not nuevo_archivo:
+                st.caption(f"Archivo en uso: {archivo.name}")
+                if st.button("Quitar archivo"):
+                    st.session_state.pop("vf_archivo_memoria", None)
+                    st.rerun()
             if archivo and es_de_traduccion(archivo.name):
                 try:
                     leidos, sin_traduccion = leer_formato(archivo.getvalue(), archivo.name)
@@ -227,7 +248,16 @@ if previo and previo[0] == firma:
     _, resultado, todas, advertencias = previo
     mostrar(resultado, todas, advertencias)
 elif not pares:
-    st.html('<p class="tc-empty">Pegá los dos textos o usá el ejemplo para empezar.</p>')
+    if DEMO:
+        import catalogo
+        proyecto = catalogo.leer()
+        with st.container(horizontal=True, vertical_alignment="center"):
+            st.subheader("El glosario detrás de la revisión")
+            st.page_link("paginas/glosario_publico.py", label=f"Explorar los {len(proyecto)} términos →")
+        st.caption("Un término puede tener más de una traducción válida. Estas son las formas que usa el verificador.")
+        st.html(catalogo.fichas(catalogo.destacados(proyecto), compactas=True))
+    else:
+        st.html('<p class="tc-empty">Pegá los dos textos o usá el ejemplo para empezar.</p>')
 
 if DEMO:
     with st.expander("Acerca de TermCheck"):

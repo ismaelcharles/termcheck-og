@@ -20,6 +20,29 @@ ETIQUETAS["INCONSISTENTE"] = ("#7A5300", "#F5E8C8", INCONSISTENTE.significado)
 CSS = """
 <style>
 [data-testid="stMainBlockContainer"]{max-width:1120px;padding-top:2rem;padding-bottom:2rem}
+.st-key-public_nav{border-bottom:1px solid #DED8CC;padding:.2rem 0 1rem;margin-bottom:1.15rem}
+.st-key-public_nav [data-testid="stPageLink"]{font-size:.95rem}
+.tc-brand-description{color:#766D60;margin:.45rem 0 .6rem;font-size:.92rem}
+.tc-page-intro{margin:.25rem 0 1.25rem}
+.tc-page-intro h2{font:500 2rem/1.25 Newsreader,Georgia,serif!important;letter-spacing:-.02em}
+.tc-page-intro p{color:#766D60;margin:.55rem 0 0}
+.tc-dict-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:.7rem 0 1.25rem}
+.tc-dict-preview{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tc-dict-card{background:#FFFDF9;border:1px solid #DED8CC;border-radius:10px;padding:1.1rem 1.25rem;min-width:0;overflow-wrap:anywhere}
+.tc-dict-top{display:flex;justify-content:space-between;gap:.5rem;font-size:.73rem;color:#7A7266;margin-bottom:.65rem}
+.tc-dict-card h3{font:500 1.6rem/1.2 Newsreader,Georgia,serif!important;letter-spacing:-.02em;margin:0}
+.tc-dict-alias{color:#7A7266;font-size:.79rem;margin:.3rem 0}
+.tc-dict-preferred{color:#285C53;font-weight:600;font-size:1rem;line-height:1.5;margin:.7rem 0 .6rem}
+.tc-dict-row{font-size:.83rem;line-height:1.6;margin:.5rem 0}
+.tc-dict-row>span{font-size:.72rem;color:#7A7266}
+.tc-dict-row p{margin:.05rem 0;color:#554F45}
+.tc-dict-avoid p{color:#9C3324}
+.tc-dict-card details{border-top:1px solid #EAE4D9;margin-top:.9rem;padding-top:.65rem;font-size:.8rem;color:#6A6257}
+.tc-dict-card summary{font-size:.76rem;color:#7A7266}
+.tc-dict-card details p{margin:.55rem 0;line-height:1.6}
+.tc-dict-source{font-size:.74rem}
+@media(max-width:760px){.tc-dict-grid,.tc-dict-preview{grid-template-columns:minmax(0,1fr)}
+ .tc-dict-card{padding:1.1rem}.tc-dict-card h3{font-size:1.5rem!important}}
 h1{font-size:1.8rem!important;letter-spacing:-.035em}
 h2{font-size:1.2rem!important;letter-spacing:-.02em}
 h3{font-size:1.05rem!important}
@@ -36,7 +59,7 @@ h3{font-size:1.05rem!important}
 .tc-en{background:transparent;color:#14120F;font-weight:500}
 .tc-mute{background:transparent;color:#4A453D}
 .tc-tachado{text-decoration:line-through;text-decoration-thickness:1.5px}
-.tc-ficha{background:transparent;border:0;border-top:1px solid #D8D0C2;border-radius:0;padding:.9rem 1rem .8rem;margin-bottom:.2rem}
+.tc-ficha{background:#FFFDF9;border:1px solid #DED8CC;border-radius:10px;padding:1.05rem 1rem;margin-bottom:.25rem}
 .tc-ficha-cab{display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;margin-bottom:.45rem}
 .tc-id{font:500 .78rem ui-monospace,monospace;color:#7A7266}
 .tc-meta{font-size:.78rem;color:#7A7266}
@@ -83,11 +106,11 @@ _LOGO_LINKEDIN = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 def cabecera(titulo):
     st.html(f'''<style>
 .tc-cabecera{{display:flex;align-items:center;gap:.65rem;flex-wrap:wrap}}
-.tc-cabecera h1{{font-family:Inter,system-ui,sans-serif;font-size:1.65rem!important;font-weight:600;margin:0;line-height:1.3;letter-spacing:-.045em}}
+.tc-cabecera h1{{font-family:Newsreader,Georgia,serif;font-size:2.25rem!important;font-weight:500;margin:0;line-height:1.2;letter-spacing:-.035em}}
 .tc-autor{{font-size:.78rem;color:#65716A;margin-left:auto}}
 .tc-cabecera a{{align-self:center;width:19px;height:19px;flex-shrink:0;
 background:url("{_LOGO_LINKEDIN}") center/contain no-repeat}}
-@media(max-width:640px){{.tc-cabecera h1{{font-size:1.4rem!important}}.tc-autor{{font-size:.72rem}}}}
+@media(max-width:640px){{.tc-cabecera h1{{font-size:1.8rem!important}}.tc-autor{{font-size:.72rem}}}}
 </style><div class="tc-cabecera"><h1>{e(titulo)}</h1><span class="tc-autor">Ismael Charles</span>
 <a href="{LINKEDIN}" target="_blank" rel="noopener" title="Ismael Charles en LinkedIn"
 aria-label="Ismael Charles en LinkedIn"></a></div>''')
