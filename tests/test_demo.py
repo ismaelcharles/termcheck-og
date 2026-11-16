@@ -35,6 +35,7 @@ def test_el_ejemplo_muestra_un_reporte(demo):
     [b for b in demo.button if "ejemplo" in b.label][0].click().run()
     assert not demo.exception, demo.exception
     assert any("Revisión" in s.value for s in demo.subheader)
+    assert demo.session_state.vf_editor_abierto is False
     assert any("términos encontrados en 3 segmentos" in m.proto.body for m in demo.get("html"))
     assert len([m for m in demo.get("html") if 'class="tc-seg"' in m.proto.body]) == 1
 
@@ -116,3 +117,4 @@ def test_texto_correcto_se_puede_consultar_sin_falsos_avisos(demo):
     assert len(bloques) == 1 and "boca de pozo" in bloques[0]
     [b for b in demo.button if b.label == "Vaciar"][0].click().run()
     assert "vf_resultado" not in demo.session_state and not demo.subheader
+    assert demo.session_state.vf_editor_abierto is True

@@ -46,7 +46,7 @@ podés consultar también las formas aceptadas y descargar el reporte completo. 
 XLIFF y TMX, y un glosario propio en CSV. Corre en un servidor compartido, así que tiene límites: archivos de hasta 1 MB, 200 segmentos y 20.000
 letras por lado. Los textos no se guardan.
 
-![La demo con el ejemplo cargado: el texto en inglés, la traducción y el reporte con los términos resaltados](docs/img/demo.png)
+![La revisión de un segmento: inglés y traducción resaltados, observaciones y descarga del reporte completo](docs/img/demo.png)
 
 ## 3. Cómo funciona
 

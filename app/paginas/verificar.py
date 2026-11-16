@@ -68,15 +68,18 @@ def vaciar():
     st.session_state.pop("vf_resultado", None)
     st.session_state.pop("vf_aviso", None)
     st.session_state.vf_pedir = False
+    st.session_state.vf_editor_abierto = True
 
 
 MODOS = {"pegar": "Pegar texto", "tsv": "Subir archivo", "corpus": "Corpus (desarrollo)"}
 if DEMO:
     del MODOS["corpus"]
 
-con_resultado = bool(st.session_state.get("vf_resultado"))
+st.session_state.setdefault("vf_editor_abierto", True)
+if st.session_state.pop("vf_cerrar_editor", False):
+    st.session_state.vf_editor_abierto = False
 with st.container(key="vf_editor"):
-    with st.expander("Textos de entrada", expanded=not con_resultado):
+    with st.expander("Textos de entrada", expanded=True, key="vf_editor_abierto", on_change="rerun"):
         with st.container(horizontal=True, vertical_alignment="center", gap="small"):
             modo = st.segmented_control("Entrada", list(MODOS), format_func=MODOS.get,
                                         default="pegar", required=True, key="vf_modo",
@@ -210,6 +213,7 @@ if pedir:
                 resultado = [(p, verificar(p[2], p[3], terminos, p[0], p[1])) for p in pares]
             todas = [o for _, oc in resultado for o in oc]
             st.session_state.vf_resultado = (firma, resultado, todas, inconsistencias(todas))
+            st.session_state.vf_cerrar_editor = True
             st.rerun()
 
 
