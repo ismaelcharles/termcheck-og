@@ -19,6 +19,18 @@ ETIQUETAS["INCONSISTENTE"] = ("#7A5300", "#F5E8C8", INCONSISTENTE.significado)
 
 CSS = """
 <style>
+[data-testid="stMainBlockContainer"]{max-width:1120px;padding-top:2rem;padding-bottom:2rem}
+h1{font-size:1.8rem!important;letter-spacing:-.035em}
+h2{font-size:1.2rem!important;letter-spacing:-.02em}
+h3{font-size:1.05rem!important}
+.st-key-vf_editor,.st-key-vf_revision{background:#FFFFFF}
+.st-key-vf_editor [data-testid="stTextArea"] textarea{background:#FAFBF9;line-height:1.6}
+.st-key-vf_editor [data-testid="stForm"]{padding:0}
+.tc-descripcion{color:#65716A;margin:.35rem 0 1.4rem;font-size:.95rem}
+.tc-result-summary{font-size:.92rem;color:#65716A;margin:0 0 .5rem}
+.tc-result-summary strong{color:#202824;font-weight:600}
+.tc-empty{padding:1.75rem 0;text-align:center;color:#65716A;font-size:.9rem}
+@media(max-width:640px){[data-testid="stMainBlockContainer"]{padding-top:1.1rem;padding-left:1rem;padding-right:1rem}}
 .tc-chip{display:inline-block;padding:.12rem .55rem;margin:.12rem .25rem .12rem 0;border-radius:0;
   font-size:.86rem;line-height:1.5;border:1px solid transparent;white-space:normal;overflow-wrap:anywhere}
 .tc-en{background:transparent;color:#14120F;font-weight:500}
@@ -70,13 +82,13 @@ _LOGO_LINKEDIN = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 
 def cabecera(titulo):
     st.html(f'''<style>
-.tc-cabecera{{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}}
-.tc-cabecera h1{{font-family:Newsreader,Georgia,serif;font-size:2.7rem;font-weight:500;margin:0;line-height:1.2}}
-.tc-autor{{font-size:.85rem;color:#6A6257}}
-.tc-cabecera a{{margin-left:auto;align-self:center;width:30px;height:30px;flex-shrink:0;
+.tc-cabecera{{display:flex;align-items:center;gap:.65rem;flex-wrap:wrap}}
+.tc-cabecera h1{{font-family:Inter,system-ui,sans-serif;font-size:1.65rem!important;font-weight:600;margin:0;line-height:1.3;letter-spacing:-.045em}}
+.tc-autor{{font-size:.78rem;color:#65716A;margin-left:auto}}
+.tc-cabecera a{{align-self:center;width:19px;height:19px;flex-shrink:0;
 background:url("{_LOGO_LINKEDIN}") center/contain no-repeat}}
-@media(max-width:640px){{.tc-cabecera h1{{font-size:2rem}}.tc-autor{{font-size:.75rem}}}}
-</style><div class="tc-cabecera"><h1>{e(titulo)}</h1><span class="tc-autor">· hecho por Ismael Charles</span>
+@media(max-width:640px){{.tc-cabecera h1{{font-size:1.4rem!important}}.tc-autor{{font-size:.72rem}}}}
+</style><div class="tc-cabecera"><h1>{e(titulo)}</h1><span class="tc-autor">Ismael Charles</span>
 <a href="{LINKEDIN}" target="_blank" rel="noopener" title="Ismael Charles en LinkedIn"
 aria-label="Ismael Charles en LinkedIn"></a></div>''')
 

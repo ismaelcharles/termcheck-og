@@ -17,15 +17,15 @@ toolbarMode = "minimal"
 # Colores y letras de aval (los mismos de aval.site)
 [theme]
 base = "light"
-primaryColor = "#14120F"
-backgroundColor = "#F6F3ED"
-secondaryBackgroundColor = "#ECE6DB"
-textColor = "#14120F"
-borderColor = "#D8D0C2"
-linkColor = "#14120F"
-baseRadius = "0.4rem"
+primaryColor = "#285C53"
+backgroundColor = "#F7F8F6"
+secondaryBackgroundColor = "#EEF0EC"
+textColor = "#202824"
+borderColor = "#DCE1DA"
+linkColor = "#285C53"
+baseRadius = "0.5rem"
 font = "Inter, system-ui, sans-serif"
-headingFont = "Newsreader, Georgia, serif"
+headingFont = "Inter, system-ui, sans-serif"
 codeFont = "ui-monospace, monospace"
 
 [[theme.fontFaces]]

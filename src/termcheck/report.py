@@ -15,26 +15,33 @@ COLORES = {c: (("#F6DCD6", "#9C3324") if e.nivel == "error" else
 e = _html.escape
 
 CSS = """
-.tc-report{color:#14120F;font:inherit;line-height:1.65;overflow-wrap:anywhere}
-.tc-report .tc-seg{border-top:1px solid #D8D0C2;padding:1.25rem 0;margin-top:1rem;break-inside:avoid}
+.tc-report{color:#202824;font:inherit;line-height:1.65;overflow-wrap:break-word}
+.tc-report .tc-seg{border-top:1px solid #DCE1DA;padding:1rem 0;margin-top:.5rem;break-inside:avoid}
+.st-key-vf_revision .tc-seg{border-top:0;padding:0;margin:0}
 .tc-report .tc-seg-id{font-size:.82rem;color:#6A6257;margin:0 0 .65rem}
-.tc-report .tc-par{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5rem}
+.tc-report .tc-par{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.75rem}
 .tc-report .tc-par p{margin:.25rem 0 .9rem;white-space:pre-wrap}
-.tc-report .tc-lengua{font-size:.82rem;color:#6A6257;font-weight:600}
+.tc-report .tc-lengua{font-size:.8rem;color:#65716A;font-weight:500}
 .tc-report mark{background:transparent;color:inherit;padding:0;border-radius:0;text-decoration:underline;
  text-decoration-color:#AAA296;text-underline-offset:3px;text-decoration-thickness:1px}
 .tc-report mark.tc-prohibido{background:#F6DCD6;color:#9C3324;text-decoration:none}
 .tc-report mark.tc-sin_traducir,.tc-report mark.tc-no_encontrado{background:#F5E8C8;color:#7A5300;text-decoration:none}
-.tc-report table{width:100%;border-collapse:collapse;font-size:.88rem;line-height:1.55;margin:.35rem 0}
-.tc-report th,.tc-report td{text-align:left;vertical-align:top;padding:.5rem .65rem;border-bottom:1px solid #E3DCD0}
-.tc-report th{font-weight:500;color:#6A6257;font-size:.82rem}
+.tc-report table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:.9rem;line-height:1.55;margin:.6rem 0 0}
+.tc-report td{overflow-wrap:anywhere}
+.tc-report th,.tc-report td{text-align:left;vertical-align:top;padding:.75rem .65rem;border-bottom:1px solid #E5E9E2}
+.tc-report th{font-weight:500;color:#65716A;font-size:.78rem}
 .tc-report th:first-child,.tc-report td:first-child{padding-left:0;width:22%}
 .tc-report td:nth-child(2){width:25%}
 .tc-report .tc-error{color:#9C3324}.tc-report .tc-aviso{color:#7A5300}
 .tc-report .tc-report-note{font-size:.84rem;color:#6A6257}
 .tc-report code{font-size:.78rem;background:transparent;color:#6A6257}
-@media(max-width:640px){.tc-report .tc-par{grid-template-columns:minmax(0,1fr);gap:0}
- .tc-report table{font-size:.8rem}.tc-report th,.tc-report td{padding:.4rem .3rem}}
+@media(max-width:640px){.tc-report .tc-par{grid-template-columns:minmax(0,1fr);gap:.4rem}
+ .tc-report table{font-size:.9rem}.tc-report table thead{display:none}
+ .tc-report table tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.25rem .75rem;
+ padding:.8rem 0;border-bottom:1px solid #E5E9E2}
+ .tc-report table td{padding:0;border:0;width:auto!important;overflow-wrap:anywhere}
+ .tc-report table td:last-child{grid-column:1/-1}
+ .tc-report table td[data-label]::before{content:attr(data-label);display:block;font-size:.75rem;color:#65716A;margin-bottom:.15rem}}
 @media print{.tc-report .tc-seg{break-inside:auto}.tc-report mark{print-color-adjust:exact;-webkit-print-color-adjust:exact}
  body{background:white!important;margin:0!important}details{display:block}}
 """
@@ -125,8 +132,8 @@ def bloque_segmento(texto_en, texto_es, ocurrencias, solo=False, cabecera=""):
     rows = []
     for o, n in grupos.values():
         veces = f", {n} veces" if n > 1 else ""
-        rows.append(f'<tr><td title="{e(o.term_id)}">{e(o.term_en)}{veces}</td>'
-                    f'<td>{e(o.es_found) if o.es_found else "—"}</td>'
+        rows.append(f'<tr><td data-label="Término" title="{e(o.term_id)}">{e(o.term_en)}{veces}</td>'
+                    f'<td data-label="En la traducción">{e(o.es_found) if o.es_found else "—"}</td>'
                     f'<td class="tc-{ETIQUETAS[o.label].nivel}">{e(detalle(o))}</td></tr>')
     tabla = ('<table><thead><tr><th>Término</th><th>En la traducción</th><th>Resultado</th></tr></thead>'
              f'<tbody>{"".join(rows)}</tbody></table>' if rows else
@@ -165,8 +172,8 @@ def a_html(segmentos, traducciones, ocurrencias, advertencias=(), titulo="Report
     fecha = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     return f'''<!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>{e(titulo)}</title>
-<style>body{{font:16px/1.65 Inter,system-ui,sans-serif;max-width:72rem;margin:2rem auto;padding:0 1rem;
-color:#14120F;background:#F6F3ED}}h1,h2,h3{{font-family:Newsreader,Georgia,serif;font-weight:500}}{CSS}</style></head>
+<style>body{{font:16px/1.65 Inter,system-ui,sans-serif;max-width:68rem;margin:2rem auto;padding:0 1rem;
+color:#202824;background:#FFFFFF}}h1,h2,h3{{font-family:Inter,system-ui,sans-serif;font-weight:600}}{CSS}</style></head>
 <body><h1>{e(titulo)}</h1><p>{e(resumen(ocurrencias, len(traducciones)))}</p><p>{e(recuento(ocurrencias))}</p>
 {avisos_html(advertencias)}{"".join(cuerpo)}<h2>Qué significa cada resultado</h2>{leyenda()}
 <p>Las sugerencias se basan en el parecido de letras. Nunca cambian la etiqueta.</p>
