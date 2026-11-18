@@ -33,7 +33,7 @@ for clave in ("vf_en", "vf_es", "vf_modo", "vf_editor_abierto", "vf_solo", "vf_s
         st.session_state[clave] = st.session_state[clave]
 vista.estilos()
 vista.cabecera(NOMBRE)
-st.html('<p class="tc-brand-description">Terminología de Oil &amp; Gas, en español de Argentina.</p>')
+st.html('<p class="tc-brand-description">Oil &amp; Gas · Inglés → español de Argentina</p>')
 with st.container(horizontal=True, gap="medium", key="public_nav"):
     for p in paginas:
         st.page_link(p)

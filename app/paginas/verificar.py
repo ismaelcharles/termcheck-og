@@ -33,9 +33,6 @@ DEMO = os.environ.get("TERMCHECK_DEMO") == "1"
 
 vista.estilos()
 st.html("<style>" + report.CSS + "</style>")
-if not DEMO:
-    st.title("Verificar")
-    st.html('<p class="tc-descripcion">Revisión terminológica de Oil &amp; Gas · Inglés → español de Argentina</p>')
 
 
 @st.cache_data(show_spinner=False)
@@ -79,14 +76,16 @@ if DEMO:
 st.session_state.setdefault("vf_editor_abierto", True)
 if st.session_state.pop("vf_cerrar_editor", False):
     st.session_state.vf_editor_abierto = False
+# Se completa al final, cuando sabemos si hay un resultado vigente.
+titulo_entrada = st.container(key="vf_intro")
 with st.container(key="vf_editor"):
-    with st.expander("Textos de entrada", expanded=True, key="vf_editor_abierto", on_change="rerun"):
+    with st.expander("Textos", expanded=True, key="vf_editor_abierto", on_change="rerun"):
         with st.container(horizontal=True, vertical_alignment="center", gap="small"):
             modo = st.segmented_control("Entrada", list(MODOS), format_func=MODOS.get,
                                         default="pegar", required=True, key="vf_modo",
                                         label_visibility="collapsed")
-            with st.popover("Glosario propio"):
-                st.caption("Se usa el glosario O&G del proyecto. Podés reemplazarlo por uno propio.")
+            with st.popover("Glosario"):
+                st.caption("Incluido: glosario O&G. Podés cargar otro en CSV.")
                 nuevo_glosario = st.file_uploader("Glosario propio (CSV)", type=["csv"], key="vf_glosario",
                                           max_upload_size=1 if DEMO else None,
                                           on_change=recordar_archivo, args=("vf_glosario", "vf_glosario_memoria"),
@@ -98,9 +97,6 @@ with st.container(key="vf_editor"):
                     if st.button("Volver al glosario del proyecto"):
                         st.session_state.pop("vf_glosario_memoria", None)
                         st.rerun()
-            if modo == "pegar":
-                st.button("Usar ejemplo", on_click=cargar_ejemplo, type="tertiary")
-                st.button("Vaciar", on_click=vaciar, type="tertiary")
         if propio:
             try:
                 bytes_glosario = propio.getvalue()
@@ -134,11 +130,13 @@ with st.container(key="vf_editor"):
             with st.form("vf_textos", border=False):
                 c1, c2 = st.columns(2)
                 tope = MAX_LETRAS if DEMO else None
-                en = c1.text_area("Original · inglés", key="vf_en", height=210, placeholder="Una oración por línea", max_chars=tope)
+                en = c1.text_area("Original · inglés", key="vf_en", height=210, placeholder="Pegá el original",
+                                  max_chars=tope, help="Si hay varios segmentos, poné uno por línea en ambos textos.")
                 es = c2.text_area("Traducción · español", key="vf_es", height=210, max_chars=tope,
-                                  placeholder="La traducción de cada línea, en el mismo orden")
+                                  placeholder="Pegá la traducción")
                 with st.container(horizontal=True, vertical_alignment="center"):
                     pedir = st.form_submit_button("Verificar", type="primary") or pedir
+                    st.form_submit_button("Vaciar", on_click=vaciar, type="tertiary")
                     st.caption(f"{nombre_glosario} · {len(terminos)} términos" + (" · Los textos no se guardan." if DEMO else ""))
             l_en = en.splitlines()
             l_es = es.splitlines()
@@ -239,6 +237,12 @@ if pedir:
 if st.session_state.get("vf_aviso"):
     st.warning(st.session_state.vf_aviso)
 previo = st.session_state.get("vf_resultado")
+if not previo or previo[0] != firma:
+    with titulo_entrada:
+        with st.container(horizontal=True, vertical_alignment="center"):
+            st.html('<div class="tc-page-intro tc-workspace-title"><h2>Verificar traducción</h2></div>')
+            if modo == "pegar":
+                st.button("Usar ejemplo", on_click=cargar_ejemplo, type="tertiary")
 if previo and previo[0] == firma:
     from revision import mostrar
     _, resultado, todas, advertencias = previo
@@ -248,9 +252,8 @@ elif not pares:
         import catalogo
         proyecto = catalogo.leer()
         with st.container(horizontal=True, vertical_alignment="center"):
-            st.subheader("El glosario detrás de la revisión")
-            st.page_link("paginas/glosario_publico.py", label=f"Explorar los {len(proyecto)} términos →")
-        st.caption("Un término puede tener más de una traducción válida. Estas son las formas que usa el verificador.")
+            st.subheader("Glosario O&G")
+            st.page_link("paginas/glosario_publico.py", label=f"Ver los {len(proyecto)} términos →")
         st.html(catalogo.fichas(catalogo.destacados(proyecto), compactas=True))
     else:
         st.html('<p class="tc-empty">Pegá los dos textos o usá el ejemplo para empezar.</p>')

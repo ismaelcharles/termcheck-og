@@ -7,10 +7,9 @@ import catalogo
 
 
 terminos = catalogo.leer()
-st.html('<div class="tc-page-intro"><h2>El glosario</h2>'
-        '<p>Las palabras del campo, con sus formas preferidas, variantes y fuentes.</p></div>')
+st.html('<div class="tc-page-intro"><h2>Glosario</h2></div>')
 with st.container(horizontal=True, vertical_alignment="center"):
-    st.caption(f"{len(terminos)} términos · Inglés → español técnico de Argentina")
+    st.caption("Inglés → español técnico de Argentina")
     st.download_button("Descargar glosario CSV", catalogo.archivo().read_bytes(), "glosario-termcheck.csv",
                        "text/csv", on_click="ignore")
 
@@ -25,7 +24,8 @@ consulta = buscar.text_input("Buscar un término", placeholder="En inglés o en 
 area = filtrar.selectbox("Área", ["Todas las áreas", *sorted({t.subdomain for t in terminos if t.subdomain})],
                         key="gp_area", on_change=primera_pagina)
 filtrados = catalogo.buscar(terminos, consulta, area)
-st.caption(f"{len(filtrados)} de {len(terminos)} términos")
+st.caption(f"{len(filtrados)} términos" if len(filtrados) == len(terminos) else
+           f"{len(filtrados)} de {len(terminos)} términos")
 if not filtrados:
     st.info("No hay términos que coincidan. Probá otra palabra o elegí otra área.")
 else:
@@ -33,5 +33,6 @@ else:
     indice = st.selectbox("Página", range(paginas), format_func=lambda i: f"{i + 1} de {paginas}",
                           key="gp_pagina", width=150) if paginas > 1 else 0
     st.html(catalogo.fichas(filtrados[indice * 6:(indice + 1) * 6]))
-st.caption("La demo y esta consulta usan la misma edición del glosario. Las equivalencias son decisiones "
-           "documentadas para este proyecto; las preferencias pueden cambiar según el contexto o el cliente.")
+with st.expander("Sobre el glosario"):
+    st.caption("La consulta y el verificador usan la misma edición. Las equivalencias son decisiones "
+               "documentadas del proyecto; las preferencias pueden cambiar según el contexto o el cliente.")

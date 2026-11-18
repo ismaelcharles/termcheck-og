@@ -174,5 +174,5 @@ def test_la_pagina_verificar_procesa_un_xliff(monkeypatch):
     [b for b in at.button if b.label == "Verificar"][0].click().run()
     assert not at.exception, at.exception
     assert any("Revisión" in s.value for s in at.subheader)
-    assert any("en 5 segmentos" in m.proto.body for m in at.get("html"))
+    assert any("· 5 segmentos" in m.proto.body for m in at.get("html"))
     assert any("Se salteó 1 segmento sin traducción" in c.value for c in at.caption)

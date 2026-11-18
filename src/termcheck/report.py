@@ -94,15 +94,15 @@ def detalle(o):
     if o.label == "OK":
         return "Preferida."
     if o.label == "VARIANTE":
-        return f"Variante aceptada. La preferida es {preferida}."
+        return f"Variante aceptada. Preferida: {preferida}."
     if o.label == "PROHIBIDO":
-        return f"Prohibida. La preferida es {preferida}."
+        return f"Prohibida. Preferida: {preferida}."
     if o.label == "SIN_TRADUCIR":
-        return f"Sin traducir. La preferida es {preferida}."
+        return f"Sin traducir. Preferida: {preferida}."
     conocidas = ", ".join(f"«{x}»" for x in dict.fromkeys((o.es_expected, *o.es_allowed)) if x)
-    texto = f"No encontrada. El glosario tiene {conocidas}."
+    texto = f"No encontrada. Formas: {conocidas}."
     if o.suggestion:
-        texto += f" Lo más parecido en la traducción: «{o.suggestion}»."
+        texto += f" Por parecido: «{o.suggestion}»."
     return texto
 
 

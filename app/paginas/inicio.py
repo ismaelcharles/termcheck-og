@@ -59,9 +59,9 @@ if not DEMO:
                 "2. Usá el glosario del proyecto o cargá el tuyo.\n"
                 "3. Verificá y revisá los términos señalados. Podés descargar el reporte en HTML o CSV.")
 else:
-    st.html('<div class="tc-page-intro"><h2>Qué revisa TermCheck</h2>'
-            '<p>Ejemplos para entender qué acepta el glosario y qué conviene revisar.</p></div>')
-st.page_link("paginas/verificar.py", label="Probar con una traducción →")
+    st.html('<div class="tc-page-intro"><h2>Ejemplos</h2></div>')
+if not DEMO:
+    st.page_link("paginas/verificar.py", label="Probar con una traducción →")
 if not DEMO:
     st.subheader("Cómo marca cada caso")
 titulos = [x["titulo"] for x in EJEMPLOS]
@@ -80,14 +80,12 @@ o = Ocurrencia("Ejemplo", "", "Ejemplo", term, ej["etiqueta"], encontrada,
                ini_es, ini_es + len(encontrada), ini_en, ini_en + len(term), "")
 st.html(report.bloque_segmento(quitar_marcas(ej["en"]), quitar_marcas(ej["es"]), [o], cabecera="Ejemplo ilustrativo"))
 st.markdown(ej["porque"])
-st.caption("Ejemplos ilustrativos. En tus textos, las formas preferidas y válidas las decide el glosario.")
 with st.expander("Las seis etiquetas"):
     st.html(report.leyenda())
+    st.caption("Ejemplos ilustrativos. En tus textos, las formas preferidas y válidas las decide el glosario.")
 if not DEMO:
     st.subheader("Estado del proyecto")
     st.write(f"Versión {VERSION}. El glosario de trabajo tiene {len(datos.leer())} términos. "
              "La evaluación publicada corresponde a la versión 0.1; los resultados de 0.2 se informan aparte en el README. "
              "Falta probar la herramienta con traductores y ampliar la anotación.")
     st.page_link("paginas/glosario.py", label="Ir al glosario")
-else:
-    st.page_link("paginas/glosario_publico.py", label="Consultar el glosario completo →")

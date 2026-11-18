@@ -23,9 +23,11 @@ def test_sin_terminos_no_se_presenta_como_revision_correcta(proyecto):
     [b for b in at.button if b.label == "Verificar"][0].click().run()
     assert not at.exception
     assert not at.success
+    assert not at.checkbox
     assert any("No se encontraron términos del glosario" in i.value for i in at.info)
     html = "".join(m.proto.body for m in at.get("html"))
     assert "documento está listo" in html
+    assert 'class="tc-result-summary"' not in html
 
 
 def test_glosario_invalido_impide_verificar(proyecto):

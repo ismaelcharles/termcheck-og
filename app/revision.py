@@ -6,7 +6,7 @@ from termcheck import report
 
 def mostrar(resultado, todas, advertencias, glosario=""):
     marcadas = sum(o.marcada for o in todas)
-    with st.container(horizontal=True, vertical_alignment="center"):
+    with st.container(horizontal=True, vertical_alignment="center", key="vf_result_header"):
         st.subheader("Revisión")
         with st.popover("Descargar"):
             segmentos = {p[0]: p[2] for p, _ in resultado}
@@ -17,21 +17,23 @@ def mostrar(resultado, todas, advertencias, glosario=""):
             st.download_button("Tabla CSV", report.a_csv_texto(todas), "termcheck.csv", "text/csv",
                                on_click="ignore", width="stretch")
     # Cuenta apariciones, como el CSV, aunque los detalles iguales se agrupen en la pantalla.
-    st.html('<p class="tc-result-summary">'
-            f'<strong>{marcadas} para revisar</strong> · {len(todas)} '
-            f'{"término encontrado" if len(todas) == 1 else "términos encontrados"} en '
-            f'{len(resultado)} {"segmento" if len(resultado) == 1 else "segmentos"}</p>')
     con_terminos = sum(bool(oc) for _, oc in resultado)
-    st.caption(f"{con_terminos} de {len(resultado)} segmentos con términos del glosario. "
-               "La revisión solo cubre esos términos; una coincidencia no valida la traducción completa.")
-    if not todas:
-        st.info("No se encontraron términos del glosario en el original. "
-                "Podés consultar el glosario o cargar uno propio para este texto.")
-    solo = st.checkbox("Solo lo que hay que revisar", value=True, key="vf_solo", disabled=not todas)
+    if todas:
+        st.html('<p class="tc-result-summary">'
+                f'<strong>{marcadas} para revisar</strong> · {len(todas)} '
+                f'{"término" if len(todas) == 1 else "términos"} · '
+                f'{len(resultado)} {"segmento" if len(resultado) == 1 else "segmentos"}</p>')
+        if con_terminos < len(resultado):
+            st.caption(f"Con términos del glosario: {con_terminos} de {len(resultado)} segmentos.")
+        if not marcadas:
+            st.success("Sin observaciones en los términos reconocidos.")
+    else:
+        st.info("No se encontraron términos del glosario en el original.")
+    # Sin avisos se muestra directamente el texto: no hay que desactivar un filtro vacío.
+    solo = st.checkbox("Solo observaciones", value=True, key="vf_solo") if marcadas else False
     indices = [i for i, (_, oc) in enumerate(resultado) if not todas or not solo or any(o.marcada for o in oc)]
     if not indices:
-        st.success("No hay términos para revisar." if not marcadas else "No hay segmentos en esta vista.")
-        st.caption("Desmarcá el filtro para ver también las formas aceptadas y los segmentos sin términos.")
+        st.info("No hay segmentos en esta vista.")
     else:
         def etiqueta(i):
             (seg_id, sistema, _, _), oc = resultado[i]
@@ -50,5 +52,5 @@ def mostrar(resultado, todas, advertencias, glosario=""):
             st.html(report.avisos_html(advertencias))
     with st.expander("Cómo leer las marcas"):
         st.html(report.leyenda())
-        st.caption("Una forma no encontrada puede ser una omisión o una variante que falta en el glosario. "
-                   "Las sugerencias por parecido de letras no cambian la etiqueta.")
+        st.caption("Solo se revisan términos del glosario, no la traducción completa. Una forma no encontrada "
+                   "puede ser válida. Las sugerencias por parecido no cambian la etiqueta.")

@@ -8,7 +8,7 @@ Recibe el texto en inglés, su traducción y un glosario bilingüe. Señala form
 términos en inglés que no se aceptan como préstamos y equivalencias que no pudo encontrar. La persona que revisa
 decide cada caso en contexto. No traduce ni corrige estilo.
 
-**Versión pública: 0.2.2 · Glosario: 1.1 · 99 términos.** Se puede usar el glosario incluido o uno propio con las
+**Versión pública: 0.2.3 · Glosario: 1.1 · 99 términos.** Se puede usar el glosario incluido o uno propio con las
 preferencias del cliente. La evaluación histórica se conserva con su código y su glosario identificados.
 
 ## 1. El problema
@@ -46,7 +46,7 @@ Se puede probar sin cuenta en **https://termcheck.aval.site/demo**
 
 Pegá el inglés y la traducción y tocá «Verificar», o elegí «Usar ejemplo» para probar con tres oraciones de
 desarrollo traducidas con Opus-MT. La revisión muestra un segmento por vez, primero con lo que hay que revisar;
-podés consultar también las formas aceptadas y descargar el reporte completo. También acepta archivos TSV/CSV,
+si no hay observaciones, muestra directamente las formas aceptadas. Podés descargar el reporte completo. También acepta archivos TSV/CSV,
 XLIFF y TMX, y un glosario propio en CSV. Corre en un servidor compartido, así que tiene límites: archivos de hasta 1 MB, 200 segmentos y 20.000
 letras por lado. Los textos no se guardan.
 
@@ -67,7 +67,7 @@ esté bien; cuando no hay términos reconocidos, la app lo informa expresamente.
 
 ![La portada del verificador con acceso al glosario, ejemplos y fichas de términos](docs/img/demo.png)
 
-*Interfaz clara de TermCheck 0.2.2. [Ver la interfaz oscura](docs/img/demo-oscuro.png).*
+*Interfaz clara de TermCheck 0.2.3. [Ver la interfaz oscura](docs/img/demo-oscuro.png).*
 
 ## 3. Cómo funciona
 
@@ -265,6 +265,12 @@ provienen del análisis ya publicado; volver a medirlas en esos mismos casos no 
 
 La versión 0.2.2 ajusta la presentación y agrega temas claro, oscuro y del sistema. El cambio es visual: conserva
 las reglas del verificador, el glosario 1.1 y los resultados históricos anteriores.
+
+### Presentación 0.2.3
+
+La versión 0.2.3 ordena las acciones de entrada y resume la pantalla de revisión. Los resultados sin avisos
+se muestran directamente; el filtro aparece cuando hay observaciones. La ayuda y las aclaraciones de alcance
+se consultan en sus desplegables. Se mantienen los temas claro y oscuro, las descargas y el glosario 1.1.
 
 ## 5. Validación
 

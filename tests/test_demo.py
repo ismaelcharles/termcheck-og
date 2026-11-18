@@ -36,7 +36,7 @@ def test_el_ejemplo_muestra_un_reporte(demo):
     assert not demo.exception, demo.exception
     assert any("Revisión" in s.value for s in demo.subheader)
     assert demo.session_state.vf_editor_abierto is False
-    assert any("términos encontrados en 3 segmentos" in m.proto.body for m in demo.get("html"))
+    assert any("términos · 3 segmentos" in m.proto.body for m in demo.get("html"))
     assert len([m for m in demo.get("html") if 'class="tc-seg"' in m.proto.body]) == 1
 
 
@@ -46,7 +46,7 @@ def test_corta_en_el_maximo_de_segmentos(demo):
     [b for b in demo.button if b.label == "Verificar"][0].click().run()
     assert not demo.exception, demo.exception
     assert any("verifica los primeros 200" in w.value for w in demo.warning)
-    assert any("en 200 segmentos" in m.proto.body for m in demo.get("html"))
+    assert any("· 200 segmentos" in m.proto.body for m in demo.get("html"))
 
 
 def test_el_cuadro_de_texto_corta_en_el_maximo_de_letras(demo):
@@ -81,12 +81,16 @@ def test_vaciar_y_verificar_solo_al_pedirlo(demo, monkeypatch):
     [b for b in demo.button if b.label == "Vaciar"][0].click().run()
     assert not any("Revisión" in s.value for s in demo.subheader)
     demo.text_area[0].set_value("Check the wellhead.")
-    demo.text_area[1].set_value("Revise la boca de pozo.")
+    demo.text_area[1].set_value("Revise el equipo.")
     assert not llamadas
     [b for b in demo.button if b.label == "Verificar"][0].click().run()
     assert len(llamadas) == 1 and not demo.exception
     demo.checkbox[0].uncheck().run()
     assert len(llamadas) == 1 and not demo.exception
+    [b for b in demo.button if b.label == "Vaciar"][0].click().run()
+    assert len(llamadas) == 1 and not demo.exception
+    assert [t.value for t in demo.text_area] == ["", ""]
+    assert "vf_resultado" not in demo.session_state
 
 
 def test_cambiar_segmento_y_filtro_no_repite_el_analisis(demo, monkeypatch):
@@ -111,11 +115,25 @@ def test_texto_correcto_se_puede_consultar_sin_falsos_avisos(demo):
     demo.text_area[1].set_value("Inspeccione la boca de pozo.")
     [b for b in demo.button if b.label == "Verificar"][0].click().run()
     assert not demo.exception
-    assert any("No hay términos para revisar" in s.value for s in demo.success)
-    demo.checkbox[0].uncheck().run()
+    assert any("Sin observaciones en los términos reconocidos" in s.value for s in demo.success)
+    assert not demo.checkbox
     bloques = [m.proto.body for m in demo.get("html") if 'class="tc-seg"' in m.proto.body]
     assert len(bloques) == 1 and "boca de pozo" in bloques[0]
     [b for b in demo.button if b.label == "Vaciar"][0].click().run()
     assert "vf_resultado" not in demo.session_state
     assert not any(s.value == "Revisión" for s in demo.subheader)
     assert demo.session_state.vf_editor_abierto is True
+
+
+def test_el_filtro_se_conserva_al_pasar_por_un_resultado_sin_avisos(demo):
+    demo.text_area[0].set_value("Inspect the wellhead.")
+    demo.text_area[1].set_value("Revise el equipo.")
+    [b for b in demo.button if b.label == "Verificar"][0].click().run()
+    demo.checkbox[0].uncheck().run()
+    demo.text_area[1].set_value("Revise la boca de pozo.")
+    [b for b in demo.button if b.label == "Verificar"][0].click().run()
+    assert not demo.checkbox and not demo.exception
+    demo.text_area[1].set_value("Revise el equipo.")
+    [b for b in demo.button if b.label == "Verificar"][0].click().run()
+    assert not demo.exception
+    assert demo.checkbox[0].value is False

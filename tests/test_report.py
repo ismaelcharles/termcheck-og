@@ -124,5 +124,5 @@ def test_filtro_muestra_solo_los_detalles_para_revisar():
     en, es = "Move the rig to the wellhead.", "Mueva la plataforma de perforación a la boca de pozo."
     oc = verificar(en, es, GLOSARIO)
     pieza = bloque_segmento(en, es, oc, solo=True)
-    assert "Prohibida. La preferida" in pieza
+    assert "Prohibida. Preferida:" in pieza
     assert "Preferida.</td>" not in pieza
