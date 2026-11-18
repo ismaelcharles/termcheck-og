@@ -63,7 +63,7 @@ esté bien; cuando no hay términos reconocidos, la app lo informa expresamente.
 
 ![La portada del verificador con acceso al glosario, ejemplos y fichas de términos](docs/img/demo.png)
 
-*Captura de la interfaz 0.2 con glosario v1.*
+*Interfaz de TermCheck 0.2.1 con glosario 1.1.*
 
 ## 3. Cómo funciona
 
