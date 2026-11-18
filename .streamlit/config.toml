@@ -12,21 +12,31 @@ enableStaticServing = true
 gatherUsageStats = false
 
 [client]
-toolbarMode = "minimal"
+toolbarMode = "viewer"
 
-# Colores y letras de aval (los mismos de aval.site)
+# Dos variantes con el selector nativo de claro, oscuro y sistema.
 [theme]
 base = "light"
-primaryColor = "#285C53"
-backgroundColor = "#F6F3ED"
-secondaryBackgroundColor = "#EEEAE2"
-textColor = "#202824"
-borderColor = "#DED8CC"
-linkColor = "#285C53"
-baseRadius = "0.5rem"
+baseRadius = "0.4rem"
 font = "Inter, system-ui, sans-serif"
 headingFont = "Inter, system-ui, sans-serif"
 codeFont = "ui-monospace, monospace"
+
+[theme.light]
+primaryColor = "#2E604B"
+backgroundColor = "#F3F5EF"
+secondaryBackgroundColor = "#E8EDE4"
+textColor = "#242D28"
+borderColor = "#D5DCD3"
+linkColor = "#285D49"
+
+[theme.dark]
+primaryColor = "#ADD3BB"
+backgroundColor = "#171D19"
+secondaryBackgroundColor = "#283229"
+textColor = "#E5EBE6"
+borderColor = "#3B473F"
+linkColor = "#B4D8C0"
 
 [[theme.fontFaces]]
 family = "Inter"

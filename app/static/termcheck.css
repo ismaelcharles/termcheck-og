@@ -1,0 +1,139 @@
+/* Los colores siguen el tema nativo de Streamlit, también al cambiarlo sin recargar. */
+.stApp {
+  --tc-text: light-dark(#242d28, #e5ebe6);
+  --tc-muted: light-dark(#5e6c62, #a8b6ac);
+  --tc-panel: light-dark(#fcfcf9, #202722);
+  --tc-field: light-dark(#f5f6f1, #191f1b);
+  --tc-border: light-dark(#d5dcd3, #3b473f);
+  --tc-rule: light-dark(#e1e6dd, #333e36);
+  --tc-accent: light-dark(#2e604b, #add3bb);
+  --tc-error: light-dark(#993b32, #f1b0a5);
+  --tc-error-bg: light-dark(#f8e7e1, #3e2b27);
+  --tc-warning: light-dark(#80590c, #e3c98b);
+  --tc-warning-bg: light-dark(#f6edd6, #383321);
+  --tc-link: light-dark(#285d49, #b4d8c0);
+  --tc-focus: light-dark(#387459, #aed1ba);
+}
+[data-testid="stMainBlockContainer"] {
+  max-width: 1100px;
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+}
+h1 {font-size: 1.8rem !important; letter-spacing: -.03em; font-weight: 500 !important}
+h2 {font-size: 1.2rem !important; letter-spacing: -.015em; font-weight: 600 !important}
+h3 {font-size: 1.05rem !important; font-weight: 600 !important}
+[data-testid="stCaptionContainer"] {opacity: 1}
+[data-testid="stCaptionContainer"] p {color: var(--tc-muted); line-height: 1.65}
+[data-testid="stBaseButton-primary"], [data-testid="stBaseButton-primaryFormSubmit"] {
+  color: light-dark(#ffffff, #17261c);
+}
+.tc-cabecera {display: flex; align-items: center; gap: .7rem; flex-wrap: wrap}
+.tc-cabecera h1 {
+  font: 500 2.15rem/1.2 Newsreader, Georgia, serif !important;
+  letter-spacing: -.04em;
+  margin: 0;
+}
+.tc-autor {font-size: .8rem; color: var(--tc-muted); margin-left: auto}
+.tc-cabecera a {width: 18px; height: 18px; flex: none}
+.tc-brand-description {color: var(--tc-muted); margin: .35rem 0 .55rem; font-size: .9rem; line-height: 1.6}
+.st-key-public_nav {border-bottom: 1px solid var(--tc-border); padding: .25rem 0 .85rem; margin-bottom: 1.1rem}
+.st-key-public_nav [data-testid="stPageLink"] {font-size: .9rem}
+.st-key-public_nav a {border-radius: 4px; padding: .4rem .65rem}
+a:focus-visible, summary:focus-visible, button:focus-visible {
+  outline: 2px solid var(--tc-focus) !important;
+  outline-offset: 3px;
+}
+.st-key-vf_editor {
+  background: var(--tc-panel);
+  border-radius: 8px;
+}
+.st-key-vf_editor [data-testid="stExpander"] > details {border-color: var(--tc-border); border-radius: 8px}
+.st-key-vf_editor [data-testid="stExpanderDetails"] {padding: .9rem 1.15rem 1.05rem}
+.st-key-vf_editor [data-testid="stForm"] {padding: 0}
+.st-key-vf_editor [data-testid="stTextArea"] textarea {
+  background: var(--tc-field);
+  font-size: .98rem;
+  line-height: 1.75;
+  padding: .85rem;
+}
+.st-key-vf_editor textarea::placeholder {color: var(--tc-muted); opacity: 1}
+.st-key-vf_editor [data-testid="stWidgetLabel"] p {font-size: .83rem; font-weight: 500}
+.st-key-vf_revision {background: var(--tc-panel); border-color: var(--tc-border); padding: 1.15rem}
+.tc-descripcion {color: var(--tc-muted); margin: .35rem 0 1.4rem; font-size: .95rem}
+.tc-result-summary {font-size: .96rem; color: var(--tc-muted); margin: 0 0 .25rem; line-height: 1.7}
+.tc-result-summary strong {color: var(--tc-text); font-weight: 600}
+.tc-empty {padding: 1.75rem 0; text-align: center; color: var(--tc-muted); font-size: .9rem}
+.tc-page-intro {margin: .25rem 0 1.25rem}
+.tc-page-intro h2 {font: 500 1.85rem/1.25 Newsreader, Georgia, serif !important; letter-spacing: -.025em}
+.tc-page-intro p {color: var(--tc-muted); margin: .5rem 0 0; line-height: 1.65}
+.tc-dict-grid {display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: .7rem 0 1.25rem}
+.tc-dict-preview {grid-template-columns: repeat(3, minmax(0, 1fr))}
+.tc-dict-card {
+  background: var(--tc-panel);
+  border: 1px solid var(--tc-border);
+  border-radius: 7px;
+  padding: 1.25rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.tc-dict-top {display: flex; justify-content: space-between; gap: .5rem; font-size: .76rem; color: var(--tc-muted); margin-bottom: .8rem}
+.tc-dict-top span:last-child {font: .72rem ui-monospace, monospace}
+.tc-dict-card h3 {font: 500 1.55rem/1.2 Newsreader, Georgia, serif !important; letter-spacing: -.02em; margin: 0; color: var(--tc-text)}
+.tc-dict-alias {color: var(--tc-muted); font-size: .81rem; margin: .3rem 0}
+.tc-dict-preferred {color: var(--tc-accent); font-weight: 600; font-size: 1rem; line-height: 1.6; margin: .8rem 0 .65rem}
+.tc-dict-row {font-size: .86rem; line-height: 1.7; margin: .65rem 0}
+.tc-dict-row > span {font-size: .75rem; color: var(--tc-muted)}
+.tc-dict-row p {margin: .12rem 0; color: var(--tc-text)}
+.tc-dict-avoid p {color: var(--tc-error)}
+.tc-dict-card details {border-top: 1px solid var(--tc-rule); margin-top: 1rem; padding-top: .75rem; font-size: .83rem; color: var(--tc-muted)}
+.tc-dict-card summary {font-size: .8rem; color: var(--tc-muted); cursor: pointer}
+.tc-dict-card details p {margin: .65rem 0; line-height: 1.75}
+.tc-dict-source {font-size: .78rem}
+.tc-chip {display: inline-block; padding: .12rem .5rem; margin: .12rem .25rem .12rem 0; border-radius: 3px; font-size: .86rem; line-height: 1.6; border: 1px solid transparent; white-space: normal; overflow-wrap: anywhere}
+.tc-en {background: transparent; color: var(--tc-text); font-weight: 500}
+.tc-mute {background: transparent; color: var(--tc-muted)}
+.tc-tachado {text-decoration: line-through; text-decoration-thickness: 1.5px}
+.tc-ficha {background: var(--tc-panel); border: 1px solid var(--tc-border); border-radius: 7px; padding: 1.15rem; margin-bottom: .25rem}
+.tc-ficha-cab {display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; margin-bottom: .45rem}
+.tc-id {font: 500 .78rem ui-monospace, monospace; color: var(--tc-muted)}
+.tc-meta {font-size: .8rem; color: var(--tc-muted)}
+.tc-fila {display: flex; gap: .5rem; align-items: flex-start; margin: .15rem 0}
+.tc-centro {align-items: center}
+.tc-signo {width: 1.1rem; flex: none; text-align: center; font-weight: 600; line-height: 1.9}
+.tc-nota {font-size: .86rem; color: var(--tc-muted); margin-top: .45rem; font-style: italic}
+.tc-fuente {font-size: .8rem; color: var(--tc-muted); margin-top: .25rem}
+.tc-falta {font-size: .8rem; color: var(--tc-warning); background: var(--tc-warning-bg); border-radius: 3px; padding: .1rem .45rem; margin-top: .45rem; display: inline-block}
+.tc-oracion {font-size: 1.06rem; line-height: 1.9; margin: .1rem 0 .5rem}
+.tc-idioma {font: 500 .82rem Inter, sans-serif; color: var(--tc-muted)}
+.tc-marca {padding: .1rem .3rem; border-radius: 3px; border-bottom: 2px solid}
+.tc-apagado {color: var(--tc-muted); border-bottom: 1px dashed var(--tc-muted)}
+.tc-etiqueta {display: inline-block; font: 500 .82rem Inter, sans-serif; padding: .15rem .5rem; border-radius: 3px}
+.tc-leyenda {display: grid; grid-template-columns: auto 1fr; gap: .35rem .8rem; align-items: center; font-size: .9rem}
+.tc-flujo {display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; font-size: .88rem; margin: .3rem 0 1rem}
+.tc-paso {background: var(--tc-panel); border: 1px solid var(--tc-border); border-radius: 4px; padding: .35rem .7rem}
+.tc-paso b {font-weight: 600}
+.tc-flecha {color: var(--tc-muted)}
+.tc-cita {font-size: .83rem; color: var(--tc-muted); line-height: 1.6; margin: .2rem 0 0 .2rem}
+.tc-cita a {color: var(--tc-link)}
+.tc-nivel {display: inline-block; font: 600 .72rem Inter, sans-serif; padding: .05rem .4rem; border-radius: 3px; margin-right: .3rem; white-space: normal; overflow-wrap: anywhere}
+.stApp .an-es {background: var(--tc-panel); border-left-color: var(--tc-border)}
+.stApp .an-term {background: var(--tc-accent); color: light-dark(#ffffff, #17261c)}
+.stApp .an-mark {background: var(--tc-warning-bg); color: var(--tc-warning)}
+.stApp .an-sub {border-bottom-color: var(--tc-warning)}
+.stApp .an-cab code, .stApp .an-nota {color: var(--tc-muted)}
+.stApp .an-falta {color: var(--tc-warning)}
+@media (max-width: 760px) {
+  .tc-dict-grid, .tc-dict-preview {grid-template-columns: minmax(0, 1fr)}
+  .tc-dict-card {padding: 1.15rem}
+}
+@media (max-width: 640px) {
+  [data-testid="stMainBlockContainer"] {padding: 4.5rem 1rem 2rem}
+  .tc-cabecera h1 {font-size: 1.8rem !important}
+  .tc-autor {font-size: .74rem}
+  .tc-brand-description {font-size: .86rem; max-width: 30ch}
+  .st-key-vf_editor [data-testid="stExpanderDetails"] {padding: .75rem}
+  .st-key-vf_revision {padding: .9rem}
+}
+@media (prefers-reduced-motion: reduce) {
+  .st-key-vf_editor *, .st-key-public_nav * {scroll-behavior: auto; transition: none !important}
+}

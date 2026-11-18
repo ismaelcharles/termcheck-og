@@ -8,7 +8,7 @@ Recibe el texto en inglés, su traducción y un glosario bilingüe. Señala form
 términos en inglés que no se aceptan como préstamos y equivalencias que no pudo encontrar. La persona que revisa
 decide cada caso en contexto. No traduce ni corrige estilo.
 
-**Versión pública: 0.2.1 · Glosario: 1.1 · 99 términos.** Se puede usar el glosario incluido o uno propio con las
+**Versión pública: 0.2.2 · Glosario: 1.1 · 99 términos.** Se puede usar el glosario incluido o uno propio con las
 preferencias del cliente. La evaluación histórica se conserva con su código y su glosario identificados.
 
 ## 1. El problema
@@ -54,6 +54,10 @@ El [glosario completo](https://termcheck.aval.site/demo/glosario) también se co
 inglés o español, filtro por área, fichas con variantes, notas y fuentes, y descarga del CSV que usa la demo.
 La sección Ejemplos explica las etiquetas del verificador. Podés recorrer ambas sin perder la revisión en curso.
 
+El menú de la esquina superior derecha permite elegir **Light**, **Dark** o **System**. La elección se conserva
+al navegar y recargar; «System» sigue el aspecto del dispositivo. Los campos, las fichas y el reporte en pantalla
+se adaptan al tema. Los reportes descargados conservan un fondo claro para leer e imprimir.
+
 Pegá una pareja de segmentos por línea, en el mismo orden en ambos cuadros. Si la cantidad de líneas no coincide,
 se pide corregir la alineación antes de verificar. En CSV/TSV se necesitan exactamente dos columnas; una traducción
 vacía se puede revisar como posible omisión. Se aceptan comas, punto y coma o tabulaciones como separadores.
@@ -63,7 +67,7 @@ esté bien; cuando no hay términos reconocidos, la app lo informa expresamente.
 
 ![La portada del verificador con acceso al glosario, ejemplos y fichas de términos](docs/img/demo.png)
 
-*Interfaz de TermCheck 0.2.1 con glosario 1.1.*
+*Interfaz clara de TermCheck 0.2.2. [Ver la interfaz oscura](docs/img/demo-oscuro.png).*
 
 ## 3. Cómo funciona
 
@@ -256,6 +260,11 @@ documenta las diferencias.
 
 No se atribuyen a esta combinación las métricas de 0.1 ni las de 0.2 con el glosario v1. Las correcciones del glosario
 provienen del análisis ya publicado; volver a medirlas en esos mismos casos no sería una evaluación independiente.
+
+### Interfaz 0.2.2
+
+La versión 0.2.2 ajusta la presentación y agrega temas claro, oscuro y del sistema. El cambio es visual: conserva
+las reglas del verificador, el glosario 1.1 y los resultados históricos anteriores.
 
 ## 5. Validación
 
