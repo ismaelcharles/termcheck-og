@@ -160,7 +160,7 @@ def leyenda():
             f'<th>Qué significa</th></tr></thead><tbody>{rows}</tbody></table></section>')
 
 
-def a_html(segmentos, traducciones, ocurrencias, advertencias=(), titulo="Reporte de TermCheck"):
+def a_html(segmentos, traducciones, ocurrencias, advertencias=(), titulo="Reporte de TermCheck", glosario=""):
     por_clave = {}
     for o in ocurrencias:
         por_clave.setdefault((o.seg_id, o.system), []).append(o)
@@ -173,8 +173,11 @@ def a_html(segmentos, traducciones, ocurrencias, advertencias=(), titulo="Report
     return f'''<!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>{e(titulo)}</title>
 <style>body{{font:16px/1.65 Inter,system-ui,sans-serif;max-width:68rem;margin:2rem auto;padding:0 1rem;
-color:#202824;background:#FFFFFF}}h1,h2,h3{{font-family:Inter,system-ui,sans-serif;font-weight:600}}{CSS}</style></head>
+color:#202824;background:#FFFFFF}}h1,h2,h3{{font-family:Inter,system-ui,sans-serif;font-weight:600}}
+footer{{overflow-wrap:anywhere}}{CSS}</style></head>
 <body><h1>{e(titulo)}</h1><p>{e(resumen(ocurrencias, len(traducciones)))}</p><p>{e(recuento(ocurrencias))}</p>
+<p>La revisión solo cubre los términos reconocidos del glosario. Una coincidencia no valida la traducción completa.
+{"No se encontraron términos del glosario en el original." if not ocurrencias else ""}</p>
 {avisos_html(advertencias)}{"".join(cuerpo)}<h2>Qué significa cada resultado</h2>{leyenda()}
 <p>Las sugerencias se basan en el parecido de letras. Nunca cambian la etiqueta.</p>
-<footer>TermCheck {VERSION} · {fecha} UTC</footer></body></html>'''
+<footer>TermCheck {VERSION} · {fecha} UTC{f'<p>Glosario: {e(glosario)}</p>' if glosario else ''}</footer></body></html>'''

@@ -8,6 +8,14 @@ Qué se usó para armar el glosario, el corpus y las traducciones, y qué se pue
 `source` de dónde sale la decisión. La forma preferida y las formas válidas las eligió el autor del proyecto;
 las fuentes son el respaldo de esa elección.
 
+La demo y la CLI por defecto usan la [edición 1.1](glossary_v1_1.md); `glossary_en_es.csv` es el archivo de trabajo
+y `glossary_v1.csv` es la edición histórica de evaluación. No son intercambiables al reproducir resultados.
+
+El campo `source` es un registro de consultas y decisiones, con distinta solidez. Las citas señaladas como
+«no está en el original» no se consideran evidencia comprobada. Una fuente de español general respalda una
+equivalencia conceptual, pero no basta para demostrar una preferencia en Argentina. El criterio propio del autor
+y las sugerencias generadas con IA se identifican como tales; no constituyen validación independiente.
+
 | Fuente | Para qué se usó | Términos que la citan | Licencia y cuidado |
 |---|---|---:|---|
 | [SLB Energy Glossary](https://glossary.slb.com) (español) | Consultar el equivalente en español de cada término | 85 | Con copyright. Se cita la página de cada término. No se copió ninguna definición. Es español general, sin variedad regional. |

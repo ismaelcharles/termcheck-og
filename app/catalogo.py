@@ -1,12 +1,11 @@
 """Consulta pública del mismo glosario que usa la demo. No escribe datos."""
 import datos
 import vista
-from termcheck.glossary import cargar
+from termcheck.glossary import cargar, publicado
 
 
 def archivo():
-    congelado = datos.GLOSARIO.parent / "glossary_v1.csv"
-    return congelado if congelado.exists() else datos.GLOSARIO
+    return publicado(datos.GLOSARIO.parent)
 
 
 def leer():

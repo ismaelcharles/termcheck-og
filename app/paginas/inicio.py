@@ -19,8 +19,9 @@ EJEMPLOS = [
     {"titulo": "Error que suena bien", "etiqueta": "PROHIBIDO",
      "en": "The [[drilling rig]] was moved to the new location.",
      "es": "La [[plataforma de perforación]] se trasladó a la nueva locación.",
-     "porque": "La frase es fluida, pero «plataforma» implica offshore. En un yacimiento en tierra es «equipo de "
-               "perforación». Es el tipo de error que se escapa al leer de corrido."},
+     "porque": "Para este contexto de perforación en tierra, el glosario prefiere «equipo de perforación» "
+               "y señala «plataforma de perforación». Una frase fluida también puede apartarse de la "
+               "terminología elegida para el encargo."},
     {"titulo": "Plural que coincide", "etiqueta": "OK",
      "en": "Check the [[drilling fluids]] every shift.",
      "es": "Controlá los [[lodos de perforación]] en cada turno.",
@@ -33,7 +34,7 @@ EJEMPLOS = [
     {"titulo": "Quedó en inglés", "etiqueta": "SIN_TRADUCIR",
      "en": "The [[pumpjack]] stopped at noon.",
      "es": "El [[pumpjack]] se detuvo al mediodía.",
-     "porque": "El glosario prefiere «AIB» y no acepta «pumpjack» como préstamo. Hay que traducirlo."},
+     "porque": "El glosario prefiere «AIB» y no acepta «pumpjack» como préstamo. Por eso lo señala para revisar."},
     {"titulo": "No aparece", "etiqueta": "NO_ENCONTRADO",
      "en": "The [[blowout preventer]] was tested before drilling.",
      "es": "El [[equipo de seguridad]] se probó antes de perforar.",

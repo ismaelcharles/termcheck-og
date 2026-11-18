@@ -100,7 +100,7 @@ def es_sigla(forma):
     return forma.isupper() and " " not in forma.strip() and len(forma.strip()) >= 2
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=16384)
 def _flexiones(norma):
     """Las formas de una palabra española sin el plural, y con el género tapado («@» en lugar de la -o o la -a).
 

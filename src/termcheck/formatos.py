@@ -12,8 +12,8 @@ Qué lee:
 - XLIFF 1.2: cada <trans-unit> con su <source> y su <target>. Si la unidad está partida en segmentos
   (<seg-source> con <mrk mtype="seg">), sale un par por segmento.
 - XLIFF 2.0: cada <segment> de cada <unit>. Los <ignorable> no cuentan.
-- TMX: cada <tu> con una <tuv> en inglés y otra en español (xml:lang que empieza con «en» y con «es»).
-  Si los idiomas no están marcados así, toma el idioma de origen del encabezado y la otra variante.
+- TMX: cada <tu> con una <tuv> en inglés y otra en español (xml:lang «en», «es» o sus variantes regionales).
+  No se atribuyen idiomas a variantes que no los declaran.
 
 Las etiquetas internas (negritas, marcadores de formato) se sacan y queda el texto. Lo que va dentro de
 <bpt>, <ept>, <ph>, <it> y <ut> es código de formato y no texto: se descarta.
@@ -47,13 +47,13 @@ def _a_texto(datos):
     """Los bytes del archivo como texto. Mira la marca de orden de bytes y la codificación declarada."""
     if isinstance(datos, str):
         return datos
-    if datos[:3] == b"\xef\xbb\xbf":
-        return datos[3:].decode("utf-8")
-    if datos[:2] in (b"\xff\xfe", b"\xfe\xff"):
-        return datos.decode("utf-16")
     declarada = re.match(rb"\s*<\?xml[^>]*encoding=[\"']([A-Za-z0-9._-]+)[\"']", datos[:200])
     codificacion = declarada.group(1).decode("ascii") if declarada else "utf-8"
     try:
+        if datos[:3] == b"\xef\xbb\xbf":
+            return datos.decode("utf-8-sig")
+        if datos[:2] in (b"\xff\xfe", b"\xfe\xff"):
+            return datos.decode("utf-16")
         return datos.decode(codificacion)
     except (LookupError, UnicodeDecodeError):
         raise ErrorDeFormato("No pude leer el archivo: la codificación no es la que declara. Guardalo en UTF-8.")
@@ -111,7 +111,19 @@ def _segmentos_mrk(elemento):
     return {m.get("mid", str(n)): m for n, m in enumerate(_todos(elemento, "mrk")) if m.get("mtype") == "seg"}
 
 
+def _idioma(codigo):
+    return codigo.lower().replace("_", "-").split("-")[0]
+
+
+def _validar_idiomas(origen, destino):
+    """No adivina idiomas ausentes, pero impide revisar como EN→ES un par declarado distinto."""
+    if (origen and _idioma(origen) != "en") or (destino and _idioma(destino) != "es"):
+        raise ErrorDeFormato("El archivo declara otro par de idiomas. Se admite inglés → español.")
+
+
 def _xliff_1(raiz):
+    for archivo in _todos(raiz, "file"):
+        _validar_idiomas(archivo.get("source-language", ""), archivo.get("target-language", ""))
     for n, unidad in enumerate(_todos(raiz, "trans-unit"), start=1):
         uid = unidad.get("id") or str(n)
         origen = (_hijos(unidad, "source") or [None])[0]
@@ -126,6 +138,7 @@ def _xliff_1(raiz):
 
 
 def _xliff_2(raiz):
+    _validar_idiomas(raiz.get("srcLang", ""), raiz.get("trgLang", ""))
     for n, unidad in enumerate(_todos(raiz, "unit"), start=1):
         uid = unidad.get("id") or str(n)
         segmentos = _hijos(unidad, "segment")
@@ -135,20 +148,13 @@ def _xliff_2(raiz):
 
 
 def _tmx(raiz):
-    encabezado = (_todos(raiz, "header") or [None])[0]
-    origen_general = (encabezado.get("srclang") or "").lower() if encabezado is not None else ""
     for n, tu in enumerate(_todos(raiz, "tu"), start=1):
         variantes = []
         for tuv in _hijos(tu, "tuv"):
             idioma = (tuv.get(XML_LANG) or tuv.get("lang") or "").lower()
             variantes.append((idioma, _texto((_hijos(tuv, "seg") or [None])[0])))
-        en = next((t for i, t in variantes if i.startswith("en")), None)
-        es = next((t for i, t in variantes if i.startswith("es")), None)
-        if en is None and es is None:
-            # Ninguna variante dice «en» ni «es»: el idioma de origen del archivo y la otra variante
-            origen = (tu.get("srclang") or origen_general).lower()
-            en = next((t for i, t in variantes if origen and i == origen), None)
-            es = next((t for i, t in variantes if i != origen), None) if en is not None else None
+        en = next((t for i, t in variantes if _idioma(i) == "en"), None)
+        es = next((t for i, t in variantes if _idioma(i) == "es"), None)
         if en is None:
             continue
         yield tu.get("tuid") or str(n), en, es or ""
@@ -174,17 +180,19 @@ def leer(datos, nombre=""):
         filas = _tmx(raiz)
     else:
         raise ErrorDeFormato(f"El archivo no es XLIFF ni TMX (empieza con <{tipo}>).")
-    pares, sin_traduccion, vistos = [], 0, {}
+    pares, sin_traduccion, vistos = [], 0, set()
     for seg_id, en, es in filas:
         if not en:
             continue
         if not es:
             sin_traduccion += 1
             continue
-        vistos[seg_id] = vistos.get(seg_id, 0) + 1
-        if vistos[seg_id] > 1:
-            seg_id = f"{seg_id}-{vistos[seg_id]}"
+        base, repeticion = seg_id, 2
+        while seg_id in vistos:
+            seg_id = f"{base}-{repeticion}"
+            repeticion += 1
+        vistos.add(seg_id)
         pares.append((seg_id, en, es))
     if not pares and not sin_traduccion:
-        raise ErrorDeFormato("No encontré segmentos en el archivo.")
+        raise ErrorDeFormato("No encontré segmentos en inglés con traducción al español en el archivo.")
     return pares, sin_traduccion

@@ -3,8 +3,8 @@
     .venv/bin/streamlit run app/demo.py --server.port 8502
 
 No muestra el glosario de trabajo en edición, la anotación ni los resultados: esas páginas están en la app
-completa (app/streamlit_app.py), que pide login. Acá la página Verificar corre en modo demo: usa el glosario v1
-congelado si existe, no ofrece el corpus y pone límites de tamaño (ver app/paginas/verificar.py).
+completa (app/streamlit_app.py), que pide login. Acá la página Verificar corre en modo demo: usa la edición
+publicada del glosario, no ofrece el corpus y pone límites de tamaño (ver app/paginas/verificar.py).
 
 En el servidor se publica con `sudo bash deploy/demo.sh`.
 """

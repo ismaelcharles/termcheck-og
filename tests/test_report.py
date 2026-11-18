@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 from termcheck.checker import verificar
+from termcheck import VERSION
 from termcheck.glossary import Termino
 from termcheck.report import a_csv_texto, a_html, escribir_csv, resaltar
 
@@ -58,7 +59,7 @@ def test_html_resalta_los_tramos():
     assert '<mark class="tc-prohibido"' in html
     assert ">plataforma de perforación</mark>" in html and ">rig</mark>" in html
     assert "1 prohibida" in html
-    assert 'name="viewport"' in html and "TermCheck 0.2.0" in html
+    assert 'name="viewport"' in html and f"TermCheck {VERSION}" in html
 
 
 def test_resaltar_no_pisa_tramos_y_saltea_los_no_encontrados():

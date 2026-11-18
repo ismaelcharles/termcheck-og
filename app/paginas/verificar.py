@@ -7,11 +7,10 @@ src/termcheck (el mismo que se evalúa); esta página solo lo muestra.
 Del corpus del proyecto solo ofrece el conjunto de desarrollo: ver el resultado del verificador sobre la prueba
 antes de anotarla rompería la anotación a ciegas.
 
-En la demo pública (app/demo.py, TERMCHECK_DEMO=1) la página funciona sin login, usa el glosario v1 congelado si
-existe, no ofrece el corpus y tiene límites de tamaño, porque el servidor es compartido.
+En la demo pública (app/demo.py, TERMCHECK_DEMO=1) la página funciona sin login, usa la edición publicada del
+glosario, no ofrece el corpus y tiene límites de tamaño, porque el servidor es compartido.
 """
 import csv
-import io
 import os
 import hashlib
 import re
@@ -20,12 +19,13 @@ import streamlit as st
 
 import datos
 import vista
+from entrada import leer_tabla
 from limites import MAX_LETRAS, MAX_SEGMENTOS, MAX_TERMINOS, aplicar
 from termcheck.checker import verificar
 from termcheck.consistency import inconsistencias
 from termcheck.formatos import ErrorDeFormato, es_de_traduccion, leer as leer_formato
-from termcheck.glossary import ErrorDeGlosario, cargar, cargar_bytes, validar
-from termcheck import NOMBRE
+from termcheck.glossary import ErrorDeGlosario, cargar_bytes, publicado, validar
+from termcheck import NOMBRE, VERSION
 from termcheck import report
 
 RAIZ = datos.RAIZ
@@ -42,12 +42,6 @@ if not DEMO:
 def leer_tsv(ruta, marca):
     with open(ruta, encoding="utf-8", newline="") as f:
         return list(csv.DictReader(f, delimiter="\t"))
-
-
-def glosario_proyecto():
-    """El glosario del proyecto. La demo usa el v1 congelado (el que se evaluó), si ya existe."""
-    congelado = datos.GLOSARIO.parent / "glossary_v1.csv"
-    return cargar(congelado if DEMO and congelado.exists() else datos.GLOSARIO)
 
 
 def cargar_ejemplo():
@@ -109,24 +103,32 @@ with st.container(key="vf_editor"):
                 st.button("Vaciar", on_click=vaciar, type="tertiary")
         if propio:
             try:
-                terminos = cargar_bytes(propio.getvalue())
+                bytes_glosario = propio.getvalue()
+                terminos = cargar_bytes(bytes_glosario)
             except ErrorDeGlosario as e:
                 st.error(f"No se pudo usar ese glosario: {e}")
                 st.stop()
             errores = [p for p in validar(terminos) if p.tipo == "error"]
             if errores:
-                st.warning(f"El glosario subido tiene {len(errores)} errores; el resultado puede fallar.  \n"
+                st.error(f"No se puede verificar con este glosario: tiene {len(errores)} errores.  \n"
                            + "  \n".join(str(p) for p in errores[:5]))
+                st.stop()
+            if not terminos:
+                st.error("El glosario no tiene términos. Agregá al menos uno para verificar.")
+                st.stop()
             if DEMO and len(terminos) > MAX_TERMINOS:
                 st.error(f"El glosario subido tiene {len(terminos)} términos. En la demo el máximo es {MAX_TERMINOS}.")
                 st.stop()
             nombre_glosario = "Glosario propio"
         else:
-            terminos = glosario_proyecto()
+            ruta_glosario = publicado(datos.GLOSARIO.parent) if DEMO else datos.GLOSARIO
+            bytes_glosario = ruta_glosario.read_bytes()
+            terminos = cargar_bytes(bytes_glosario)
             nombre_glosario = "Glosario O&G"
 
+        referencia_glosario = ((propio.name if propio else ruta_glosario.name)
+                              + " · SHA-256 " + hashlib.sha256(bytes_glosario).hexdigest())
         pares = []
-        aviso_alineacion = ""
         pedir = st.session_state.pop("vf_pedir", False)
         if modo == "pegar":
             with st.form("vf_textos", border=False):
@@ -138,16 +140,21 @@ with st.container(key="vf_editor"):
                 with st.container(horizontal=True, vertical_alignment="center"):
                     pedir = st.form_submit_button("Verificar", type="primary") or pedir
                     st.caption(f"{nombre_glosario} · {len(terminos)} términos" + (" · Los textos no se guardan." if DEMO else ""))
-            l_en = [x for x in en.splitlines() if x.strip()]
-            l_es = [x for x in es.splitlines() if x.strip()]
-            if l_en and l_es:
+            l_en = en.splitlines()
+            l_es = es.splitlines()
+            if en.strip() and es.strip():
                 if len(l_en) == len(l_es):
-                    pares = [(f"L{i}", "", a, b) for i, (a, b) in enumerate(zip(l_en, l_es), start=1)]
+                    if any(not a.strip() and b.strip() for a, b in zip(l_en, l_es)):
+                        if pedir:
+                            st.warning("Hay una línea con traducción pero sin original en inglés. "
+                                       "Alineá los textos: una pareja por línea. No se verificó el texto.")
+                    else:
+                        pares = [(f"L{i}", "", a, b) for i, (a, b) in enumerate(zip(l_en, l_es), start=1)
+                                 if a.strip()]
                 else:
-                    aviso_alineacion = (f"El inglés tiene {len(l_en)} líneas y la traducción {len(l_es)}. "
-                                        "Se verifica como un solo segmento. Para separar las oraciones, "
-                                        "poné una por línea en los dos lados.")
-                    pares = [("L1", "", " ".join(l_en), " ".join(l_es))]
+                    if pedir:
+                        st.warning(f"El inglés tiene {len(l_en)} líneas y la traducción {len(l_es)}. "
+                                   "Alineá los textos: una pareja por línea. No se verificó el texto.")
             elif pedir:
                 st.info("Completá el inglés y la traducción para verificar.")
 
@@ -176,21 +183,11 @@ with st.container(key="vf_editor"):
                     st.warning("Ningún segmento del archivo tiene traducción.")
             elif archivo:
                 try:
-                    texto = archivo.getvalue().decode("utf-8-sig")
-                except UnicodeDecodeError:
-                    st.warning("No pude leer el archivo. Tiene que ser texto en UTF-8.")
+                    filas = leer_tabla(archivo.getvalue())
+                except ValueError as e:
+                    st.warning(str(e))
                     st.stop()
-                if not texto.strip():
-                    st.warning("El archivo está vacío.")
-                    st.stop()
-                sep = "\t" if "\t" in texto.splitlines()[0] else ","
-                filas = list(csv.reader(io.StringIO(texto), delimiter=sep))
-                if filas and [c.strip().lower() for c in filas[0][:2]] == ["source_en", "target_es"]:
-                    filas = filas[1:]
-                filas = [f for f in filas if len(f) >= 2 and f[0].strip()]
                 pares = [(f"F{i}", "", f[0], f[1]) for i, f in enumerate(filas, start=1)]
-                if not pares:
-                    st.warning("No encontré filas con dos columnas.")
 
         else:
             seg = {f["seg_id"]: f["source_en"] for f in leer_tsv(str(RAIZ / "data/corpus/segments.tsv"), 0)}
@@ -211,7 +208,8 @@ with st.container(key="vf_editor"):
                 st.caption(f"{nombre_glosario} · {len(terminos)} términos")
             if modo == "tsv":
                 with st.expander("Formatos y límites"):
-                    st.markdown("TSV/CSV: dos columnas (`source_en`, `target_es`), con o sin encabezado. "
+                    st.markdown("TSV/CSV en UTF-8: dos columnas (`source_en`, `target_es`), con o sin encabezado, "
+                                "separadas por tabulación, coma o punto y coma. "
                                 "Una fila por segmento. XLIFF 1.2, XLIFF 2.0 y TMX: se leen los segmentos con traducción. "
                                 "No se admiten SDLXLIFF ni MQXLIFF; no se probaron exportaciones reales de Trados o memoQ.")
                     if DEMO:
@@ -243,10 +241,8 @@ if st.session_state.get("vf_aviso"):
 previo = st.session_state.get("vf_resultado")
 if previo and previo[0] == firma:
     from revision import mostrar
-    if aviso_alineacion:
-        st.info(aviso_alineacion)
     _, resultado, todas, advertencias = previo
-    mostrar(resultado, todas, advertencias)
+    mostrar(resultado, todas, advertencias, glosario=referencia_glosario)
 elif not pares:
     if DEMO:
         import catalogo
@@ -263,10 +259,12 @@ if DEMO:
     with st.expander("Acerca de TermCheck"):
         st.markdown("Compara los términos con un glosario técnico de español de Argentina. "
                     "Señala qué revisar; no traduce ni corrige el estilo. Los textos no se guardan.")
+        edicion = publicado(datos.GLOSARIO.parent).stem.removeprefix("glossary_").replace("_", ".")
+        st.caption(f"Versión {VERSION} · Glosario {edicion}")
         st.markdown("[Código, método y evaluación](https://github.com/ismaelcharles/termcheck-og)")
         readme = (RAIZ / "README.md").read_text(encoding="utf-8")
         fila = re.search(r"^\| TermCheck \| 120 \|.*$", readme, re.M)
         if fila:
             columnas = [c.strip() for c in fila.group().split("|")[1:-1]]
-            st.caption(f"Demo pública · Verificador 0.2 · Evaluación publicada de la versión 0.1: "
+            st.caption(f"Demo pública · Evaluación publicada de la versión 0.1 con glosario v1: "
                        f"precisión {columnas[6].split()[0]}, recall {columnas[7].split()[0]}, F1 {columnas[8]}.")

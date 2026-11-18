@@ -68,6 +68,16 @@ def cargar(ruta):
     return cargar_bytes(ruta.read_bytes())
 
 
+def publicado(carpeta):
+    """Última edición publicada; el glosario histórico de evaluación permanece disponible."""
+    carpeta = Path(carpeta)
+    for nombre in ("glossary_v1_1.csv", "glossary_v1.csv", "glossary_en_es.csv"):
+        ruta = carpeta / nombre
+        if ruta.exists():
+            return ruta
+    raise ErrorDeGlosario("No hay un glosario publicado en esta carpeta.")
+
+
 def cargar_bytes(datos):
     """Lo mismo que cargar(), con el contenido del archivo ya leído (por ejemplo, un glosario subido desde la app).
 
@@ -80,14 +90,22 @@ def cargar_bytes(datos):
                               "comas)».")
     encabezado = texto.split("\n", 1)[0]
     separador = max(",;\t", key=encabezado.count)  # el que más aparece en la primera línea; si empatan, la coma
-    lector = csv.DictReader(io.StringIO(texto, newline=""), delimiter=separador)
-    nombres = [(n or "").strip() for n in (lector.fieldnames or [])]
+    try:
+        lector = csv.DictReader(io.StringIO(texto, newline=""), delimiter=separador, strict=True)
+        nombres = [(n or "").strip() for n in (lector.fieldnames or [])]
+        lector.fieldnames = nombres
+        filas = list(lector)
+    except csv.Error as e:
+        raise ErrorDeGlosario("No se pudo leer el CSV: revisá las comillas y el separador de columnas.") from e
     faltan = [c for c in COLUMNAS if c not in nombres]
     if faltan:
         raise ErrorDeGlosario(f"Al archivo le faltan columnas: {', '.join(faltan)}")
-    lector.fieldnames = nombres
+    if len(nombres) != len(set(nombres)):
+        raise ErrorDeGlosario("El CSV tiene nombres de columna repetidos.")
     terminos = []
-    for numero, fila in enumerate(lector, start=2):  # la fila 1 es el encabezado
+    for numero, fila in enumerate(filas, start=2):  # la fila 1 es el encabezado
+        if None in fila:
+            raise ErrorDeGlosario(f"La fila {numero} del CSV tiene más campos que el encabezado.")
         fila = {c: (fila.get(c) or "").strip() for c in COLUMNAS}
         if not any(fila.values()):
             continue  # fila vacía al final del archivo

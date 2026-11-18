@@ -33,5 +33,5 @@ else:
     indice = st.selectbox("Página", range(paginas), format_func=lambda i: f"{i + 1} de {paginas}",
                           key="gp_pagina", width=150) if paginas > 1 else 0
     st.html(catalogo.fichas(filtrados[indice * 6:(indice + 1) * 6]))
-st.caption("La demo y esta consulta usan el mismo glosario v1. Las equivalencias son decisiones documentadas "
-           "para este proyecto; una forma no reconocida puede requerir revisión de contexto.")
+st.caption("La demo y esta consulta usan la misma edición del glosario. Las equivalencias son decisiones "
+           "documentadas para este proyecto; las preferencias pueden cambiar según el contexto o el cliente.")

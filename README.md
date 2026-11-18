@@ -4,8 +4,12 @@ Verificador de terminología para traducción automática inglés → español e
 técnico de Argentina como variante. Está pensado para quien post-edita o revisa traducciones técnicas y hoy
 controla los términos a ojo, segmento por segmento.
 
-Recibe el texto en inglés, su traducción y un glosario bilingüe. Marca los términos del glosario que quedaron mal
-traducidos, sin traducir o con una forma que el glosario no conoce. No traduce ni corrige estilo.
+Recibe el texto en inglés, su traducción y un glosario bilingüe. Señala formas desaconsejadas por ese glosario,
+términos en inglés que no se aceptan como préstamos y equivalencias que no pudo encontrar. La persona que revisa
+decide cada caso en contexto. No traduce ni corrige estilo.
+
+**Versión pública: 0.2.1 · Glosario: 1.1 · 99 términos.** Se puede usar el glosario incluido o uno propio con las
+preferencias del cliente. La evaluación histórica se conserva con su código y su glosario identificados.
 
 ## 1. El problema
 
@@ -15,8 +19,8 @@ bien. Los glosarios generales tampoco alcanzan: muchas formas que se usan en Esp
 que se usan en un yacimiento argentino.
 
 <!-- autor:ejemplos:inicio -->
-Dos ejemplos del conjunto de prueba. En los dos la frase se lee bien y los términos no son los que se usan en
-un equipo de perforación argentino.
+Dos ejemplos del conjunto de prueba, revisados según el criterio del autor para el español técnico de Argentina.
+La distinción entre una forma preferida, una variante aceptable y un error depende del contexto y del encargo.
 
 **1. DeepL**
 
@@ -50,7 +54,16 @@ El [glosario completo](https://termcheck.aval.site/demo/glosario) también se co
 inglés o español, filtro por área, fichas con variantes, notas y fuentes, y descarga del CSV que usa la demo.
 La sección Ejemplos explica las etiquetas del verificador. Podés recorrer ambas sin perder la revisión en curso.
 
+Pegá una pareja de segmentos por línea, en el mismo orden en ambos cuadros. Si la cantidad de líneas no coincide,
+se pide corregir la alineación antes de verificar. En CSV/TSV se necesitan exactamente dos columnas; una traducción
+vacía se puede revisar como posible omisión. Se aceptan comas, punto y coma o tabulaciones como separadores.
+
+La revisión cubre únicamente los términos reconocidos del glosario. Cero avisos no demuestra que toda la traducción
+esté bien; cuando no hay términos reconocidos, la app lo informa expresamente.
+
 ![La portada del verificador con acceso al glosario, ejemplos y fichas de términos](docs/img/demo.png)
+
+*Captura de la interfaz 0.2 con glosario v1.*
 
 ## 3. Cómo funciona
 
@@ -104,6 +117,10 @@ versión 0.1 del verificador.
 
 120 términos anotados en 20 oraciones (53 errores según la anotación). El verificador no detectó 0 de ellos (cuentan como no marcados).
 
+Los 120 casos son 40 unidades de término y oración traducidas por tres sistemas: no son 120 contextos distintos.
+La anotación considera error también una forma que el autor juzga inadecuada para el uso argentino. Los porcentajes
+por sistema describen esta muestra y este criterio; no miden la calidad general de esos traductores automáticos.
+
 ### Verificador frente al baseline
 
 | Método | Términos | TP | FP | FN | TN | Precisión (IC 95 %) | Recall (IC 95 %) | F1 |
@@ -144,7 +161,9 @@ versión 0.1 del verificador.
 | OMISION | 0 | 1 | 0 | 0 | 0 | 0 |
 | SIN_TRADUCIR | 0 | 0 | 0 | 0 | 0 | 0 |
 
-IC 95 %: intervalo de Wilson. Con pocos casos es ancho: los números son orientativos.
+IC 95 %: intervalo de Wilson por caso. No corrige la dependencia entre términos de una misma oración ni entre
+las tres traducciones del mismo original. Con pocos contextos, se interpreta como referencia descriptiva,
+no como garantía de generalización.
 <!-- resultados:fin -->
 
 ### Hallazgos
@@ -222,6 +241,21 @@ términos en inglés salió idéntica en las 120 oraciones. El código se cerró
 Siguen igual las 3 falsas alarmas y los 2 errores sin marcar que dependen del glosario o de mirar las palabras
 que rodean al término: «perforación» por *perforating*, «vástago» por *kelly*, «varilla Kelly» y «boca del pozo».
 Quedan 60 oraciones del conjunto de prueba sin anotar. Anotarlas daría una medida de la 0.2 sin este sesgo.
+
+### Versión pública 0.2.1 y glosario 1.1
+
+La versión 0.2.1 conserva las reglas de detección de 0.2 y corrige el tratamiento de entradas y la presentación de
+la cobertura: impide verificar con glosarios inválidos, informa las filas defectuosas y evita presentar un texto sin
+términos reconocidos como una revisión correcta. También corrige colisiones de identificadores en XLIFF/TMX y
+rechaza pares de idiomas declarados incompatibles con inglés → español.
+
+El glosario 1.1 aplica tres decisiones del autor ya registradas el 14/11: retira «boca del pozo» de las variantes de
+*wellhead*, acepta «vástago» para *kelly* y acepta «perforación» para *perforating*. Se mantiene el glosario v1 original
+y no se modifica la anotación ni las tablas históricas. El [registro del glosario](data/glossary/glossary_v1_1.md)
+documenta las diferencias.
+
+No se atribuyen a esta combinación las métricas de 0.1 ni las de 0.2 con el glosario v1. Las correcciones del glosario
+provienen del análisis ya publicado; volver a medirlas en esos mismos casos no sería una evaluación independiente.
 
 ## 5. Validación
 
