@@ -19,6 +19,13 @@
   padding-top: 5rem;
   padding-bottom: 3rem;
 }
+/* El área que desplaza toda la página no debe dibujar un marco de foco alrededor
+   del viewport. Los controles conservan sus indicadores de foco propios. */
+[data-testid="stMain"]:focus,
+[data-testid="stMain"]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
 h1 {font-size: 1.8rem !important; letter-spacing: -.03em; font-weight: 500 !important}
 h2 {font-size: 1.2rem !important; letter-spacing: -.015em; font-weight: 600 !important}
 h3 {font-size: 1.05rem !important; font-weight: 600 !important}
