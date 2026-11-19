@@ -29,7 +29,7 @@ def ficha(t):
     detalle = ((f'<p>{e(t.note)}</p>' if t.note else "")
                + (f'<p class="tc-dict-source">{e(t.source)}</p>' if t.source else ""))
     return (f'<article class="tc-dict-card"><div class="tc-dict-top"><span>{e(t.subdomain)}</span>'
-            f'<span>{e(t.id)}</span></div><h3>{e(t.en[0])}</h3>{alternativas}'
+            f'<span>{e(vista.numero_termino(t.id))}</span></div><h3>{e(t.en[0])}</h3>{alternativas}'
             f'<div class="tc-dict-preferred">{e(t.es_preferred)}</div>{formas}{evitar}'
             + (f'<details><summary>Nota y fuentes</summary>{detalle}</details>' if detalle else "")
             + '</article>')

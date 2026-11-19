@@ -69,6 +69,14 @@ def leyenda():
     return f'<div class="tc-leyenda">{filas}</div>'
 
 
+def numero_termino(identificador):
+    """Número visible de las fichas del glosario del proyecto."""
+    identificador = str(identificador)
+    if identificador.startswith("T") and identificador[1:].isdigit():
+        return str(int(identificador[1:]))
+    return identificador
+
+
 def ficha(fila):
     """La ficha de un término: inglés arriba; abajo, qué traducción da cada etiqueta."""
     en = "".join(f'<span class="tc-chip tc-en">{e(v)}</span>' for v in variantes(fila["en"])) or chip("sin término")
@@ -87,7 +95,7 @@ def ficha(fila):
     fuente = f'<div class="tc-fuente">Fuente: {e(fila["source"])}</div>' if fila["source"] else ""
     falta = faltantes(fila)
     aviso = f'<div class="tc-falta">Falta: {e(", ".join(falta))}</div>' if falta else ""
-    return (f'<div class="tc-ficha"><div class="tc-ficha-cab"><div>{en}</div><span class="tc-id">{e(fila["id"])}</span>'
+    return (f'<div class="tc-ficha"><div class="tc-ficha-cab"><div>{en}</div><span class="tc-id">{e(numero_termino(fila["id"]))}</span>'
             f'</div><div class="tc-meta">{e(meta)}</div>{cuerpo}{nota}{fuente}{aviso}</div>')
 
 
