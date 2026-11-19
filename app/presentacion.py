@@ -30,10 +30,12 @@ def mostrar():
     termino = next((t for t in catalogo.leer() if "drilling rig" in t.en), None)
     if termino is None:
         return
+    if st.button("Ir al verificador ↓", key="saltar_recorrido"):
+        st.session_state.recorrido_visto = True
+        st.rerun()
     inicial, corregida = caso(termino)
     st.html(f"""
     <section class="tc-recorrido" aria-labelledby="tc-titulo-caso">
-      <a class="tc-salto" href="#herramienta" target="_self">Ir al verificador ↓</a>
       <header><p>Una traducción de campo</p>
         <h2 id="tc-titulo-caso">¿Cómo traducirías <i lang="en">drilling rig</i>?</h2>
         <p>El parte describe una perforación en tierra. Una sola palabra cambia dónde imaginamos el equipo.</p>

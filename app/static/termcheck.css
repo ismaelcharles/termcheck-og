@@ -167,8 +167,6 @@ a:focus-visible, summary:focus-visible, button:focus-visible {
 }
 
 .tc-recorrido {position:relative; border-block:1px solid var(--tc-border); margin:1rem 0; padding:1rem 0 1.25rem}
-.tc-salto {display:block; width:fit-content; margin-left:auto; font-weight:600; color:var(--tc-link)}
-#herramienta {scroll-margin-top:4rem}
 .tc-recorrido header {max-width:43rem; padding:1.25rem 0}
 .tc-recorrido header p:first-child, .tc-caso small {font-size:.85rem; font-weight:600; color:var(--tc-muted)}
 .tc-recorrido header h2 {font:500 clamp(2.1rem,5vw,3.7rem)/1.05 Newsreader,Georgia,serif !important; letter-spacing:-.035em; margin:.5rem 0}
@@ -185,10 +183,6 @@ a:focus-visible, summary:focus-visible, button:focus-visible {
 @media(max-width:640px) {
   .tc-caso {grid-template-columns:1fr}
   .tc-caso > div + div {border-left:0; border-top:1px solid var(--tc-border)}
-}
-.tc-recorrido .tc-salto {
-  position:sticky; top:3.25rem; z-index:1; padding:.35rem .75rem;
-  background:var(--tc-panel); border:1px solid var(--tc-border); border-radius:.4rem;
 }
 @media (prefers-reduced-motion: no-preference) {
   .tc-correccion[open] .tc-lectura {animation:tc-mostrar-lectura .18s ease-out}

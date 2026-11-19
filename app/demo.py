@@ -37,7 +37,6 @@ st.html('<p class="tc-brand-description">Revisión terminológica de petróleo y
 if pagina.url_path == paginas[0].url_path and not st.session_state.get("recorrido_visto"):
     from presentacion import mostrar
     mostrar()
-st.html('<div id="herramienta" tabindex="-1"></div>')
 with st.container(horizontal=True, gap="small", key="public_nav"):
     for p, icono in zip(paginas, (":material/fact_check:", ":material/menu_book:", ":material/science:")):
         if st.button(p.title, icon=icono, key=f"nav_{p.title}",
