@@ -141,3 +141,27 @@ a:focus-visible, summary:focus-visible, button:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .st-key-vf_editor *, .st-key-public_nav * {scroll-behavior: auto; transition: none !important}
 }
+
+.st-key-public_nav {
+  width: fit-content; max-width: 100%; gap: .2rem; padding: .22rem;
+  background: var(--tc-panel); border: 1px solid var(--tc-border); border-radius: .75rem;
+}
+.st-key-public_nav button {
+  min-height: 2.65rem; padding: .45rem .8rem; border-radius: .52rem;
+  transition: background-color .15s ease, color .15s ease;
+}
+.st-key-public_nav [data-testid="stBaseButton-primary"] {
+  color: var(--tc-accent); background: var(--tc-rule); font-weight: 600;
+}
+.st-key-public_nav button:focus-visible {outline: 2px solid var(--tc-accent); outline-offset: 1px}
+.st-key-vf_textos [data-testid="stWidgetLabel"] p {font-size: .95rem; font-weight: 600}
+@media (max-width: 640px) {
+  .st-key-public_nav {width: 100%; justify-content: space-between}
+  .st-key-public_nav button {padding: .4rem .45rem}
+}
+@media (max-width: 640px) {
+  .st-key-vf_textos textarea {
+    height: 7rem !important;
+    min-height: 7rem;
+  }
+}

@@ -5,7 +5,7 @@ import streamlit as st
 import datos
 import vista
 from termcheck import NOMBRE, VERSION, report
-from termcheck.checker import Ocurrencia
+from termcheck.checker import Ocurrencia, verificar
 
 
 # Ejemplos ilustrativos con los términos del plan (sección 3). Entre [[ ]] va el término; entre (( )), lo que el
@@ -78,8 +78,22 @@ ini_es, encontrada = tramo(ej["es"])
 # Ejemplos ilustrativos ya escritos: se muestran sin agregar contenido al glosario.
 o = Ocurrencia("Ejemplo", "", "Ejemplo", term, ej["etiqueta"], encontrada,
                ini_es, ini_es + len(encontrada), ini_en, ini_en + len(term), "")
-st.html(report.bloque_segmento(quitar_marcas(ej["en"]), quitar_marcas(ej["es"]), [o], cabecera="Ejemplo ilustrativo"))
-st.markdown(ej["porque"])
+if DEMO:
+    import catalogo
+    original = quitar_marcas(ej["en"])
+    st.caption("Original · inglés")
+    st.write(original)
+    traduccion = st.text_area("Probá otra traducción", value=quitar_marcas(ej["es"]),
+                              key=f"ej_traduccion_{titulos.index(elegido)}", max_chars=1500,
+                              help="Al salir del campo se actualizan las marcas.")
+    if traduccion.strip():
+        ocurrencias = verificar(original, traduccion, catalogo.leer())
+        st.html(report.bloque_segmento(original, traduccion, ocurrencias, cabecera="Resultado con el glosario O&G"))
+        if traduccion == quitar_marcas(ej["es"]):
+            st.markdown(ej["porque"])
+else:
+    st.html(report.bloque_segmento(quitar_marcas(ej["en"]), quitar_marcas(ej["es"]), [o], cabecera="Ejemplo ilustrativo"))
+    st.markdown(ej["porque"])
 with st.expander("Las seis etiquetas"):
     st.html(report.leyenda())
     st.caption("Ejemplos ilustrativos. En tus textos, las formas preferidas y válidas las decide el glosario.")

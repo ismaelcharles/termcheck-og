@@ -23,7 +23,7 @@ from termcheck import NOMBRE  # noqa: E402
 st.set_page_config(page_title=f"{NOMBRE} · demo", layout="wide", page_icon=":material/fact_check:")
 import vista  # noqa: E402
 
-paginas = [st.Page("paginas/verificar.py", title="Verificar", default=True),
+paginas = [st.Page("paginas/verificar.py", title="Verificador", default=True),
            st.Page("paginas/glosario_publico.py", title="Glosario", url_path="glosario"),
            st.Page("paginas/inicio.py", title="Ejemplos", url_path="ejemplos")]
 pagina = st.navigation(paginas, position="hidden")
@@ -33,8 +33,10 @@ for clave in ("vf_en", "vf_es", "vf_modo", "vf_editor_abierto", "vf_solo", "vf_s
         st.session_state[clave] = st.session_state[clave]
 vista.estilos()
 vista.cabecera(NOMBRE)
-st.html('<p class="tc-brand-description">Oil &amp; Gas · Inglés → español de Argentina</p>')
-with st.container(horizontal=True, gap="medium", key="public_nav"):
-    for p in paginas:
-        st.page_link(p)
+st.html('<p class="tc-brand-description">Revisión terminológica de petróleo y gas · Inglés → español de Argentina</p>')
+with st.container(horizontal=True, gap="small", key="public_nav"):
+    for p, icono in zip(paginas, (":material/fact_check:", ":material/menu_book:", ":material/science:")):
+        if st.button(p.title, icon=icono, key=f"nav_{p.title}",
+                     type="primary" if p.url_path == pagina.url_path else "tertiary"):
+            st.switch_page(p)
 pagina.run()

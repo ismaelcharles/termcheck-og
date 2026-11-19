@@ -4,7 +4,7 @@ import streamlit as st
 from termcheck import report
 
 
-def mostrar(resultado, todas, advertencias, glosario=""):
+def mostrar(resultado, todas, advertencias, glosario="", terminos=()):
     marcadas = sum(o.marcada for o in todas)
     with st.container(horizontal=True, vertical_alignment="center", key="vf_result_header"):
         st.subheader("Revisión")
@@ -47,6 +47,12 @@ def mostrar(resultado, todas, advertencias, glosario=""):
         with st.container(border=True, key="vf_revision"):
             st.html(report.bloque_segmento(en, es, oc, solo=solo,
                                           cabecera=" · ".join(x for x in (f"Segmento {seleccionado + 1}", sistema) if x)))
+            ids = {o.term_id for o in oc if o.marcada or not solo}
+            fichas = [t for t in terminos if t.id in ids]
+            if fichas:
+                import catalogo
+                with st.expander("Consultar las fichas de este segmento"):
+                    st.html(catalogo.fichas(fichas))
     if advertencias:
         with st.expander("Términos usados de formas distintas"):
             st.html(report.avisos_html(advertencias))

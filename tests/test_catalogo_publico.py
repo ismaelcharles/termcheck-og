@@ -42,8 +42,8 @@ def test_la_ficha_escapa_todos_los_campos():
 
 def test_navegacion_publica_y_ejemplos(proyecto):
     at = AppTest.from_file(str(RAIZ / "app/demo.py"), default_timeout=120).run()
-    links = [p.proto.label for p in at.get("page_link")]
-    assert all(nombre in links for nombre in ("Verificar", "Glosario", "Ejemplos"))
+    links = [b.label for b in at.button if b.key and b.key.startswith("nav_")]
+    assert all(nombre in links for nombre in ("Verificador", "Glosario", "Ejemplos"))
     at.switch_page("paginas/inicio.py").run()
     assert not at.exception, at.exception
     assert at.selectbox[0].options

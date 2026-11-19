@@ -84,7 +84,7 @@ with st.container(key="vf_editor"):
             modo = st.segmented_control("Entrada", list(MODOS), format_func=MODOS.get,
                                         default="pegar", required=True, key="vf_modo",
                                         label_visibility="collapsed")
-            with st.popover("Glosario"):
+            with st.popover("Cambiar glosario"):
                 st.caption("Incluido: glosario O&G. Podés cargar otro en CSV.")
                 nuevo_glosario = st.file_uploader("Glosario propio (CSV)", type=["csv"], key="vf_glosario",
                                           max_upload_size=1 if DEMO else None,
@@ -127,7 +127,7 @@ with st.container(key="vf_editor"):
         pares = []
         pedir = st.session_state.pop("vf_pedir", False)
         if modo == "pegar":
-            with st.form("vf_textos", border=False):
+            with st.container(key="vf_textos"):
                 c1, c2 = st.columns(2)
                 tope = MAX_LETRAS if DEMO else None
                 en = c1.text_area("Original · inglés", key="vf_en", height=210, placeholder="Pegá el original",
@@ -135,8 +135,8 @@ with st.container(key="vf_editor"):
                 es = c2.text_area("Traducción · español", key="vf_es", height=210, max_chars=tope,
                                   placeholder="Pegá la traducción")
                 with st.container(horizontal=True, vertical_alignment="center"):
-                    pedir = st.form_submit_button("Verificar", type="primary") or pedir
-                    st.form_submit_button("Vaciar", on_click=vaciar, type="tertiary")
+                    pedir = st.button("Verificar", type="primary") or pedir
+                    st.button("Vaciar", on_click=vaciar, type="tertiary")
                     st.caption(f"{nombre_glosario} · {len(terminos)} términos" + (" · Los textos no se guardan." if DEMO else ""))
             l_en = en.splitlines()
             l_es = es.splitlines()
@@ -246,7 +246,7 @@ if not previo or previo[0] != firma:
 if previo and previo[0] == firma:
     from revision import mostrar
     _, resultado, todas, advertencias = previo
-    mostrar(resultado, todas, advertencias, glosario=referencia_glosario)
+    mostrar(resultado, todas, advertencias, glosario=referencia_glosario, terminos=terminos)
 elif not pares:
     if DEMO:
         import catalogo
