@@ -61,3 +61,11 @@ terminológica ni actualiza las métricas de evaluación.
   permiten limitarla. No toda interacción obliga a recalcular el motor.
 - [FastAPI: plantillas y archivos estáticos](https://fastapi.tiangolo.com/advanced/templates/).
 - [HTMX: peticiones y actualización de regiones HTML](https://htmx.org/docs/).
+
+## Avance del 19 de noviembre
+
+Ya existe una implementación paralela en `web/`, descrita en
+[interfaz-web.md](interfaz-web.md), con el flujo de texto, archivos, glosario propio,
+catálogo, ejemplos y descargas. La aplicación publicada continúa en Streamlit.
+La paridad funcional se comprueba con pruebas HTTP y navegador; la comparación de
+rendimiento y el cambio del servicio público quedan para la activación.

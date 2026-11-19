@@ -1,0 +1,32 @@
+{% from 'fichas.html' import fichas %}
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TermCheck O&G · Revisión terminológica</title><meta name="description" content="Revisá traducciones de petróleo y gas con un glosario de español técnico argentino.">
+<script src="{{ url_for('static', path='tema.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', path='web.css') }}"><style>{{ css_reporte|safe }}</style>
+<script defer src="{{ url_for('static', path='vendor/htmx.min.js') }}"></script><script defer src="{{ url_for('static', path='web.js') }}"></script></head>
+<body><a class="skip" href="#verificador">Ir al verificador</a>
+<header class="masthead"><a href="./" class="brand">TermCheck <span>O&G</span></a>
+<label class="theme-label">Apariencia<select id="tema"><option value="system">Sistema</option><option value="light">Claro</option><option value="dark">Oscuro</option></select></label></header>
+<div class="shell"><p class="strapline">Revisión terminológica de petróleo y gas · Inglés → español de Argentina</p>
+<nav aria-label="Navegación principal"><button class="active" data-nav="verificador" aria-current="page">Verificador</button><button data-nav="glosario" hx-get="glosario" hx-target="#browse-panel">Glosario</button><button data-nav="ejemplos" hx-get="ejemplos" hx-target="#browse-panel">Ejemplos</button></nav>
+<main><div id="workspace">
+<section class="welcome" aria-labelledby="caso-titulo"><div><p class="eyebrow">El término cambia el sentido</p><h1 id="caso-titulo">¿Cómo traducirías <em lang="en">{{ bienvenida.en }}</em>?</h1><p>{{ bienvenida.contexto }}</p><a href="#verificador" class="text-link">Probar con mi traducción</a></div>
+<div class="welcome-case"><p class="eyebrow">Original</p><p lang="en">{{ bienvenida.original }}</p><hr><p class="eyebrow">Traducción en revisión</p><p>{{ bienvenida.inicial }}</p><details><summary>Ver una forma aceptada</summary><p>{{ bienvenida.corregida }}</p></details></div></section>
+<section id="verificador" class="workspace" aria-labelledby="form-titulo"><div class="section-heading"><h2 id="form-titulo">Verificar traducción</h2><button type="button" class="quiet" id="usar-ejemplo">Usar ejemplo</button></div>
+<details id="editor" open><summary>Textos</summary>
+<form id="verificar-form" action="verificar" method="post" enctype="multipart/form-data" hx-post="verificar" hx-target="#resultado" hx-encoding="multipart/form-data" hx-disabled-elt="find button, find input, find textarea, find select" hx-indicator="#analizando">
+<div class="input-toolbar"><fieldset class="modes"><legend class="sr-only">Entrada</legend><label><input type="radio" name="modo" value="texto" checked> Pegar texto</label><label><input type="radio" name="modo" value="archivo"> Subir archivo</label></fieldset>
+<details class="glossary-choice"><summary>Cambiar glosario</summary><label>Glosario propio (CSV)<input type="file" name="glosario" accept=".csv"></label><p class="muted">Hasta 1 MB y 1.000 términos. Mismas columnas que el glosario descargable.</p><button type="button" class="quiet" id="quitar-glosario">Usar glosario O&G</button></details></div>
+<div id="text-fields" class="bilingual"><label>Original · inglés<textarea name="en" id="en" maxlength="20000" placeholder="Pegá el original" rows="8" aria-describedby="alineacion"></textarea></label><label>Traducción · español<textarea name="es" id="es" maxlength="20000" placeholder="Pegá la traducción" rows="8"></textarea></label></div>
+<div id="file-fields" hidden><label>Archivo bilingüe<input type="file" name="archivo" accept=".csv,.tsv,.txt,.xlf,.xliff,.tmx"></label><button type="button" class="quiet" id="quitar-archivo">Quitar archivo</button><p class="muted">CSV, TSV, XLIFF 1.2/2.0 o TMX · Hasta 1 MB</p></div>
+<div class="form-actions"><button type="submit" class="primary">Verificar</button><button type="button" class="quiet" id="vaciar">Vaciar</button><span id="analizando" class="htmx-indicator" role="status">Verificando…</span><span class="muted" id="glosario-en-uso">Glosario O&G · {{ terminos|length }} términos</span></div>
+<details class="help"><summary>Formatos y límites</summary><p id="alineacion">Un segmento por línea en ambos textos. CSV/TSV en UTF-8 con dos columnas: source_en y target_es, con o sin encabezado. Hasta 200 segmentos y 20.000 caracteres por idioma. XLIFF/TMX: solo se leen segmentos traducidos. No se admiten SDLXLIFF ni MQXLIFF.</p><p>El glosario propio usa las columnas id, en, pos, es_preferred, es_allowed, es_forbidden, subdomain, note y source; las variantes se separan con |.</p></details>
+</form></details><div id="resultado" aria-live="polite"></div><p class="privacy">Los textos y archivos se procesan en memoria y no se guardan en disco.</p></section>
+<section id="destacados"><div class="section-heading"><h2>Glosario O&G</h2><button class="quiet" data-nav="glosario" hx-get="glosario" hx-target="#browse-panel">Ver los {{ terminos|length }} términos</button></div>{{ fichas(destacados) }}</section>
+<div class="project">{{ proyecto|safe }}</div>
+<details class="about"><summary>Acerca de TermCheck</summary><p>Compara los términos con un glosario técnico de español de Argentina. Señala qué revisar; no traduce ni corrige el estilo.</p><p class="muted">Demo en previsualización · Fase beta · Motor {{ version }} · Glosario v1.3</p></details>
+</div><section id="browse-panel" hidden aria-live="polite" tabindex="-1"></section></main>
+<footer>TermCheck O&G <span>Terminología con criterio de campo.</span></footer></div>
+<template id="ejemplo-en">{{ ejemplo[0] }}</template><template id="ejemplo-es">{{ ejemplo[1] }}</template>
+<div id="network-error" role="alert" hidden>No se pudo completar la solicitud. Revisá la conexión y volvé a intentar.</div>
+</body></html>

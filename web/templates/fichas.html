@@ -1,0 +1,11 @@
+{% macro fichas(terminos) %}
+<div class="dict-grid">{% for t in terminos %}
+<article class="dict-card" id="ficha-{{ t.id }}">
+<div class="card-meta"><span>{{ t.subdomain }}</span><span>{{ t.id[1:]|int if t.id.startswith('T') and t.id[1:].isdigit() else t.id }}</span></div>
+<h3 lang="en">{{ t.en[0] }}</h3>{% if t.en|length > 1 %}<p class="muted">{{ t.en[1:]|join(' · ') }}</p>{% endif %}
+<p class="preferred">{{ t.es_preferred }}</p>
+{% if t.es_allowed %}<p><span class="muted">También</span><br>{{ t.es_allowed|join(' · ') }}</p>{% endif %}
+{% if t.es_forbidden %}<p class="avoid"><span>Evitar</span><br>{{ t.es_forbidden|join(' · ') }}</p>{% endif %}
+{% if t.note or t.source %}<details><summary>Nota y fuentes</summary><p>{{ t.note }}</p><p class="muted">{{ t.source }}</p></details>{% endif %}
+</article>{% endfor %}</div>
+{% endmacro %}

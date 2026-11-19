@@ -9,28 +9,7 @@ from vista import e
 
 
 # Las cuatro alternativas usan decisiones de la edición publicada.
-EJEMPLOS = (
-    {"id": "T011", "en": "drilling rig",
-     "original": "The drilling rig was moved to the new location.",
-     "inicial": "La plataforma de perforación se trasladó a la nueva locación.",
-     "corregida": "El equipo de perforación se trasladó a la nueva locación.",
-     "contexto": "El parte describe una perforación en tierra. Una sola palabra cambia dónde imaginamos el equipo."},
-    {"id": "T038", "en": "kick",
-     "original": "The crew detected a kick during drilling.",
-     "inicial": "La cuadrilla detectó una patada durante la perforación.",
-     "corregida": "La cuadrilla detectó una surgencia durante la perforación.",
-     "contexto": "El parte describe una entrada de fluido de la formación al pozo. La traducción literal pierde el sentido técnico."},
-    {"id": "T019", "en": "wellhead",
-     "original": "Inspect the wellhead before starting production.",
-     "inicial": "Inspeccioná la cabeza del pozo antes de iniciar la producción.",
-     "corregida": "Inspeccioná la boca de pozo antes de iniciar la producción.",
-     "contexto": "La instrucción se refiere al equipo en superficie. El glosario fija la denominación elegida para este encargo."},
-    {"id": "T035", "en": "drill pipe",
-     "original": "Inspect the drill pipe before drilling.",
-     "inicial": "Inspeccioná el tubo de perforación antes de perforar.",
-     "corregida": "Inspeccioná la barra de sondeo antes de perforar.",
-     "contexto": "La instrucción pide revisar una pieza de la sarta. La elección del término responde al registro petrolero argentino."},
-)
+from termcheck.ejemplos import PORTADA as EJEMPLOS
 
 
 def elegir(terminos):

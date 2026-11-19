@@ -10,42 +10,7 @@ from termcheck.checker import Ocurrencia, verificar
 
 # Ejemplos ilustrativos con los términos del plan (sección 3). Entre [[ ]] va el término; entre (( )), lo que el
 # verificador ve pero no cuenta como término. No son datos del glosario: el glosario lo decide el dueño.
-EJEMPLOS = [
-    {"titulo": "Traducción prohibida", "etiqueta": "PROHIBIDO",
-     "en": "The [[shale]] formation lies 3,000 m below the surface.",
-     "es": "La formación de [[esquisto]] está a 3.000 m de profundidad.",
-     "porque": "«Esquisto» es *schist*, otra roca. El glosario lo marca como error frecuente de la traducción "
-               "automática: en Vaca Muerta se dice «shale» o «lutita»."},
-    {"titulo": "Error que suena bien", "etiqueta": "PROHIBIDO",
-     "en": "The [[drilling rig]] was moved to the new location.",
-     "es": "La [[plataforma de perforación]] se trasladó a la nueva locación.",
-     "porque": "Para este contexto de perforación en tierra, el glosario prefiere «equipo de perforación» "
-               "y señala «plataforma de perforación». Una frase fluida también puede apartarse de la "
-               "terminología elegida para el encargo."},
-    {"titulo": "Plural que coincide", "etiqueta": "OK",
-     "en": "Check the [[drilling fluids]] every shift.",
-     "es": "Controlá los [[lodos de perforación]] en cada turno.",
-     "porque": "El glosario dice «lodo de perforación», en singular. El verificador compara lemas "
-               "(«lodos» → «lodo»), así que el plural no es error."},
-    {"titulo": "Préstamo aceptado", "etiqueta": "OK",
-     "en": "Run the [[casing]] to 2,000 m.",
-     "es": "Bajar el [[casing]] hasta 2.000 m.",
-     "porque": "Quedó en inglés, pero en el campo argentino se dice «casing». Como el glosario lo acepta, no se marca."},
-    {"titulo": "Quedó en inglés", "etiqueta": "SIN_TRADUCIR",
-     "en": "The [[pumpjack]] stopped at noon.",
-     "es": "El [[pumpjack]] se detuvo al mediodía.",
-     "porque": "El glosario prefiere «AIB» y no acepta «pumpjack» como préstamo. Por eso lo señala para revisar."},
-    {"titulo": "No aparece", "etiqueta": "NO_ENCONTRADO",
-     "en": "The [[blowout preventer]] was tested before drilling.",
-     "es": "El [[equipo de seguridad]] se probó antes de perforar.",
-     "porque": "Ninguna traducción conocida («BOP», «preventor de reventones») está en la traducción. Puede ser "
-               "una omisión o un sinónimo que falta en el glosario: lo decide quien revisa."},
-    {"titulo": "«well» que no es pozo", "etiqueta": "OK",
-     "en": "Check the [[BOP]] as ((well)) as the choke manifold.",
-     "es": "Revisá el [[BOP]] y también el choke manifold.",
-     "porque": "Acá «well» es adverbio (*as well as* = «además de»), no el sustantivo «pozo». El verificador mira "
-               "la categoría gramatical y no lo cuenta como término.", "apagado": "ADV: no es el término «pozo»"},
-]
+from termcheck.ejemplos import ILUSTRATIVOS as EJEMPLOS
 
 
 vista.estilos()

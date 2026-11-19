@@ -2,9 +2,7 @@
 from pathlib import Path
 import re
 
-import streamlit as st
-
-from vista import e
+from html import escape as e
 
 README = Path(__file__).resolve().parent.parent / "README.md"
 FUENTE = "https://github.com/ismaelcharles/termcheck-og#4-resultados"
@@ -23,7 +21,7 @@ def resultados_publicados():
     return resultados
 
 
-def mostrar():
+def contenido(interfaz="Streamlit"):
     datos = resultados_publicados()
     tc, base = datos["TermCheck"], datos["Baseline (texto exacto)"]
     # Desempeño del verificador específicamente sobre los 40 casos traducidos con DeepL,
@@ -32,7 +30,7 @@ def mostrar():
     errores = tc["tp"] + tc["fn"]
     avisos = tc["tp"] + tc["fp"]
     precision = round(100 * tc["tp"] / avisos)
-    st.html(f"""
+    return f"""
     <section class="tc-project-section" aria-labelledby="tc-por-que">
       <div class="tc-project-heading">
         <h2 id="tc-por-que">¿Por qué usar TermCheck además de DeepL o un LLM?</h2>
@@ -102,7 +100,7 @@ def mostrar():
         <p>El proceso tiene cuatro pasos: del texto de entrada a una marca que podés revisar.</p>
       </div>
       <ol class="tc-architecture">
-        <li><h3>Recibe los textos y el glosario</h3><p>La interfaz, hecha con Streamlit,
+        <li><h3>Recibe los textos y el glosario</h3><p>La interfaz, hecha con {e(interfaz)},
         recibe el original en inglés y su traducción. También lee CSV, TSV, XLIFF y TMX.
         El glosario aporta las equivalencias y las decisiones de uso.</p></li>
         <li><h3>Reconoce los términos</h3><p>Aplica NLP (procesamiento del lenguaje natural) y técnicas
@@ -135,4 +133,9 @@ def mostrar():
       No encontrar avisos no garantiza que toda la traducción esté bien. La interpretación del contexto
       y la decisión final quedan en manos de quien revisa.</p>
     </section>
-    """)
+    """
+
+
+def mostrar():
+    import streamlit as st
+    st.html(contenido())

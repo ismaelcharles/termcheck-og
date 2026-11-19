@@ -1,5 +1,5 @@
 # Configuración de las pruebas. Le dice a pytest dónde está el código (src/) para que «import termcheck» funcione
 # sin instalar nada.
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 testpaths = ["tests"]

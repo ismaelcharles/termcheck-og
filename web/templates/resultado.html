@@ -1,0 +1,13 @@
+{% from 'fichas.html' import fichas %}
+<section class="result" data-result-ok><div class="section-heading"><h2 tabindex="-1" id="revision-titulo">Revisión</h2><details class="downloads"><summary>Descargar</summary><button type="button" data-download="html" data-content="{{ html_b64 }}">Reporte HTML</button><button type="button" data-download="csv" data-content="{{ csv_b64 }}">Tabla CSV</button></details></div>
+{% if aviso %}<p class="notice">{{ aviso }}</p>{% endif %}
+{% if todas %}<p class="result-summary"><strong>{{ marcadas }} para revisar</strong> · {{ todas|length }} {{ 'término' if todas|length == 1 else 'términos' }} · {{ resultado|length }} {{ 'segmento' if resultado|length == 1 else 'segmentos' }}</p>{% if not marcadas %}<p class="notice success">Sin observaciones en los términos reconocidos.</p>{% endif %}{% else %}<p class="notice">No se encontraron términos del glosario en el original.</p>{% endif %}
+<div class="review-toolbar">{% if marcadas %}<label><input type="checkbox" id="solo-observaciones" checked> Solo observaciones</label>{% endif %}{% if resultado|length > 1 %}<label>Segmento<select id="segmento">{% for p, oc in resultado %}<option value="{{ loop.index0 }}" data-marked="{{ oc|selectattr('marcada')|list|length }}">Segmento {{ loop.index }} de {{ resultado|length }} · {{ oc|selectattr('marcada')|list|length }} para revisar</option>{% endfor %}</select></label>{% endif %}</div>
+{% for p, oc in resultado %}<div class="review-segment" data-segment="{{ loop.index0 }}" data-marked="{{ oc|selectattr('marcada')|list|length }}">
+<div class="view-all">{{ bloque(p[2], p[3], oc, cabecera='Segmento ' ~ loop.index)|safe }}</div>{% if marcadas %}<div class="view-only">{{ bloque(p[2], p[3], oc, solo=True, cabecera='Segmento ' ~ loop.index)|safe }}</div>{% endif %}
+{% set ids = oc|map(attribute='term_id')|list %}{% set relacionadas = terminos|selectattr('id', 'in', ids)|list %}
+{% if relacionadas %}<details class="related"><summary>Consultar las fichas de este segmento</summary>{{ fichas(relacionadas) }}</details>{% endif %}
+</div>{% endfor %}
+{% if consistencia %}<details><summary>Términos usados de formas distintas</summary>{{ consistencia|safe }}</details>{% endif %}
+<details class="help"><summary>Cómo leer las marcas</summary>{{ leyenda|safe }}<p>Solo se revisan términos del glosario, no la traducción completa. Una forma no encontrada puede ser válida. Las sugerencias por parecido no cambian la etiqueta.</p></details>
+</section>
