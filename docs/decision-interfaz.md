@@ -70,3 +70,11 @@ catálogo, ejemplos y descargas. Se monta bajo `/demo/`; la aplicación privada 
 en Streamlit. La paridad funcional se comprueba con pruebas HTTP y navegador.
 La activación conserva el puerto y los límites del servicio y permite recuperar
 la demo Streamlit sin cambiar el proxy ni los datos lingüísticos.
+
+
+## Revisión tras la publicación
+
+El autor rechazó la presentación de FastAPI por ser inferior a la versión Streamlit.
+La demo pública volvió a Streamlit. El prototipo se conserva, pero la recomendación
+de arquitectura no autoriza a dar por bueno su diseño: una próxima migración debe
+conservar o mejorar la presentación existente y compararse visualmente antes de activarse.

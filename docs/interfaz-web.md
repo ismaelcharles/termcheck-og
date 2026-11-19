@@ -1,9 +1,9 @@
-# Interfaz pública con FastAPI y HTMX
+# Prototipo de interfaz pública con FastAPI y HTMX
 
 Implementada en `web/` con FastAPI, plantillas Jinja y HTMX 2.0.8 servido localmente
 (licencia incluida). Reutiliza el motor de `src/termcheck` sin modificar sus reglas.
-La demo pública funciona con esta interfaz bajo `/demo/`. La aplicación privada conserva Streamlit.
-`app/demo.py` mantiene la implementación anterior para recuperación.
+La demo pública volvió a Streamlit tras el rechazo visual del autor. FastAPI queda
+conservado como prototipo, sin activación pública. `app/demo.py` sirve la demo actual.
 
 ## Ejecutar
 
@@ -91,3 +91,12 @@ FastAPI. Incluye cachés; los procesos tenían distinta antigüedad. Estos resul
 una muestra breve y un único texto, con variación de carga del servidor entre corridas.
 No demuestran mejoras generales de rendimiento ni capacidad sostenida. Evidencias locales:
 `salida/web/mediciones/streamlit.json`, `fastapi.json` y `salida/web/produccion/navegador.json`.
+
+
+## Retirada de la migración pública
+
+El autor consideró la presentación inferior a la interfaz Streamlit anterior. Se retiró
+el cambio del ejecutable y se restauró Streamlit en la misma URL pública. El código
+FastAPI se conserva para revisión; la validación funcional no implica aprobación visual.
+README y capturas recuperan la presentación de Streamlit. La medición anterior describe
+el experimento retirado y no justifica su publicación.
