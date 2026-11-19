@@ -66,9 +66,12 @@ copió del commit `05cbf049b00fb02998c4e72dcf8eacdf3288eafc`, sin cambiar el che
 Las apariciones son las del reporte del motor; no son unidades de referencia humana.
 
 Chromium comprobó los cinco archivos en la demo local: carga, unidades omitidas, cobertura, revisión,
-descargas CSV y HTML, y versión del reporte. Los CSV del navegador coinciden con la CLI en sus campos
+descargas CSV y HTML, y versión del reporte. El mismo recorrido pasó después en la demo pública
+con 0.2.5. Los CSV del navegador coinciden con la CLI en sus campos
 de resultados; el identificador del sistema de entrada puede diferir. Se probaron además tres regresiones
 desde los cuadros de texto. Las memorias sin términos muestran explícitamente ausencia de cobertura.
+Las 330 pruebas automáticas pasaron. El recorrido habitual de siete verificaciones, catálogo y descarga
+del glosario también pasó en previsualización y producción, con vistas de PC y teléfono.
 
 ## Avisos y límites que siguen abiertos
 
