@@ -184,5 +184,63 @@
     "descarga_sha256": "94361832f327ad9fa53802dfed4eee0e18d2f249b02d636780e35762be91c358",
     "errors": []
   },
-  "csv_navegador_equivale_cli": true
+  "csv_navegador_equivale_cli": true,
+  "navegador_produccion": {
+    "ok": true,
+    "base": "https://termcheck.aval.site/demo/",
+    "resultados": [
+      {
+        "name": "directiva",
+        "segments": 48,
+        "terms": 1,
+        "avisos": 0,
+        "skip": 0,
+        "downloadRows": 1
+      },
+      {
+        "name": "dgt",
+        "segments": 73,
+        "terms": 0,
+        "avisos": 0,
+        "skip": 11,
+        "downloadRows": 0
+      },
+      {
+        "name": "dgt-control",
+        "segments": 47,
+        "terms": 0,
+        "avisos": 0,
+        "skip": 3,
+        "downloadRows": 0
+      },
+      {
+        "name": "ifc-offshore",
+        "segments": 16,
+        "terms": 68,
+        "avisos": 5,
+        "skip": 0,
+        "downloadRows": 68
+      },
+      {
+        "name": "ifc-onshore",
+        "segments": 2,
+        "terms": 13,
+        "avisos": 0,
+        "skip": 0,
+        "downloadRows": 13
+      }
+    ],
+    "regresiones": 7,
+    "errors": []
+  },
+  "catalogo_produccion": {
+    "ok": true,
+    "cbl": true,
+    "disposal": true,
+    "version": "1.4",
+    "descarga_sha256": "94361832f327ad9fa53802dfed4eee0e18d2f249b02d636780e35762be91c358",
+    "errors": []
+  },
+  "commit_activado": "5be300e",
+  "estado": "publicado_y_comprobado"
 }

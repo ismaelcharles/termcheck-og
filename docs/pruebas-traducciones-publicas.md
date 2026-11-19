@@ -112,6 +112,8 @@ es una comprobación de cambios sobre ejemplos conocidos, no una evaluación ind
 
 Los otros 102 conceptos conservan todos sus campos. Las 340 pruebas automáticas pasaron; el
 [resumen de validación de 1.4](glosario-1-4-validacion.json) identifica fuentes, huellas y conteos.
+La edición 1.4 se comprobó también en producción: cinco archivos, siete regresiones por texto, las dos
+fichas modificadas, la versión visible y la descarga exacta del CSV en vistas de PC y teléfono.
 
 ## Evidencia
 
