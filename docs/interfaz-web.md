@@ -1,8 +1,9 @@
-# Interfaz pública paralela
+# Interfaz pública con FastAPI y HTMX
 
 Implementada en `web/` con FastAPI, plantillas Jinja y HTMX 2.0.8 servido localmente
 (licencia incluida). Reutiliza el motor de `src/termcheck` sin modificar sus reglas.
-La demo publicada y la aplicación privada siguen en Streamlit.
+La demo pública funciona con esta interfaz bajo `/demo/`. La aplicación privada conserva Streamlit.
+`app/demo.py` mantiene la implementación anterior para recuperación.
 
 ## Ejecutar
 
@@ -12,8 +13,8 @@ Instalar `requirements-web.txt` en el entorno del proyecto y ejecutar:
 bash scripts/previsualizar-web.sh
 ```
 
-Disponible en `http://127.0.0.1:8530/`. `TERMCHECK_PUERTO_WEB` cambia el puerto.
-No modifica servicios ni configura alojamiento externo. Para cerrar, Ctrl+C.
+Disponible en `http://127.0.0.1:8530/demo/`. `TERMCHECK_PUERTO_WEB` cambia el puerto.
+El lanzador local no modifica servicios ni configura alojamiento externo. Para cerrar, Ctrl+C.
 
 ## Funciones
 
@@ -41,7 +42,7 @@ Los cuerpos no se registran; el lanzador desactiva el registro de accesos de Uvi
 
 ```bash
 .venv/bin/pytest -q
-TERMCHECK_URL=http://127.0.0.1:8530/ node scripts/revisar-web.cjs
+TERMCHECK_URL=http://127.0.0.1:8530/demo/ node scripts/revisar-web.cjs
 ```
 
 El ensayo de navegador usa las herramientas ya instaladas en este servidor, comprueba
@@ -50,9 +51,14 @@ Guarda capturas PC/teléfono, HTML, CSV, PDF y `navegador.json` en `salida/web/`
 Las pruebas HTTP contrastan el CSV por aparición directamente con el motor, incluidas las
 formas singular y plural de elevator. No recalculan la evaluación congelada del proyecto.
 
-Esta entrega es una previsualización local. Antes de sustituir la demo hay que preparar la
-ruta del proxy y el servicio, revisar el montaje bajo esa ruta, comparar latencia y memoria
-en el mismo servidor, y comprobar recuperación a la demo existente. La prueba de tres
+La aplicación ASGI `web.main:publica` monta las rutas bajo `/demo/`, incluidos recursos y
+enlaces directos al catálogo y los ejemplos. El servicio público conserva su puerto y sus
+límites de recursos. La recuperación consiste en retirar el cambio de ejecutable y reiniciar
+la implementación Streamlit conservada.
+
+El script `scripts/medir-interfaz.cjs` registra cuatro visitas con contextos nuevos y una
+verificación breve antes y después del cambio. Es una medición descriptiva del servidor,
+no una prueba de carga ni una estimación de rendimiento general. La prueba de tres
 visitantes comprueba aislamiento; no demuestra capacidad para una carga pública grande.
 
 Referencias: [formularios y archivos de FastAPI](https://fastapi.tiangolo.com/tutorial/request-forms-and-files/),

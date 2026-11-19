@@ -67,7 +67,7 @@ esté bien; cuando no hay términos reconocidos, la app lo informa expresamente.
 
 ![La portada del verificador con acceso al glosario, ejemplos y fichas de términos](docs/img/demo.png)
 
-*Interfaz clara de TermCheck 0.2.3. [Ver la interfaz oscura](docs/img/demo-oscuro.png).*
+*Interfaz pública FastAPI con motor TermCheck 0.2.4. [Ver la interfaz oscura](docs/img/demo-oscuro.png).*
 
 ## 3. Cómo funciona
 
@@ -329,12 +329,12 @@ Probado en Linux con Python 3.12.
 
 ```
 python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
+.venv/bin/pip install -r requirements-web.txt
 .venv/bin/python -m spacy download en_core_web_sm
 .venv/bin/python -m spacy download es_core_news_sm
 ```
 
-`requirements.txt` alcanza para verificar y usar la app. Para volver a traducir con Opus-MT
+`requirements-web.txt` incluye la interfaz pública FastAPI. `requirements.txt` alcanza para el motor y la app privada Streamlit. Para volver a traducir con Opus-MT
 (`scripts/translate_opusmt.py`), instalá además `requirements-mt.txt`. Para torch sin GPU, seguí la indicación
 en ese archivo.
 
@@ -353,11 +353,14 @@ Verificar un archivo XLIFF 1.2, XLIFF 2.0 o TMX. La página Verificar también l
 Escribe `salida/mio.csv` y `salida/mio.html`. Con `--glossary` se usa otro glosario, con las mismas columnas que
 `data/glossary/glossary_en_es.csv`.
 
-La demo en la propia máquina (solo la página de verificación):
+La interfaz pública en la propia máquina:
 
 ```
-.venv/bin/streamlit run app/demo.py
+bash scripts/previsualizar-web.sh
 ```
+
+Queda en http://127.0.0.1:8530/demo/. Incluye verificador, glosario y ejemplos.
+La implementación y sus límites están en [docs/interfaz-web.md](docs/interfaz-web.md).
 
 La app completa, con el glosario, la anotación y los resultados, sin inicio de sesión:
 
@@ -365,7 +368,7 @@ La app completa, con el glosario, la anotación y los resultados, sin inicio de 
 TERMCHECK_SIN_LOGIN=1 .venv/bin/streamlit run app/streamlit_app.py
 ```
 
-Las dos quedan en http://127.0.0.1:8501.
+La app privada queda en http://127.0.0.1:8501. La demo anterior se conserva en `app/demo.py`.
 
 Las pruebas automáticas y la evaluación:
 
@@ -380,7 +383,8 @@ Qué hay en cada carpeta:
 |---|---|
 | `src/termcheck/` | El verificador: glosario, normalización, detección, clasificación, consistencia y reporte |
 | `scripts/` | Armado del corpus, traducción, división en conjuntos, verificación, baseline y evaluación |
-| `app/` | La app web (Streamlit): glosario, traducciones, anotación, verificación y resultados; `demo.py` es la demo pública |
+| `web/` | Interfaz pública con FastAPI, HTML/CSS y HTMX: verificador, catálogo y ejemplos |
+| `app/` | App privada Streamlit: glosario, traducciones, anotación, verificación y resultados; `demo.py` conserva la interfaz pública anterior |
 | `data/` | Glosario, corpus, traducciones, división en conjuntos y anotación |
 | `tests/` | Pruebas automáticas, con un proyecto inventado que no toca los datos reales |
 | `docs/` | La guía de anotación y los hallazgos |

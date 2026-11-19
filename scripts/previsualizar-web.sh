@@ -8,4 +8,4 @@ if [[ ! -x "$python_web" ]]; then
 fi
 cd "$raiz"
 export PYTHONPATH="$raiz/src:$raiz"
-exec "$python_web" -m uvicorn web.main:app --host 127.0.0.1 --port "${TERMCHECK_PUERTO_WEB:-8530}" --no-access-log
+exec "$python_web" -m uvicorn web.main:publica --host 127.0.0.1 --port "${TERMCHECK_PUERTO_WEB:-8530}" --no-access-log

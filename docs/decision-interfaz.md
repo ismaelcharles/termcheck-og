@@ -1,6 +1,6 @@
 # Evaluación de la interfaz pública de TermCheck
 
-Fecha: 19 de noviembre de 2026. Propuesta de arquitectura; no se ha migrado la aplicación.
+Fecha: 19 de noviembre de 2026. Decisión de arquitectura e implementación de la interfaz pública.
 
 ## Necesidad
 
@@ -64,8 +64,9 @@ terminológica ni actualiza las métricas de evaluación.
 
 ## Avance del 19 de noviembre
 
-Ya existe una implementación paralela en `web/`, descrita en
+La implementación pública en `web/` está descrita en
 [interfaz-web.md](interfaz-web.md), con el flujo de texto, archivos, glosario propio,
-catálogo, ejemplos y descargas. La aplicación publicada continúa en Streamlit.
-La paridad funcional se comprueba con pruebas HTTP y navegador; la comparación de
-rendimiento y el cambio del servicio público quedan para la activación.
+catálogo, ejemplos y descargas. Se monta bajo `/demo/`; la aplicación privada continúa
+en Streamlit. La paridad funcional se comprueba con pruebas HTTP y navegador.
+La activación conserva el puerto y los límites del servicio y permite recuperar
+la demo Streamlit sin cambiar el proxy ni los datos lingüísticos.

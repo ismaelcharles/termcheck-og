@@ -1,6 +1,6 @@
 {% from 'fichas.html' import fichas %}
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TermCheck O&G · Revisión terminológica</title><meta name="description" content="Revisá traducciones de petróleo y gas con un glosario de español técnico argentino.">
+<base href="{{ request.url_for('inicio') }}"><title>TermCheck O&G · Revisión terminológica</title><meta name="description" content="Revisá traducciones de petróleo y gas con un glosario de español técnico argentino.">
 <script src="{{ url_for('static', path='tema.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', path='web.css') }}"><style>{{ css_reporte|safe }}</style>
 <script defer src="{{ url_for('static', path='vendor/htmx.min.js') }}"></script><script defer src="{{ url_for('static', path='web.js') }}"></script></head>
@@ -8,8 +8,8 @@
 <header class="masthead"><a href="./" class="brand">TermCheck <span>O&G</span></a>
 <label class="theme-label">Apariencia<select id="tema"><option value="system">Sistema</option><option value="light">Claro</option><option value="dark">Oscuro</option></select></label></header>
 <div class="shell"><p class="strapline">Revisión terminológica de petróleo y gas · Inglés → español de Argentina</p>
-<nav aria-label="Navegación principal"><button class="active" data-nav="verificador" aria-current="page">Verificador</button><button data-nav="glosario" hx-get="glosario" hx-target="#browse-panel">Glosario</button><button data-nav="ejemplos" hx-get="ejemplos" hx-target="#browse-panel">Ejemplos</button></nav>
-<main><div id="workspace">
+<nav aria-label="Navegación principal"><button class="{% if not pestana %}active{% endif %}" data-nav="verificador" {% if not pestana %}aria-current="page"{% endif %}>Verificador</button><button {% if pestana == "glosario" %}class="active" aria-current="page"{% endif %} data-nav="glosario" hx-get="glosario" hx-target="#browse-panel">Glosario</button><button {% if pestana == "ejemplos" %}class="active" aria-current="page"{% endif %} data-nav="ejemplos" hx-get="ejemplos" hx-target="#browse-panel">Ejemplos</button></nav>
+<main><div id="workspace" {% if pestana %}hidden{% endif %}>
 <section class="welcome" aria-labelledby="caso-titulo"><div><p class="eyebrow">El término cambia el sentido</p><h1 id="caso-titulo">¿Cómo traducirías <em lang="en">{{ bienvenida.en }}</em>?</h1><p>{{ bienvenida.contexto }}</p><a href="#verificador" class="text-link">Probar con mi traducción</a></div>
 <div class="welcome-case"><p class="eyebrow">Original</p><p lang="en">{{ bienvenida.original }}</p><hr><p class="eyebrow">Traducción en revisión</p><p>{{ bienvenida.inicial }}</p><details><summary>Ver una forma aceptada</summary><p>{{ bienvenida.corregida }}</p></details></div></section>
 <section id="verificador" class="workspace" aria-labelledby="form-titulo"><div class="section-heading"><h2 id="form-titulo">Verificar traducción</h2><button type="button" class="quiet" id="usar-ejemplo">Usar ejemplo</button></div>
@@ -24,8 +24,8 @@
 </form></details><div id="resultado" aria-live="polite"></div><p class="privacy">Los textos y archivos se procesan en memoria y no se guardan en disco.</p></section>
 <section id="destacados"><div class="section-heading"><h2>Glosario O&G</h2><button class="quiet" data-nav="glosario" hx-get="glosario" hx-target="#browse-panel">Ver los {{ terminos|length }} términos</button></div>{{ fichas(destacados) }}</section>
 <div class="project">{{ proyecto|safe }}</div>
-<details class="about"><summary>Acerca de TermCheck</summary><p>Compara los términos con un glosario técnico de español de Argentina. Señala qué revisar; no traduce ni corrige el estilo.</p><p class="muted">Demo en previsualización · Fase beta · Motor {{ version }} · Glosario v1.3</p></details>
-</div><section id="browse-panel" hidden aria-live="polite" tabindex="-1"></section></main>
+<details class="about"><summary>Acerca de TermCheck</summary><p>Compara los términos con un glosario técnico de español de Argentina. Señala qué revisar; no traduce ni corrige el estilo.</p><p class="muted">Demo pública · Fase beta · Motor {{ version }} · Glosario v1.3</p></details>
+</div><section id="browse-panel" {% if not pestana %}hidden{% endif %} aria-live="polite" tabindex="-1">{{ panel|default('')|safe }}</section></main>
 <footer>TermCheck O&G <span>Terminología con criterio de campo.</span></footer></div>
 <template id="ejemplo-en">{{ ejemplo[0] }}</template><template id="ejemplo-es">{{ ejemplo[1] }}</template>
 <div id="network-error" role="alert" hidden>No se pudo completar la solicitud. Revisá la conexión y volvé a intentar.</div>

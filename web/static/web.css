@@ -1,6 +1,6 @@
-@font-face{font-family:Inter;src:url('/fonts/inter-normal-latin.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:Inter;src:url('../fonts/inter-normal-latin.woff2') format('woff2');font-weight:100 900;font-display:swap}
 
-@font-face{font-family:Newsreader;src:url('/fonts/newsreader-normal-latin.woff2') format('woff2');font-weight:200 800;font-display:swap}
+@font-face{font-family:Newsreader;src:url('../fonts/newsreader-normal-latin.woff2') format('woff2');font-weight:200 800;font-display:swap}
 
 :root{color-scheme:light;--tc-bg:#f8f7f3;--tc-surface:#fff;--tc-text:#202d29;--tc-muted:#58635d;--tc-border:#d5dcd5;--tc-rule:#e4e7e2;--tc-accent:#245c47;--tc-soft:#eaf0e9;--tc-error:#9c3324;--tc-error-bg:#f6dcd6;--tc-warning:#7a5300;--tc-warning-bg:#f5e8c8}
 

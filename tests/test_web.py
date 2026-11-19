@@ -123,7 +123,7 @@ def test_catalogo_y_descarga(cliente):
     assert '<span>91</span>' in html
     assert cliente.get('/glosario.csv').content == (servicio.RAIZ / 'data/glossary/glossary_v1_3.csv').read_bytes()
     assert 'No encontré términos' in cliente.get('/glosario?q=zzzzzz').text
-    assert 'Página 1 de' in cliente.get('/glosario?pagina=-1').text
+    assert 'Página 1 de' in cliente.get('/glosario?pagina=-1', headers={'HX-Request':'true'}).text
 
 
 def test_sesiones_simultaneas_sin_cruces(cliente):
@@ -134,3 +134,34 @@ def test_sesiones_simultaneas_sin_cruces(cliente):
         assert all(f'Visitante {j}.' not in html for j in range(3) if j != i)
     with ThreadPoolExecutor(max_workers=3) as pool:
         list(pool.map(caso, range(3)))
+
+
+@pytest.fixture(scope="module")
+def cliente_publico():
+    from web.main import publica
+    with TestClient(publica) as c:
+        yield c
+
+
+def test_montaje_demo_y_fuentes(cliente_publico):
+    r = cliente_publico.get('/demo/')
+    assert r.status_code == 200
+    assert '<base href="http://testserver/demo/">' in r.text
+    for archivo in ['static/web.css', 'static/web.js', 'static/tema.js', 'static/vendor/htmx.min.js', 'fonts/inter-normal-latin.woff2']:
+        assert cliente_publico.get('/demo/' + archivo).status_code == 200
+    assert "url('../fonts/" in cliente_publico.get('/demo/static/web.css').text
+    assert cliente_publico.get('/demo/salud').json()['estado'] == 'ok'
+    html = cliente_publico.post('/demo/verificar', data={'en':'Inspect the elevator.', 'es':'Inspeccioná el elevador.'}).text
+    assert 'Sin observaciones' in html
+
+
+@pytest.mark.parametrize('ruta,selector', [
+    ('glosario?q=elevator', '<h3 lang="en">elevator</h3>'),
+    ('ejemplos', 'Probar traducción'),
+])
+def test_secciones_directas_y_fragmentos(cliente_publico, ruta, selector):
+    completo = cliente_publico.get('/demo/' + ruta).text
+    assert '<!doctype html>' in completo and selector in completo
+    assert 'id="workspace" hidden' in completo
+    parcial = cliente_publico.get('/demo/' + ruta, headers={'HX-Request':'true'}).text
+    assert '<!doctype html>' not in parcial and selector in parcial

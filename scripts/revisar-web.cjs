@@ -2,8 +2,8 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const {loadPlaywright, installedBrowser} = require('/home/ubuntu/tools/codex-toolkit/browser.cjs');
-const base = process.env.TERMCHECK_URL || 'http://127.0.0.1:8530/';
-const out = path.resolve('salida/web');
+const base = process.env.TERMCHECK_URL || 'http://127.0.0.1:8530/demo/';
+const out = path.resolve(process.env.TERMCHECK_SALIDA_WEB || 'salida/web');
 async function main() {
   fs.mkdirSync(out, {recursive:true});
   const {chromium} = loadPlaywright();
@@ -116,6 +116,16 @@ async function main() {
     await page.screenshot({path:path.join(out,'entrada-telefono.png'),fullPage:true});
     await llenar('Drill pipe.','Tubo de perforación.');
     await page.pdf({path:path.join(out,'revision.pdf'),format:'A4',printBackground:true});
+    // Las URLs compartidas también muestran una página completa bajo /demo/.
+    for (const ruta of ['glosario?q=elevator', 'ejemplos']) {
+      await page.goto(new URL(ruta, base).href);
+      await page.locator('#tema').waitFor();
+      await page.locator('#browse-panel:visible').waitFor();
+      await overflow();
+      if (ruta.startsWith('glosario')) await page.getByRole('heading',{name:'elevator',exact:true}).waitFor();
+      await page.locator('nav [data-nav=verificador]').click();
+      await llenar('Inspect the elevator.', 'Inspeccioná el elevador.');
+    }
     // Tres visitantes independientes.
     await Promise.all([0,1,2].map(async i => {
       const c = await browser.newContext(); const p = await c.newPage();

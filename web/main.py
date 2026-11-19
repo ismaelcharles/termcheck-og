@@ -1,4 +1,4 @@
-"""Lanzar: PYTHONPATH=src .venv/bin/uvicorn web.main:app --host 127.0.0.1 --port 8520."""
+"""Lanzar: PYTHONPATH=src .venv/bin/uvicorn web.main:app --host 127.0.0.1 --port 8530."""
 import random
 import unicodedata
 from pathlib import Path
@@ -55,12 +55,23 @@ def renderizar(request, nombre, **contexto):
     return templates.TemplateResponse(request=request, name=nombre, context=contexto)
 
 
-@app.get("/", response_class=HTMLResponse)
-def inicio(request: Request):
+def contexto_inicio():
     terminos, _ = servicio.glosario()
-    return renderizar(request, "index.html", terminos=terminos, destacados=random.sample(terminos, 3),
+    return dict(terminos=terminos, destacados=random.sample(terminos, 3),
                   bienvenida=random.choice(PORTADA), ejemplo=servicio.ejemplo_desarrollo(),
                   proyecto=contenido("FastAPI y HTMX"), css_reporte=report.CSS)
+
+
+@app.get("/", response_class=HTMLResponse)
+def inicio(request: Request):
+    return renderizar(request, "index.html", **contexto_inicio())
+
+
+def seccion(request, nombre, pestana, **contexto):
+    if request.headers.get("HX-Request") == "true":
+        return renderizar(request, nombre, **contexto)
+    panel = templates.get_template(nombre).render(**contexto)
+    return renderizar(request, "index.html", **contexto_inicio(), panel=panel, pestana=pestana)
 
 
 async def carga(form, campo):
@@ -108,7 +119,7 @@ def catalogo(request: Request, q: str = "", area: str = "", pagina: int = 1):
     pagina = min(max(pagina, 1), paginas)
     contexto = dict(terminos=filtrados[(pagina-1)*12:pagina*12], total=len(filtrados), q=q[:200], area=area,
                     areas=sorted({t.subdomain for t in terminos}), numero=pagina, paginas=paginas)
-    return renderizar(request, "catalogo.html", **contexto)
+    return seccion(request, "catalogo.html", "glosario", **contexto)
 
 
 @app.get("/glosario.csv")
@@ -120,7 +131,7 @@ def descargar_glosario():
 @app.get("/ejemplos", response_class=HTMLResponse)
 def ejemplos(request: Request):
     limpiar = lambda s: s.replace("[[", "").replace("]]", "").replace("((", "").replace("))", "")
-    return renderizar(request, "ejemplos.html", ejemplos=[dict(e, original=limpiar(e["en"]), traduccion=limpiar(e["es"])) for e in ILUSTRATIVOS])
+    return seccion(request, "ejemplos.html", "ejemplos", ejemplos=[dict(e, original=limpiar(e["en"]), traduccion=limpiar(e["es"])) for e in ILUSTRATIVOS])
 
 
 @app.post("/ejemplo", response_class=HTMLResponse)
@@ -145,3 +156,8 @@ async def probar_ejemplo(request: Request):
 @app.get("/salud")
 def salud():
     return {"estado": "ok", "version": VERSION}
+
+
+# Caddy conserva /demo/ al reenviar al puerto público. El área privada usa otro servicio.
+publica = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+publica.mount("/demo", app)
