@@ -1,5 +1,10 @@
 # Guía de anotación
 
+Esta guía documenta la anotación humana histórica con el glosario v1. Las reformas terminológicas
+posteriores están registradas en [Glosario 1.3](../data/glossary/glossary_v1_3.md). La revisión posterior
+de las 60 oraciones reservadas usa una referencia mixta humana/IA y tiene su propio
+[informe de método y resultados](evaluacion-reserva-60.md); no amplía la anotación humana histórica.
+
 > Redactada por Claude el 2026-11-14 a pedido del autor. Los criterios y los ejemplos se sacaron de su anotación
 > (`data/annotations/gold.csv`), de sus comentarios y del glosario v1. Donde dice **[A DECIDIR]** la anotación no
 > alcanza para saber el criterio y falta que lo diga el autor.

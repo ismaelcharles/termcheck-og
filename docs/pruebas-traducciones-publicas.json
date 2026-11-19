@@ -1,0 +1,190 @@
+{
+  "fecha": "2026-11-19",
+  "base_commit": "05cbf049b00fb02998c4e72dcf8eacdf3288eafc",
+  "antes": {
+    "version": "0.2.4",
+    "glosario_sha256": "8c4e54c821236896dcb1a8ca9646ac10391cab6dd3192d35737cc31e0a91d127",
+    "muestras": {
+      "directiva": {
+        "segmentos": 48,
+        "omitidos_sin_es": 0,
+        "apariciones": 3,
+        "avisos": 3,
+        "etiquetas": {
+          "NO_ENCONTRADO": 3
+        }
+      },
+      "dgt": {
+        "segmentos": 73,
+        "omitidos_sin_es": 11,
+        "apariciones": 8,
+        "avisos": 8,
+        "etiquetas": {
+          "NO_ENCONTRADO": 8
+        }
+      },
+      "dgt-control": {
+        "segmentos": 47,
+        "omitidos_sin_es": 3,
+        "apariciones": 0,
+        "avisos": 0,
+        "etiquetas": {}
+      },
+      "ifc-offshore": {
+        "segmentos": 16,
+        "omitidos_sin_es": 0,
+        "apariciones": 69,
+        "avisos": 7,
+        "etiquetas": {
+          "OK": 44,
+          "VARIANTE": 18,
+          "NO_ENCONTRADO": 5,
+          "PROHIBIDO": 2
+        }
+      },
+      "ifc-onshore": {
+        "segmentos": 2,
+        "omitidos_sin_es": 0,
+        "apariciones": 13,
+        "avisos": 0,
+        "etiquetas": {
+          "OK": 9,
+          "VARIANTE": 4
+        }
+      }
+    }
+  },
+  "despues": {
+    "version": "0.2.5",
+    "glosario_sha256": "8c4e54c821236896dcb1a8ca9646ac10391cab6dd3192d35737cc31e0a91d127",
+    "muestras": {
+      "directiva": {
+        "segmentos": 48,
+        "omitidos_sin_es": 0,
+        "apariciones": 1,
+        "avisos": 0,
+        "etiquetas": {
+          "OK": 1
+        }
+      },
+      "dgt": {
+        "segmentos": 73,
+        "omitidos_sin_es": 11,
+        "apariciones": 0,
+        "avisos": 0,
+        "etiquetas": {}
+      },
+      "dgt-control": {
+        "segmentos": 47,
+        "omitidos_sin_es": 3,
+        "apariciones": 0,
+        "avisos": 0,
+        "etiquetas": {}
+      },
+      "ifc-offshore": {
+        "segmentos": 16,
+        "omitidos_sin_es": 0,
+        "apariciones": 68,
+        "avisos": 6,
+        "etiquetas": {
+          "OK": 44,
+          "VARIANTE": 18,
+          "NO_ENCONTRADO": 4,
+          "PROHIBIDO": 2
+        }
+      },
+      "ifc-onshore": {
+        "segmentos": 2,
+        "omitidos_sin_es": 0,
+        "apariciones": 13,
+        "avisos": 0,
+        "etiquetas": {
+          "OK": 9,
+          "VARIANTE": 4
+        }
+      }
+    }
+  },
+  "fuentes_ifc": [
+    {
+      "url": "https://www.ifc.org/content/dam/ifc/doc/2000/2007-onshore-oil-gas-development-ehs-guidelines-en.pdf",
+      "archivo": "2007-onshore-oil-gas-development-ehs-guidelines-en.pdf",
+      "bytes": 409723,
+      "sha256": "688ecd61229edbb69f9911a8e2185dd27d68d4ceec42226664d005279fde1244"
+    },
+    {
+      "url": "https://www.ifc.org/content/dam/ifc/doc/2000/2007-onshore-oil-gas-development-ehs-guidelines-es.pdf",
+      "archivo": "2007-onshore-oil-gas-development-ehs-guidelines-es.pdf",
+      "bytes": 220433,
+      "sha256": "e6c1589b878c4fb73bba8200dbebec26669638aa3dd28b2bf235712167ce58b1"
+    },
+    {
+      "url": "https://www.ifc.org/content/dam/ifc/doc/2010/2015-offshore-oil-gas-development-ehs-guidelines-en.pdf",
+      "archivo": "2015-offshore-oil-gas-development-ehs-guidelines-en.pdf",
+      "bytes": 350664,
+      "sha256": "790a8fb36b69afbbf5e88ee2fc6c9f055bd329ea0e4b5d63256cbeb677e9621e"
+    },
+    {
+      "url": "https://www.ifc.org/content/dam/ifc/doc/2010/2015-offshore-oil-gas-development-ehs-guidelines-es.pdf",
+      "archivo": "2015-offshore-oil-gas-development-ehs-guidelines-es.pdf",
+      "bytes": 586233,
+      "sha256": "21bb9b0edd2c8b0004235745cbe4088e72851ec949892b026b83b2382e012e7f"
+    }
+  ],
+  "sha256_insumos": {
+    "ifc-onshore-pares.json": "fe35e6e395ce585b9ba86f0089ad07af8fc0c9d75b71e16ce22c6d7cc33969ac",
+    "ifc-offshore-pares.json": "890e1841c4354955df94eaee470c61b3235a44142c6502ef43a46b99296ba8a1",
+    "revision-astra-ifc.json": "9cd28791b50aeb64515769372d15582efb1732e211107f2e716b1825842b80dc",
+    "antes/casos.json": "31c1d394f8c42472045520c1e5a5de80862f1f4748591a6070e0c06cf2128c16",
+    "despues/casos.json": "344caf3fd7bce64b2e1fc5c9d776be220737a6d62dbcf6da753f829a20feccd4"
+  },
+  "navegador_previsualizacion": {
+    "ok": true,
+    "base": "http://127.0.0.1:8536",
+    "resultados": [
+      {
+        "name": "directiva",
+        "segments": 48,
+        "terms": 1,
+        "avisos": 0,
+        "skip": 0,
+        "downloadRows": 1
+      },
+      {
+        "name": "dgt",
+        "segments": 73,
+        "terms": 0,
+        "avisos": 0,
+        "skip": 11,
+        "downloadRows": 0
+      },
+      {
+        "name": "dgt-control",
+        "segments": 47,
+        "terms": 0,
+        "avisos": 0,
+        "skip": 3,
+        "downloadRows": 0
+      },
+      {
+        "name": "ifc-offshore",
+        "segments": 16,
+        "terms": 68,
+        "avisos": 6,
+        "skip": 0,
+        "downloadRows": 68
+      },
+      {
+        "name": "ifc-onshore",
+        "segments": 2,
+        "terms": 13,
+        "avisos": 0,
+        "skip": 0,
+        "downloadRows": 13
+      }
+    ],
+    "regresiones": 3,
+    "errors": []
+  },
+  "referencia": "Prueba de funcionamiento con revisión cualitativa de Astra; sin referencia humana completa ni métricas de precisión/recall."
+}

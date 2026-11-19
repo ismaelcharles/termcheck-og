@@ -8,7 +8,7 @@ Recibe el texto en inglés, su traducción y un glosario bilingüe. Señala form
 términos en inglés que no se aceptan como préstamos y equivalencias que no pudo encontrar. La persona que revisa
 decide cada caso en contexto. No traduce ni corrige estilo.
 
-**Versión pública: 0.2.4 · Glosario: 1.3 · 104 términos.** Se puede usar el glosario incluido o uno propio con las
+**Versión pública: 0.2.5 · Glosario: 1.3 · 104 términos.** Se puede usar el glosario incluido o uno propio con las
 preferencias del cliente. La evaluación histórica se conserva con su código y su glosario identificados.
 
 ## 1. El problema
@@ -244,7 +244,8 @@ términos en inglés salió idéntica en las 120 oraciones. El código se cerró
 
 Siguen igual las 3 falsas alarmas y los 2 errores sin marcar que dependen del glosario o de mirar las palabras
 que rodean al término: «perforación» por *perforating*, «vástago» por *kelly*, «varilla Kelly» y «boca del pozo».
-Quedan 60 oraciones del conjunto de prueba sin anotar. Anotarlas daría una medida de la 0.2 sin este sesgo.
+En ese momento quedaban 60 oraciones reservadas. Su revisión posterior se cerró con referencia mixta
+humana/IA y se usó para ajustar el glosario; ya no constituyen una prueba independiente (ver abajo).
 
 ### Versión pública 0.2.1 y glosario 1.1
 
@@ -286,16 +287,48 @@ La versión 0.2.3 ordena las acciones de entrada y resume la pantalla de revisi�
 se muestran directamente; el filtro aparece cuando hay observaciones. La ayuda y las aclaraciones de alcance
 se consultan en sus desplegables. Se mantienen los temas claro y oscuro, las descargas y el glosario 1.1.
 
+### Reserva de 60 oraciones: referencia mixta humana/IA
+
+El 19 de noviembre de 2026 cerré la revisión de las 60 oraciones reservadas: 180 traducciones y 447
+decisiones de término. Revisé 177 casos seleccionados por discrepancias o muestreo; GPT-6.2 Astra anotó los
+270 restantes. La referencia final aplica mis aclaraciones posteriores sobre «equipo» y «barras de sondeo»,
+y el glosario vigente a tres dudas sobre «múltiple de estrangulación». Se excluyeron dos casos por alcance;
+quedan 445 unidades evaluables y ninguna duda pendiente.
+
+| Combinación | TP | FP | FN | TN | Precisión | Recall | F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Motor y glosario 1.2 congelados | 137 | 42 | 17 | 249 | 0,765 | 0,890 | 0,823 |
+| TermCheck 0.2.4 y glosario 1.3 | 139 | 13 | 15 | 278 | 0,914 | 0,903 | 0,908 |
+
+**Es una comparación descriptiva sobre ejemplos conocidos, con referencia mixta humana/IA.** Estas
+oraciones ya intervinieron en las reformas del glosario. Los resultados no reemplazan la evaluación
+histórica ni estiman el rendimiento en textos nuevos. El universo de términos se seleccionó con el glosario
+1.2 y no mide la cobertura completa de 1.3. El [informe del método y los resultados](docs/evaluacion-reserva-60.md)
+detalla la procedencia de las decisiones y los límites.
+
+### Correcciones 0.2.5 con traducciones públicas
+
+La prueba de cinco muestras públicas (186 segmentos) permitió corregir dos falsas alarmas: `case/cases`
+ya no se detecta como `casing`, y «control de un pozo» se reconoce como «control de pozo». La primera regla
+conserva las formas inglesas en -ing y sus plurales; la segunda admite un artículo indefinido después de
+«de» ante un sustantivo, sin igualar «de» con «del» ni omitir modificadores arbitrarios.
+
+Se probaron traducciones técnicas publicadas por IFC, la muestra bilingüe de EUR-Lex y dos TMX originales
+de DGT. Los contenedores XLIFF/TMX de las muestras extraídas de PDF se prepararon localmente. El
+[registro de pruebas](docs/pruebas-traducciones-publicas.md) separa los avisos restantes de los cambios
+del motor. El glosario sigue en 1.3; no se recalculó la evaluación histórica ni la referencia mixta.
+
 ## 5. Validación
 
 No hubo entrevistas ni pruebas con traductores. El plan original preveía mostrarle la herramienta a entre 3 y 5
-personas; eso no se hizo. Hasta ahora el verificador se midió solo contra la anotación del autor y nadie más lo
-usó con textos propios.
+personas; eso no se hizo. La evaluación histórica usa mi anotación; la reserva de 60 oraciones usa una referencia
+mixta con anotaciones de GPT-6.2 Astra. Nadie más lo usó con textos propios.
 
 ## 6. Limitaciones
 
-- **Pocos datos.** La prueba tiene 20 oraciones (el plan preveía 80) y el conjunto de desarrollo 15. Los
-  intervalos de confianza son anchos y los números son orientativos.
+- **Pocos datos.** La prueba histórica tiene 20 oraciones (el plan preveía 80) y el conjunto de desarrollo 15.
+  Sus intervalos de confianza son anchos. Las otras 60 oraciones tienen referencia mixta humana/IA y ya se
+  usaron para ajustar el glosario; no amplían la prueba humana independiente.
 - **Un solo anotador humano.** La anotación refleja el criterio de una persona. El segundo anotador fue un
   modelo de lenguaje (Claude Fable 5.2), que anotó a ciegas las mismas oraciones y solo se usó para medir el
   acuerdo. En la prueba coincidieron en 98 de 120 términos (acuerdo 0,82; kappa de Cohen 0,62 con las cuatro
@@ -307,8 +340,9 @@ usó con textos propios.
   regional. Parte de los apuntes de curso que se consultaron se generaron con herramientas de IA y no sirven
   como prueba de uso argentino. Donde las fuentes no alcanzaban, la forma preferida es criterio de campo del
   autor. El detalle está en `data/glossary/SOURCES.md`.
-- **Glosario chico y solo de sustantivos.** Son 99 términos. 20 de ellos no aparecen en ninguna oración del
-  corpus, así que no se evaluaron.
+- **Glosario chico y centrado en sustantivos.** La edición actual tiene 104 conceptos y admite algunas variantes
+  verbales explícitas. En el glosario histórico de 99 términos, 20 no aparecían en ninguna oración del corpus.
+  La revisión de la reserva tampoco constituye una evaluación completa de la cobertura de la edición actual.
 - **El corpus son textos del gobierno de EE. UU.** (OSHA y reglamentos federales). Es inglés de normas y de
   seguridad, no documentación operativa de una empresa.
 - **`NO_ENCONTRADO` no distingue causas.** Puede ser un error, una omisión o un sinónimo correcto que el
@@ -397,9 +431,14 @@ Las fuentes de cada término, lo que se excluyó por copyright y el método de c
 
 ## 9. Próximos pasos
 
-- Anotar las 60 oraciones de prueba que faltan, para medir la versión 0.2 con oraciones que el código no vio.
+- Ampliar las pruebas de traducciones públicas y revisar los avisos contextuales pendientes del
+  [registro de pruebas](docs/pruebas-traducciones-publicas.md). La confusión de `case/cases` con `casing`
+  y el aviso por «control de un pozo» se corrigieron en 0.2.5.
+- Medir la edición actual en contextos nuevos, con una referencia humana fijada antes de consultar sus resultados.
+- Revisar humanamente las 270 anotaciones complementarias de Astra si se busca una referencia íntegramente humana
+  para la reserva; eso no devuelve a esas oraciones su independencia respecto de los cambios ya hechos.
 - Un segundo anotador humano sobre una parte de la prueba, para medir el acuerdo entre personas.
 - Más formas prohibidas en el glosario, cada una con un error real que la respalde.
 - Probar la lectura de XLIFF y TMX con exportaciones reales de Trados y memoQ. Hoy lee XLIFF 1.2, XLIFF 2.0 y TMX
-  según la norma, probados con archivos armados a mano. No lee `.sdlxliff` ni `.mqxliff`.
+  según la norma, probados con archivos armados a mano y un TMX público original de DGT. No lee `.sdlxliff` ni `.mqxliff`.
 - Probar la herramienta con traductores que hagan post-edición técnica.

@@ -1,0 +1,57 @@
+{
+  "fecha": "2026-11-19",
+  "tipo": "comparacion_descriptiva_con_referencia_mixta_humana_ia",
+  "oraciones": 60,
+  "traducciones": 180,
+  "unidades": 447,
+  "evaluables": 445,
+  "excluidas_por_alcance": 2,
+  "dudas_pendientes": 0,
+  "decisiones_humanas": 177,
+  "anotaciones_complementarias_astra": 270,
+  "ajustes_por_criterio_posterior": 5,
+  "resoluciones_segun_glosario": 3,
+  "referencia": {
+    "correctas": 291,
+    "errores": 154,
+    "no_va": 2
+  },
+  "commit_motor_actual": "05cbf049b00fb02998c4e72dcf8eacdf3288eafc",
+  "sha256": {
+    "casos.json": "6d1b338c6fb43a71e4d18267f88443221eeaa268feb0fa4644d9820bb88f526a",
+    "complemento-astra.json": "60aa20500cc341b6479cb7b29ea24028cebfc1629070eb3de98121d6ec9009c3",
+    "ajustes-criterio.json": "d8cc0bec0ea195c3a768edc869924af2777fc1f09b81d1821863f94b56514b0a",
+    "resoluciones-autor.json": "67758989ff3c3d42462c142b9c9b158af8793a4c16b0e86dd7dd3214509ca34a",
+    "glossary_v1_3.csv": "8c4e54c821236896dcb1a8ca9646ac10391cab6dd3192d35737cc31e0a91d127"
+  },
+  "metricas": {
+    "congelado": {
+      "casos": 445,
+      "TP": 137,
+      "FP": 42,
+      "FN": 17,
+      "TN": 249,
+      "precision": 0.7653631284916201,
+      "recall": 0.8896103896103896,
+      "f1": 0.8228228228228228
+    },
+    "actual": {
+      "casos": 445,
+      "TP": 139,
+      "FP": 13,
+      "FN": 15,
+      "TN": 278,
+      "precision": 0.9144736842105263,
+      "recall": 0.9025974025974026,
+      "f1": 0.9084967320261438
+    }
+  },
+  "limites": [
+    "Referencia mixta: selección humana dirigida y complemento de IA.",
+    "La revisión y los cambios de glosario ya utilizaron estas oraciones.",
+    "Comparación descriptiva sobre ejemplos conocidos; no evaluación independiente.",
+    "El universo de 447 unidades corresponde a la selección del glosario 1.2; no mide cobertura completa de 1.3.",
+    "Las respuestas humanas binarias no distinguen tipo de error.",
+    "NO_VA y DUDA se excluyen de las métricas; no se convierten en aciertos."
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "version": "0.2.4",
+  "glosario": "1.3",
+  "glosario_sha256": "8c4e54c821236896dcb1a8ca9646ac10391cab6dd3192d35737cc31e0a91d127",
+  "procedencia": {
+    "fecha": "2026-11-19",
+    "directiva": {
+      "celex": "32013L0030",
+      "seccion": "Artículo 2 completo, párrafos de contenido",
+      "pares": 48,
+      "urls": {
+        "en": "https://publications.europa.eu/resource/celex/32013L0030",
+        "es": "https://publications.europa.eu/resource/celex/32013L0030"
+      },
+      "negociacion": {
+        "Accept": "application/xhtml+xml",
+        "Accept-Language": "en / es"
+      },
+      "transformacion": "Espacios normalizados; marcadores de numeración excluidos; alineación por orden revisada. XLIFF/TMX construidos localmente, no exportados por CAT."
+    },
+    "dgt": {
+      "url": "https://wt-public.emm4u.eu/Resources/DGT-TM-2011/Vol_2006_5.zip",
+      "miembro": "E2006C0069.tmx",
+      "pares": 73,
+      "sin_es": 11,
+      "original_sin_modificaciones": true
+    },
+    "sha256": {
+      "Vol_2006_5.zip": "74bfb36d3780ae0cb4a6649b8b8d0659e046f26baa26ff6db17f667c62aef86b",
+      "E2006C0069.tmx": "a3cca87cc80e5780864621de09eecebe907adeb993113a1ddf98aae4cb45fe08",
+      "publications-en.html": "69b36432d55dc419cdc7e4a37a6f01495309e9cffa6872546e1a2743e12a97c0",
+      "publications-es.html": "4ef5dc30b15fb21d6d364543fad573685c430241f67262632a63af060a969d0c",
+      "directiva-art2.tsv": "b8e7116e56b65b92e05e5e1a9df18703e7145e7e96b88b5475c518665110daf7",
+      "directiva-art2.xlf": "bbc1908dc8d9f2d9f11b7034e02f2ed6293c1b95436241ec501ca56d95f8fca1",
+      "directiva-art2.tmx": "69e4fd58af15e7ff3638b1c6e5b7bc79a1c5b1600958bbed4d029f4cb7f316fb"
+    }
+  },
+  "reportes": {
+    "xliff_derivado": {
+      "ocurrencias": 3,
+      "etiquetas": {
+        "NO_ENCONTRADO": 3
+      },
+      "sha256_csv": "0333994d3a5f7fbbb1a88d09dd80db630889bb09bb8a21b3590c09989b94c917"
+    },
+    "tmx_derivado": {
+      "ocurrencias": 3,
+      "etiquetas": {
+        "NO_ENCONTRADO": 3
+      },
+      "sha256_csv": "0333994d3a5f7fbbb1a88d09dd80db630889bb09bb8a21b3590c09989b94c917"
+    },
+    "tmx_dgt_original": {
+      "ocurrencias": 8,
+      "etiquetas": {
+        "NO_ENCONTRADO": 8
+      },
+      "sha256_csv": "b0d1261f7e8f981bd20232f0d352adeb24c7bbafd1ea185cd3b3ac74b59b1e24"
+    }
+  },
+  "navegador": {
+    "ok": true,
+    "resultados": [
+      {
+        "file": "directiva-art2.xlf",
+        "segments": 48,
+        "terms": 3,
+        "skip": 0,
+        "summary": "3 para revisar · 3 términos · 48 segmentos",
+        "downloadRows": 3
+      },
+      {
+        "file": "E2006C0069.tmx",
+        "segments": 73,
+        "terms": 8,
+        "skip": 11,
+        "summary": "8 para revisar · 8 términos · 73 segmentos",
+        "downloadRows": 8
+      }
+    ],
+    "errors": []
+  },
+  "csv_navegador_equivale_cli": true,
+  "limite": "Prueba de funcionamiento local sin referencia anotada ni métricas de precisión; no exportación de Trados/memoQ."
+}

@@ -245,5 +245,18 @@ Lo que queda es del glosario o pide mirar las palabras que rodean al término: �
 - Sigue sin haber alineación de palabras. El caso S091 se arregló porque «repararse» ya no coincide con
   «reparación», no porque el verificador sepa qué palabra traduce a *workover*.
 
-Para medir la 0.2 sin sesgo quedan 60 oraciones del conjunto de prueba que no se anotaron ni se usaron para
-ajustar nada.
+Al cerrar la versión 0.2 quedaban 60 oraciones reservadas. El 19 de noviembre de 2026 se completó su revisión
+con referencia mixta humana/IA, después de utilizarlas para ajustar el glosario. Ya no son una prueba
+independiente de la edición actual.
+
+## Revisión posterior de la reserva de 60 oraciones
+
+La revisión reúne 177 decisiones humanas y 270 anotaciones complementarias de GPT-6.2 Astra. De las 447
+unidades, dos se excluyen por alcance y 445 son evaluables. Con TermCheck 0.2.4 y glosario 1.3 se obtuvieron
+139 TP, 13 FP, 15 FN y 278 TN: precisión 0,914, recall 0,903 y F1 0,908.
+
+La referencia incorpora aclaraciones posteriores del autor y tres resoluciones según el glosario vigente.
+La selección humana fue dirigida y las anotaciones de Astra usaron los criterios ya revisados. Estos números
+describen ejemplos conocidos; no sustituyen las métricas históricas de este documento ni miden rendimiento
+en contextos nuevos. El [informe de la reserva](evaluacion-reserva-60.md) detalla el método y la comparación
+con la combinación congelada de motor y glosario 1.2.

@@ -14,6 +14,8 @@ Una palabra escrita con guion cuenta como sus partes: «gas-lift» = «gas lift�
 
 En español una forma de varias palabras también se reconoce cuando va coordinada con otra y comparten el
 principio (buscar_coordinada): «pozo de petróleo o gas» vale por «pozo de gas».
+Se admite un artículo indefinido después de «de» ante un sustantivo («control de un pozo»), sin igualar
+«de» con «del». Los términos ingleses en -ing conservan su forma y plural; su lema verbal no basta.
 
 Ejemplo:
     from termcheck.matcher import analizar, analizar_forma, buscar
@@ -27,7 +29,9 @@ from functools import lru_cache
 from termcheck.normalize import GUIONES, normalizar
 
 # Un término en español es una unidad fija: «cabeza del pozo» no es «cabeza de pozo» (anotación del dueño, S118
-# de desarrollo, 2026-11-11). Por eso no se igualan «de» y «del» ni se saltean artículos en el medio.
+# de desarrollo, 2026-11-11). Por eso no se igualan «de» y «del». Solo se admite un artículo indefinido
+# después de «de» ante un sustantivo: «control de un pozo» conserva la unidad «control de pozo».
+INDEFINIDOS = {"un", "una", "unos", "unas"}
 # Categorías que un sustantivo de una sola palabra no puede tener (en «as well as», «well» es ADV).
 NO_SUSTANTIVO = {"ADV", "ADP", "AUX", "CCONJ", "SCONJ", "DET", "PRON", "PART", "NUM", "PUNCT", "SYM", "INTJ"}
 # Los tramos de una palabra separados por guiones: «gas-lift» → «gas», «lift». Un guion suelto no deja ninguno.
@@ -127,6 +131,11 @@ def _flexiones(norma):
 
 def _coincide(p, q, idioma):
     """¿La palabra del texto p coincide con la palabra de la forma q?"""
+    if idioma == "en" and any(n.endswith(("ing", "ings")) for n in (p.norma, q.norma)):
+        # El lema verbal de un término en -ing no es una variante del sustantivo:
+        # spaCy analiza «casing» como «case», también cuando la ficha dice NOUN.
+        # Se conservan la forma literal y su plural, sin confundir «case/cases» con «casing».
+        return p.norma == q.norma or p.norma == q.norma + "s" or q.norma == p.norma + "s"
     if p.norma == q.norma or p.lema == q.norma or p.lema == q.lema or p.norma == q.lema:
         return True
     if idioma == "en":
@@ -168,9 +177,14 @@ def buscar(texto, forma, idioma, sigla=None):
 def _intentar(texto, forma, i, idioma, sigla):
     """Si la forma empieza en texto[i], devuelve dónde termina; si no, None."""
     k = i
-    for q in forma:
+    for n, q in enumerate(forma):
         if k >= len(texto):
             return None
+        if (idioma == "es" and not sigla and n > 0 and forma[n - 1].norma == "de"
+                and q.pos in {"NOUN", "PROPN"} and texto[k].norma in INDEFINIDOS):
+            k += 1
+            if k >= len(texto):
+                return None
         p = texto[k]
         if sigla:
             if not re.fullmatch(re.escape(sigla) + r"s?", p.texto):

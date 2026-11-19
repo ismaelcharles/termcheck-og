@@ -19,7 +19,8 @@ Las etiquetas internas (negritas, marcadores de formato) se sacan y queda el tex
 <bpt>, <ept>, <ph>, <it> y <ut> es código de formato y no texto: se descarta.
 
 Qué NO lee: los formatos propios de cada herramienta (.sdlxliff de Trados, .mqxliff de memoQ). Se probó con
-archivos armados a mano según la norma, no con exportaciones reales de esas herramientas.
+archivos armados a mano según la norma y un TMX público original de DGT (ver docs/prueba-material-publico.md),
+no con exportaciones reales de esas herramientas.
 
 Seguridad: un XML puede traer definiciones (<!ENTITY>) que hacen crecer el archivo hasta agotar la memoria.
 Por eso se rechaza cualquier archivo que defina entidades o que traiga un DOCTYPE con definiciones adentro.

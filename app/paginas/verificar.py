@@ -264,4 +264,4 @@ if DEMO:
     with st.expander("Acerca de TermCheck"):
         st.markdown("Compara los términos con un glosario técnico de español de Argentina. "
                     "Señala qué revisar; no traduce ni corrige el estilo. Los textos no se guardan.")
-        st.caption("Demo pública · Fase beta · Versión 0.2.4 · Glosario v1.3")
+        st.caption(f"Demo pública · Fase beta · Versión {VERSION} · Glosario v1.3")
