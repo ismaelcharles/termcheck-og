@@ -77,3 +77,15 @@ def test_edicion_publicada_incluye_la_revision():
     terminos = cargar(ruta)
     assert len(terminos) == 104
     assert next(t for t in terminos if t.id == "T032").es_preferred == "manifold de surgencia"
+
+
+@pytest.mark.parametrize("ingles,espanol", [
+    ("Inspect the elevator.", "Inspeccioná el elevador."),
+    ("Inspect the elevators.", "Inspeccioná los elevadores."),
+])
+def test_elevator_singular_y_plural(glosario_trabajo, ingles, espanol):
+    termino = next(t for t in glosario_trabajo if t.id == "T091")
+    assert termino.en == ["elevator"]
+    ocurrencias = verificar(ingles, espanol, [termino])
+    assert len(ocurrencias) == 1
+    assert ocurrencias[0].label == "OK"
