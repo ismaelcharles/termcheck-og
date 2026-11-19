@@ -1,4 +1,8 @@
 """Consulta pública del mismo glosario que usa la demo. No escribe datos."""
+import random
+
+import streamlit as st
+
 import datos
 import vista
 from termcheck.glossary import cargar, publicado
@@ -42,5 +46,9 @@ def fichas(terminos, compactas=False):
 
 def destacados(terminos):
     por_id = {t.id: t for t in terminos}
-    preferidos = [por_id[k] for k in ("T019", "T031", "T016") if k in por_id]
-    return preferidos or terminos[:3]
+    ids = st.session_state.get("portada_fichas", [])
+    cantidad = min(3, len(por_id))
+    if len(ids) != cantidad or any(i not in por_id for i in ids):
+        ids = random.sample(list(por_id), cantidad)
+        st.session_state.portada_fichas = ids
+    return [por_id[i] for i in ids]

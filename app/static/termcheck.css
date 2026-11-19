@@ -168,7 +168,7 @@ a:focus-visible, summary:focus-visible, button:focus-visible {
 
 .tc-recorrido {position:relative; border-block:1px solid var(--tc-border); margin:1rem 0; padding:1rem 0 1.25rem}
 .tc-recorrido header {max-width:43rem; padding:1.25rem 0}
-.tc-recorrido header p:first-child, .tc-caso small {font-size:.85rem; font-weight:600; color:var(--tc-muted)}
+.tc-caso small {font-size:.85rem; font-weight:600; color:var(--tc-muted)}
 .tc-recorrido header h2 {font:500 clamp(2.1rem,5vw,3.7rem)/1.05 Newsreader,Georgia,serif !important; letter-spacing:-.035em; margin:.5rem 0}
 .tc-recorrido header h2 i {color:var(--tc-accent)}
 .tc-caso {display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--tc-border); border-radius:.65rem; background:var(--tc-panel)}
@@ -188,3 +188,7 @@ a:focus-visible, summary:focus-visible, button:focus-visible {
   .tc-correccion[open] .tc-lectura {animation:tc-mostrar-lectura .18s ease-out}
   @keyframes tc-mostrar-lectura {from {opacity:.4; transform:translateY(3px)} to {opacity:1; transform:none}}
 }
+
+/* La barra nativa conserva el menú de apariencia sin tapar el contenido al desplazar. */
+[data-testid="stHeader"] {background: transparent}
+[data-testid="stToolbar"] {background: transparent}

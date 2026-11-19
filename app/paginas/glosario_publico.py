@@ -35,4 +35,4 @@ else:
     st.html(catalogo.fichas(filtrados[indice * 6:(indice + 1) * 6]))
 with st.expander("Sobre el glosario"):
     st.caption("La consulta y el verificador usan la misma edición. Las equivalencias son decisiones "
-               "documentadas del proyecto; las preferencias pueden cambiar según el contexto o el cliente.")
+               "documentadas de Ismael Charles; las preferencias pueden cambiar según el contexto o el cliente.")
