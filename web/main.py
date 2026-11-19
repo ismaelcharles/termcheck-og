@@ -15,7 +15,7 @@ from starlette.formparsers import MultiPartParser
 from app.proyecto_publico import contenido
 from termcheck import VERSION, report
 from termcheck.ejemplos import PORTADA, ILUSTRATIVOS
-from termcheck.glossary import ErrorDeGlosario, publicado
+from termcheck.glossary import ErrorDeGlosario, edicion_publicada, publicado
 from termcheck.formatos import ErrorDeFormato
 from web import servicio
 
@@ -26,7 +26,8 @@ app.mount("/fonts", StaticFiles(directory=servicio.RAIZ / "app/static/fonts"), n
 # Las cargas de hasta 1 MB permanecen en memoria durante el análisis.
 MultiPartParser.spool_max_size = 3 * servicio.MAX_ARCHIVO
 templates = Jinja2Templates(directory=CARPETA / "templates")
-templates.env.globals.update(bloque=report.bloque_segmento, version=VERSION)
+templates.env.globals.update(bloque=report.bloque_segmento, version=VERSION,
+                             edicion_glosario=lambda: edicion_publicada(servicio.RAIZ / "data/glossary"))
 
 
 @app.middleware("http")
@@ -124,8 +125,9 @@ def catalogo(request: Request, q: str = "", area: str = "", pagina: int = 1):
 
 @app.get("/glosario.csv")
 def descargar_glosario():
-    return Response(publicado(servicio.RAIZ / "data/glossary").read_bytes(), media_type="text/csv",
-                    headers={"Content-Disposition": 'attachment; filename="glossary_v1_3.csv"'})
+    ruta = publicado(servicio.RAIZ / "data/glossary")
+    return Response(ruta.read_bytes(), media_type="text/csv",
+                    headers={"Content-Disposition": f'attachment; filename="{ruta.name}"'})
 
 
 @app.get("/ejemplos", response_class=HTMLResponse)

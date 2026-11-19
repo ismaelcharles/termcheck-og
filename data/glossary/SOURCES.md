@@ -4,11 +4,11 @@ Qué se usó para armar el glosario, el corpus y las traducciones, y qué se pue
 
 ## Glosario (`glossary_en_es.csv`)
 
-99 términos de perforación, terminación, producción y seguridad en locación. Cada fila dice en la columna
+104 conceptos de perforación, terminación, producción y seguridad en locación. Cada fila dice en la columna
 `source` de dónde sale la decisión. La forma preferida y las formas válidas las eligió el autor del proyecto;
 las fuentes son el respaldo de esa elección.
 
-La demo y la CLI por defecto usan la [edición 1.1](glossary_v1_1.md); `glossary_en_es.csv` es el archivo de trabajo
+La demo y la CLI por defecto usan la [edición 1.4](glossary_v1_4.md); `glossary_en_es.csv` es el archivo de trabajo
 y `glossary_v1.csv` es la edición histórica de evaluación. No son intercambiables al reproducir resultados.
 
 El campo `source` es un registro de consultas y decisiones, con distinta solidez. Las citas señaladas como
@@ -16,7 +16,11 @@ El campo `source` es un registro de consultas y decisiones, con distinta solidez
 equivalencia conceptual, pero no basta para demostrar una preferencia en Argentina. El criterio propio del autor
 y las sugerencias generadas con IA se identifican como tales; no constituyen validación independiente.
 
-| Fuente | Para qué se usó | Términos que la citan | Licencia y cuidado |
+Los recuentos de la tabla siguiente corresponden al glosario histórico v1 de 99 términos. Las incorporaciones
+y revisiones posteriores se documentan en el registro de cada edición; en 1.4 se consultaron las fichas de
+SLB para cement bond log y disposal well. No se copian las definiciones de esas fuentes.
+
+| Fuente | Para qué se usó | Términos que la citan en v1 | Licencia y cuidado |
 |---|---|---:|---|
 | [SLB Energy Glossary](https://glossary.slb.com) (español) | Consultar el equivalente en español de cada término | 85 | Con copyright. Se cita la página de cada término. No se copió ninguna definición. Es español general, sin variedad regional. |
 | [OSHA Oil and Gas Well Drilling and Servicing eTool](https://www.osha.gov/etools/oil-and-gas) | Confirmar que el término en inglés se usa así en textos reales | 32 | Obra del gobierno de EE. UU. El glosario del eTool y los recuadros marcados con † vienen del *Dictionary of Petroleum Terms* de Petex (© 2001): esas definiciones no son de dominio público y no se usaron. |

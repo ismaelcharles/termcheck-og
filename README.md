@@ -8,7 +8,7 @@ Recibe el texto en inglés, su traducción y un glosario bilingüe. Señala form
 términos en inglés que no se aceptan como préstamos y equivalencias que no pudo encontrar. La persona que revisa
 decide cada caso en contexto. No traduce ni corrige estilo.
 
-**Versión pública: 0.2.5 · Glosario: 1.3 · 104 términos.** Se puede usar el glosario incluido o uno propio con las
+**Versión pública: 0.2.5 · Glosario: 1.4 · 104 términos.** Se puede usar el glosario incluido o uno propio con las
 preferencias del cliente. La evaluación histórica se conserva con su código y su glosario identificados.
 
 ## 1. El problema
@@ -316,7 +316,15 @@ conserva las formas inglesas en -ing y sus plurales; la segunda admite un artíc
 Se probaron traducciones técnicas publicadas por IFC, la muestra bilingüe de EUR-Lex y dos TMX originales
 de DGT. Los contenedores XLIFF/TMX de las muestras extraídas de PDF se prepararon localmente. El
 [registro de pruebas](docs/pruebas-traducciones-publicas.md) separa los avisos restantes de los cambios
-del motor. El glosario sigue en 1.3; no se recalculó la evaluación histórica ni la referencia mixta.
+del motor. Esa comparación usó el glosario 1.3; no se recalculó la evaluación histórica ni la referencia mixta.
+
+### Glosario 1.4
+
+Acepté «registro de adherencia del cemento» como variante de cement bond log, conservando «registro de
+cementación» como preferida. También retiré «Eliminación» aislada de las formas prohibidas de disposal well:
+puede referirse a la gestión de residuos en el mismo segmento. Mantengo «pozo sumidero» como preferida
+y «pozo de eliminación» como desaconsejada para el encargo. El [registro de la edición](data/glossary/glossary_v1_4.md)
+documenta las fuentes técnicas consultadas y los límites. Los otros 102 conceptos y la edición 1.3 se conservan.
 
 ## 5. Validación
 

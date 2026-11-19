@@ -54,7 +54,7 @@ async function main() {
     await page.screenshot({path:path.join(out,'glosario-pc.png'),fullPage:true});
     const csv = await Promise.all([page.waitForEvent('download'),page.getByRole('link',{name:'Descargar CSV'}).click()]);
     await csv[0].saveAs(path.join(out,'glosario.csv'));
-    assert.equal(fs.readFileSync(path.join(out,'glosario.csv'),'utf8'),fs.readFileSync('data/glossary/glossary_v1_3.csv','utf8'));
+    assert.equal(fs.readFileSync(path.join(out,'glosario.csv'),'utf8'),fs.readFileSync('data/glossary/glossary_v1_4.csv','utf8'));
     await page.locator('nav [data-nav=ejemplos]').click();
     await page.locator('.example').first().waitFor();
     await page.getByRole('button',{name:'Probar traducción',exact:true}).first().click();

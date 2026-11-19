@@ -192,3 +192,18 @@ def test_forma_repetida_dentro_del_mismo_termino_es_aviso(tmp_path):
     ruta = escribir(tmp_path, ['T012,screen-out|screen out,NOUN,arenamiento,,,terminación,,VERIFICAR'])
     [p] = validar(cargar(ruta))
     assert p.tipo == "aviso"
+
+
+@pytest.mark.parametrize('ediciones,esperada', [
+    (['glossary_en_es.csv'], 'de trabajo'),
+    (['glossary_v1.csv', 'glossary_en_es.csv'], '1'),
+    (['glossary_v1_3.csv', 'glossary_v1.csv'], '1.3'),
+    (['glossary_v1_3.csv', 'glossary_v1_4.csv', 'glossary_en_es.csv'], '1.4'),
+])
+def test_edicion_seleccionada_para_presentacion_y_descarga(tmp_path, ediciones, esperada):
+    from termcheck.glossary import edicion_publicada, publicado
+    for nombre in ediciones:
+        (tmp_path / nombre).write_text('')
+    assert edicion_publicada(tmp_path) == esperada
+    if esperada == '1.4':
+        assert publicado(tmp_path).name == 'glossary_v1_4.csv'

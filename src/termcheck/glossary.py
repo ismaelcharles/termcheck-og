@@ -71,11 +71,17 @@ def cargar(ruta):
 def publicado(carpeta):
     """Última edición publicada; el glosario histórico de evaluación permanece disponible."""
     carpeta = Path(carpeta)
-    for nombre in ("glossary_v1_3.csv", "glossary_v1_1.csv", "glossary_v1.csv", "glossary_en_es.csv"):
+    for nombre in ("glossary_v1_4.csv", "glossary_v1_3.csv", "glossary_v1_1.csv", "glossary_v1.csv", "glossary_en_es.csv"):
         ruta = carpeta / nombre
         if ruta.exists():
             return ruta
     raise ErrorDeGlosario("No hay un glosario publicado en esta carpeta.")
+
+
+def edicion_publicada(carpeta):
+    """Número de la edición seleccionada, o «de trabajo» si no existe una edición numerada."""
+    nombre = publicado(carpeta).stem
+    return nombre.removeprefix("glossary_v").replace("_", ".") if nombre.startswith("glossary_v") else "de trabajo"
 
 
 def cargar_bytes(datos):

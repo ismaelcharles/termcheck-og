@@ -72,7 +72,7 @@ def test_glosario_revisado_valido(glosario_trabajo):
 def test_edicion_publicada_incluye_la_revision():
     carpeta = Path(__file__).resolve().parents[1] / "data/glossary"
     ruta = publicado(carpeta)
-    assert ruta.name == "glossary_v1_3.csv"
+    assert ruta.name == "glossary_v1_4.csv"
     assert ruta.read_bytes() == (carpeta / "glossary_en_es.csv").read_bytes()
     terminos = cargar(ruta)
     assert len(terminos) == 104
@@ -89,3 +89,28 @@ def test_elevator_singular_y_plural(glosario_trabajo, ingles, espanol):
     ocurrencias = verificar(ingles, espanol, [termino])
     assert len(ocurrencias) == 1
     assert ocurrencias[0].label == "OK"
+
+
+@pytest.mark.parametrize("ingles,espanol,etiqueta,encontrado", [
+    ("Run a cement bond log.", "Tome un registro de adherencia del cemento.", "VARIANTE", "registro de adherencia del cemento"),
+    ("Run a CBL.", "Tome un registro de cementación.", "OK", "registro de cementación"),
+])
+def test_cbl_variante_aprobada(glosario_trabajo, ingles, espanol, etiqueta, encontrado):
+    t = next(t for t in glosario_trabajo if t.id == "T020")
+    [o] = verificar(ingles, espanol, [t])
+    assert (o.label, o.es_found) == (etiqueta, encontrado)
+    assert espanol[o.start:o.end] == encontrado
+
+
+@pytest.mark.parametrize("espanol,etiqueta", [
+    ("El pozo sumidero recibe fluidos para su eliminación.", "OK"),
+    ("La eliminación de residuos está controlada.", "NO_ENCONTRADO"),
+    ("El pozo de eliminación recibe fluidos.", "PROHIBIDO"),
+    ("El pozo de evacuación recibe fluidos para su eliminación.", "NO_ENCONTRADO"),
+])
+def test_disposal_well_no_atribuye_eliminacion_aislada(glosario_trabajo, espanol, etiqueta):
+    t = next(t for t in glosario_trabajo if t.id == "T063")
+    assert t.es_preferred == "pozo sumidero"
+    assert t.es_forbidden == ["pozo de eliminación"]
+    [o] = verificar("The disposal well receives waste fluids.", espanol, [t])
+    assert o.label == etiqueta

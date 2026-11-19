@@ -23,7 +23,7 @@ from limites import MAX_LETRAS, MAX_SEGMENTOS, MAX_TERMINOS, aplicar
 from termcheck.checker import verificar
 from termcheck.consistency import inconsistencias
 from termcheck.formatos import ErrorDeFormato, es_de_traduccion, leer as leer_formato
-from termcheck.glossary import ErrorDeGlosario, cargar_bytes, publicado, validar
+from termcheck.glossary import ErrorDeGlosario, cargar_bytes, edicion_publicada, publicado, validar
 from termcheck import NOMBRE, VERSION
 from termcheck import report
 
@@ -264,4 +264,4 @@ if DEMO:
     with st.expander("Acerca de TermCheck"):
         st.markdown("Compara los términos con un glosario técnico de español de Argentina. "
                     "Señala qué revisar; no traduce ni corrige el estilo. Los textos no se guardan.")
-        st.caption(f"Demo pública · Fase beta · Versión {VERSION} · Glosario v1.3")
+        st.caption(f"Demo pública · Fase beta · Versión {VERSION} · Glosario {edicion_publicada(datos.GLOSARIO.parent)}")

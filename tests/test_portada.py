@@ -6,14 +6,14 @@ import pytest
 
 from presentacion import EJEMPLOS
 from termcheck.checker import verificar
-from termcheck.glossary import cargar
+from termcheck.glossary import cargar, publicado
 
 RAIZ = Path(__file__).resolve().parent.parent
 
 
 @pytest.mark.parametrize("ejemplo", EJEMPLOS, ids=lambda ej: ej["en"])
 def test_contraste_con_glosario_publicado(ejemplo):
-    terminos = cargar(RAIZ / "data/glossary/glossary_v1_3.csv")
+    terminos = cargar(publicado(RAIZ / "data/glossary"))
     for campo, marcada in (("inicial", True), ("corregida", False)):
         ocurrencias = verificar(ejemplo["original"], ejemplo[campo], terminos)
         termino, = [o for o in ocurrencias if o.term_id == ejemplo["id"]]

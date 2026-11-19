@@ -54,7 +54,7 @@ def test_html_incluye_documento_completo_y_huella(cliente):
     datos = re.search(r'data-download="html" data-content="([^"]+)"', html).group(1)
     reporte = base64.b64decode(datos).decode()
     assert 'L1' in reporte and 'L2' in reporte
-    assert 'SHA-256' in reporte and 'glossary_v1_3.csv' in reporte
+    assert 'SHA-256' in reporte and 'glossary_v1_4.csv' in reporte
     assert len(list(csv.DictReader(io.StringIO(csv_salida(html))))) == 2
 
 
@@ -121,7 +121,9 @@ def test_catalogo_y_descarga(cliente):
     html = cliente.get('/glosario?q=elevator').text
     assert '<h3 lang="en">elevator</h3>' in html
     assert '<span>91</span>' in html
-    assert cliente.get('/glosario.csv').content == (servicio.RAIZ / 'data/glossary/glossary_v1_3.csv').read_bytes()
+    descarga = cliente.get('/glosario.csv')
+    assert descarga.content == (servicio.RAIZ / 'data/glossary/glossary_v1_4.csv').read_bytes()
+    assert 'filename="glossary_v1_4.csv"' in descarga.headers['content-disposition']
     assert 'No encontré términos' in cliente.get('/glosario?q=zzzzzz').text
     assert 'Página 1 de' in cliente.get('/glosario?pagina=-1', headers={'HX-Request':'true'}).text
 

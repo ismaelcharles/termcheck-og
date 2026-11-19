@@ -24,7 +24,7 @@
 </form></details><div id="resultado" aria-live="polite"></div><p class="privacy">Los textos y archivos se procesan en memoria y no se guardan en disco.</p></section>
 <section id="destacados"><div class="section-heading"><h2>Glosario O&G</h2><button class="quiet" data-nav="glosario" hx-get="glosario" hx-target="#browse-panel">Ver los {{ terminos|length }} términos</button></div>{{ fichas(destacados) }}</section>
 <div class="project">{{ proyecto|safe }}</div>
-<details class="about"><summary>Acerca de TermCheck</summary><p>Compara los términos con un glosario técnico de español de Argentina. Señala qué revisar; no traduce ni corrige el estilo.</p><p class="muted">Demo pública · Fase beta · Motor {{ version }} · Glosario v1.3</p></details>
+<details class="about"><summary>Acerca de TermCheck</summary><p>Compara los términos con un glosario técnico de español de Argentina. Señala qué revisar; no traduce ni corrige el estilo.</p><p class="muted">Demo pública · Fase beta · Motor {{ version }} · Glosario {{ edicion_glosario() }}</p></details>
 </div><section id="browse-panel" {% if not pestana %}hidden{% endif %} aria-live="polite" tabindex="-1">{{ panel|default('')|safe }}</section></main>
 <footer>TermCheck O&G <span>Terminología con criterio de campo.</span></footer></div>
 <template id="ejemplo-en">{{ ejemplo[0] }}</template><template id="ejemplo-es">{{ ejemplo[1] }}</template>

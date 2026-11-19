@@ -1,6 +1,7 @@
 # Glosario 1.3
 
-Edición del 19 de noviembre de 2026, con 104 conceptos. La demo y la CLI usan esta edición.
+Edición del 19 de noviembre de 2026, con 104 conceptos. La demo y la CLI usaron esta edición hasta la
+publicación del [glosario 1.4](glossary_v1_4.md); su CSV se conserva para reproducir las pruebas anteriores.
 La numeración continúa la copia de trabajo 1.2 usada en la revisión del autor.
 
 El autor revisó 177 casos y escribió 91 notas. Se aplicaron sus reformas explícitas cuando

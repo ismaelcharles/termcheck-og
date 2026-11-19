@@ -1,0 +1,188 @@
+{
+  "fecha": "2026-11-19",
+  "motor": "0.2.5",
+  "glosario_anterior": "1.3",
+  "glosario_nuevo": "1.4",
+  "conceptos": 104,
+  "fichas_modificadas": [
+    "T020",
+    "T063"
+  ],
+  "otros_conceptos_sin_cambios": 102,
+  "fuentes": [
+    "https://glossary.slb.com/es/terms/d/disposal_well",
+    "https://glossary.slb.com/es/terms/c/cement_bond_log"
+  ],
+  "sha256": {
+    "glossary_v1_3.csv": "8c4e54c821236896dcb1a8ca9646ac10391cab6dd3192d35737cc31e0a91d127",
+    "glossary_v1_4.csv": "94361832f327ad9fa53802dfed4eee0e18d2f249b02d636780e35762be91c358"
+  },
+  "pruebas_automaticas_aprobadas": 340,
+  "comparacion": {
+    "cambios": [
+      {
+        "id": "ifc-offshore-056",
+        "cambios": [
+          [
+            {
+              "term_id": "T063",
+              "term_en": "disposal well",
+              "label": "PROHIBIDO",
+              "es_found": "eliminación",
+              "start": 60,
+              "end": 71,
+              "src_start": 190,
+              "src_end": 203
+            },
+            {
+              "term_id": "T063",
+              "term_en": "disposal well",
+              "label": "NO_ENCONTRADO",
+              "es_found": "",
+              "start": -1,
+              "end": -1,
+              "src_start": 190,
+              "src_end": 203
+            }
+          ]
+        ]
+      },
+      {
+        "id": "ifc-offshore-115",
+        "cambios": [
+          [
+            {
+              "term_id": "T020",
+              "term_en": "cement bond log",
+              "label": "NO_ENCONTRADO",
+              "es_found": "",
+              "start": -1,
+              "end": -1,
+              "src_start": 606,
+              "src_end": 621
+            },
+            {
+              "term_id": "T020",
+              "term_en": "cement bond log",
+              "label": "VARIANTE",
+              "es_found": "registro de adherencia del cemento",
+              "start": 754,
+              "end": 788,
+              "src_start": 606,
+              "src_end": 621
+            }
+          ]
+        ]
+      }
+    ],
+    "resumen": {
+      "version": "0.2.5",
+      "glosario_sha256": "94361832f327ad9fa53802dfed4eee0e18d2f249b02d636780e35762be91c358",
+      "muestras": {
+        "directiva": {
+          "segmentos": 48,
+          "omitidos_sin_es": 0,
+          "apariciones": 1,
+          "avisos": 0,
+          "etiquetas": {
+            "OK": 1
+          }
+        },
+        "dgt": {
+          "segmentos": 73,
+          "omitidos_sin_es": 11,
+          "apariciones": 0,
+          "avisos": 0,
+          "etiquetas": {}
+        },
+        "dgt-control": {
+          "segmentos": 47,
+          "omitidos_sin_es": 3,
+          "apariciones": 0,
+          "avisos": 0,
+          "etiquetas": {}
+        },
+        "ifc-offshore": {
+          "segmentos": 16,
+          "omitidos_sin_es": 0,
+          "apariciones": 68,
+          "avisos": 5,
+          "etiquetas": {
+            "OK": 44,
+            "VARIANTE": 19,
+            "NO_ENCONTRADO": 4,
+            "PROHIBIDO": 1
+          }
+        },
+        "ifc-onshore": {
+          "segmentos": 2,
+          "omitidos_sin_es": 0,
+          "apariciones": 13,
+          "avisos": 0,
+          "etiquetas": {
+            "OK": 9,
+            "VARIANTE": 4
+          }
+        }
+      }
+    }
+  },
+  "alcance": "Comprobación de decisiones aprobadas sobre ejemplos conocidos; sin recalcular evaluaciones anteriores.",
+  "navegador_previsualizacion": {
+    "ok": true,
+    "base": "http://127.0.0.1:8536",
+    "resultados": [
+      {
+        "name": "directiva",
+        "segments": 48,
+        "terms": 1,
+        "avisos": 0,
+        "skip": 0,
+        "downloadRows": 1
+      },
+      {
+        "name": "dgt",
+        "segments": 73,
+        "terms": 0,
+        "avisos": 0,
+        "skip": 11,
+        "downloadRows": 0
+      },
+      {
+        "name": "dgt-control",
+        "segments": 47,
+        "terms": 0,
+        "avisos": 0,
+        "skip": 3,
+        "downloadRows": 0
+      },
+      {
+        "name": "ifc-offshore",
+        "segments": 16,
+        "terms": 68,
+        "avisos": 5,
+        "skip": 0,
+        "downloadRows": 68
+      },
+      {
+        "name": "ifc-onshore",
+        "segments": 2,
+        "terms": 13,
+        "avisos": 0,
+        "skip": 0,
+        "downloadRows": 13
+      }
+    ],
+    "regresiones": 7,
+    "errors": []
+  },
+  "catalogo_previsualizacion": {
+    "ok": true,
+    "cbl": true,
+    "disposal": true,
+    "version": "1.4",
+    "descarga_sha256": "94361832f327ad9fa53802dfed4eee0e18d2f249b02d636780e35762be91c358",
+    "errors": []
+  },
+  "csv_navegador_equivale_cli": true
+}

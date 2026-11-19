@@ -75,7 +75,8 @@ del glosario también pasó en previsualización y producción, con vistas de PC
 
 ## Avisos y límites que siguen abiertos
 
-Quedan seis apariciones para revisar en IFC costa afuera. La revisión cualitativa de Astra distinguió:
+En la comparación con el glosario 1.3 quedaron seis apariciones para revisar en IFC costa afuera.
+La revisión cualitativa de Astra distinguió:
 
 - **Dos `pipe ram` y un `kick`:** juzgó incorrectas las traducciones como componentes de corte y como
   «golpe de presión», respectivamente. Los avisos se conservan según el glosario.
@@ -95,6 +96,22 @@ en capacitación queda fuera de los conceptos actuales del glosario. Cero avisos
 Estas pruebas verifican funcionamiento y documentan ejemplos. No estiman precisión o recall, no comparan
 la calidad general de las traducciones y no validan el contenido como instrucciones operativas.
 Continúan pendientes las exportaciones reales de Trados/memoQ y la prueba de uso con traductores.
+
+## Resolución posterior: glosario 1.4
+
+El autor aprobó incorporar «registro de adherencia del cemento» y autorizó retirar «Eliminación» aislada
+si había respaldo técnico externo. Se consultaron las fichas de SLB para ambos conceptos y se aplicaron
+las dos decisiones en el [glosario 1.4](../data/glossary/glossary_v1_4.md), conservando el CSV de 1.3.
+Las menciones anteriores a consultas pendientes describen el estado de la comparación inicial.
+
+La repetición sobre los mismos 186 segmentos con el mismo motor 0.2.5 y el nuevo glosario cambió solo
+dos etiquetas: el CBL del párrafo 115 pasa de NO_ENCONTRADO a VARIANTE, y disposal well en el párrafo 56
+pasa de PROHIBIDO a NO_ENCONTRADO. «Pozo de evacuación» continúa fuera de las variantes aceptadas.
+Las otras apariciones y la detección en inglés permanecen idénticas. El total de avisos pasa de seis a cinco;
+es una comprobación de cambios sobre ejemplos conocidos, no una evaluación independiente.
+
+Los otros 102 conceptos conservan todos sus campos. Las 340 pruebas automáticas pasaron; el
+[resumen de validación de 1.4](glosario-1-4-validacion.json) identifica fuentes, huellas y conteos.
 
 ## Evidencia
 
