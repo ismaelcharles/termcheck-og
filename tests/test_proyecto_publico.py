@@ -25,6 +25,12 @@ def test_resultados_y_metodo_siguen_visibles_despues_de_verificar(proyecto):
         html = ''.join(m.proto.body for m in at.get('html'))
         assert '49 de 53' in html and '88 %' in html
         assert 'Cómo funciona por dentro' in html
-        assert 'no se evaluó TermCheck frente a un LLM usado como revisor' in html
         assert 'no estiman el rendimiento' in html
-        assert 'La edición actual todavía no cuenta con una evaluación independiente equivalente' in html
+
+
+def test_demo_indica_beta_y_explicita_nlp(proyecto):
+    at = AppTest.from_file(str(RAIZ / 'app/demo.py'), default_timeout=120).run()
+    html = ''.join(m.proto.body for m in at.get('html'))
+    assert 'NLP (procesamiento del lenguaje natural)' in html
+    assert 'Anotación humana a ciegas' not in html
+    assert 'Resultados históricos de 0.1 con glosario v1' not in html

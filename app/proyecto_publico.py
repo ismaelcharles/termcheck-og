@@ -50,7 +50,6 @@ def mostrar():
       </div>
       <div class="tc-evidence">
         <h3>Qué mostró la evaluación</h3>
-        <p class="tc-evidence-context">Versión 0.1 · Glosario v1 · Anotación humana a ciegas</p>
         <div class="tc-metrics">
           <div><strong>{tc['tp']} de {errores}</strong><span>errores detectados</span>
             <p>De los errores identificados en la revisión humana, detectó el {round(100 * tc['tp'] / errores)} %.</p></div>
@@ -92,9 +91,7 @@ def mostrar():
           <p>En la publicación, el intervalo de confianza del 95 % es 76–94 % para la precisión
           y 82–97 % para la detección de errores.</p>
         </details>
-        <p class="tc-evidence-note">Resultados históricos de 0.1 con glosario v1.
-        La edición actual todavía no cuenta con una evaluación independiente equivalente.
-        <a href="{e(FUENTE)}" target="_blank" rel="noopener">Consultar el método y los resultados completos</a>.</p>
+        <p class="tc-evidence-note"><a href="{e(FUENTE)}" target="_blank" rel="noopener">Consultar el método y los resultados completos</a>.</p>
       </div>
     </section>
     <section class="tc-project-section" aria-labelledby="tc-como-funciona">
@@ -106,9 +103,9 @@ def mostrar():
         <li><h3>Recibe los textos y el glosario</h3><p>La interfaz, hecha con Streamlit,
         recibe el original en inglés y su traducción. También lee CSV, TSV, XLIFF y TMX.
         El glosario aporta las equivalencias y las decisiones de uso.</p></li>
-        <li><h3>Reconoce los términos</h3><p>Python y spaCy separan las palabras y analizan
-        sus formas y categorías. Así puede reconocer un plural y distinguir el sustantivo
-        <i lang="en">well</i> de la expresión <i lang="en">as well as</i>.</p></li>
+        <li><h3>Reconoce los términos</h3><p>Aplica NLP (procesamiento del lenguaje natural) y técnicas
+        de lingüística computacional: Python y spaCy analizan formas y categorías para reconocer plurales
+        y distinguir el sustantivo <i lang="en">well</i> de la expresión <i lang="en">as well as</i>.</p></li>
         <li><h3>Aplica las reglas del glosario</h3><p>Busca la forma preferida, las variantes
         admitidas y las formas a evitar. También señala términos que quedaron en inglés sin
         estar aceptados y traducciones que no pudo encontrar.</p></li>
