@@ -53,6 +53,7 @@ if puerta():
         st.Page("paginas/verificar.py", title="Verificar", icon=":material/fact_check:", url_path="verificar"),
         st.Page("paginas/glosario.py", title="Glosario", icon=":material/menu_book:", url_path="glosario"),
         st.Page("paginas/traducciones.py", title="Traducciones", icon=":material/translate:", url_path="traducciones"),
+        st.Page("paginas/revision_asistida.py", title="Revisión asistida", icon=":material/rate_review:", url_path="revision"),
         st.Page("paginas/anotar.py", title="Anotar", icon=":material/edit_note:", url_path="anotar"),
         st.Page("paginas/resultados.py", title="Resultados", icon=":material/analytics:", url_path="resultados"),
     ])

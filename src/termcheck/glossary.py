@@ -71,7 +71,7 @@ def cargar(ruta):
 def publicado(carpeta):
     """Última edición publicada; el glosario histórico de evaluación permanece disponible."""
     carpeta = Path(carpeta)
-    for nombre in ("glossary_v1_1.csv", "glossary_v1.csv", "glossary_en_es.csv"):
+    for nombre in ("glossary_v1_3.csv", "glossary_v1_1.csv", "glossary_v1.csv", "glossary_en_es.csv"):
         ruta = carpeta / nombre
         if ruta.exists():
             return ruta

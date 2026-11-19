@@ -131,6 +131,17 @@ def _coincide(p, q, idioma):
         return True
     if idioma == "en":
         return p.norma in (q.norma + "s", q.norma + "es")  # plural simple si spaCy no lo lematizó
+    if p.pos == "VERB" and q.pos == "VERB" and q.norma.endswith(("ar", "er", "ir")):
+        # spaCy puede dejar pronombres en el lema («cementarlo» → «cementar el»).
+        lema, *pronombres = p.lema.split()
+        if lema == q.norma and all(pronombre in {"el", "lo", "la", "los", "las", "le", "les", "se", "me", "te", "nos", "os"}
+                                  for pronombre in pronombres):
+            return True
+        # En futuro y condicional regulares se conserva el infinitivo completo.
+        # Respalda lemas erróneos como «cementará» → «cementacer».
+        if p.norma in {q.norma + final for final in ("e", "as", "a", "emos", "eis", "an",
+                                                    "ia", "ias", "iamos", "iais", "ian")}:
+            return True
     # Respaldo para cuando spaCy no acierta el lema: mismo vocablo con otro número o género.
     return not _flexiones(p.norma).isdisjoint(_flexiones(q.norma))
 

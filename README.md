@@ -8,7 +8,7 @@ Recibe el texto en inglés, su traducción y un glosario bilingüe. Señala form
 términos en inglés que no se aceptan como préstamos y equivalencias que no pudo encontrar. La persona que revisa
 decide cada caso en contexto. No traduce ni corrige estilo.
 
-**Versión pública: 0.2.3 · Glosario: 1.1 · 99 términos.** Se puede usar el glosario incluido o uno propio con las
+**Versión pública: 0.2.4 · Glosario: 1.3 · 104 términos.** Se puede usar el glosario incluido o uno propio con las
 preferencias del cliente. La evaluación histórica se conserva con su código y su glosario identificados.
 
 ## 1. El problema
@@ -265,6 +265,20 @@ provienen del análisis ya publicado; volver a medirlas en esos mismos casos no 
 
 La versión 0.2.2 ajusta la presentación y agrega temas claro, oscuro y del sistema. El cambio es visual: conserva
 las reglas del verificador, el glosario 1.1 y los resultados históricos anteriores.
+
+### Revisión terminológica 0.2.4 y glosario 1.3
+
+La edición 1.3 incorpora las decisiones del autor sobre 177 casos seleccionados para revisión,
+con sus notas sobre el registro petrolero argentino. Actualiza las preferencias de drill pipe,
+choke manifold y los tipos de casing, y acepta variantes como «equipo», «aparejo», «cementar»
+y «control inmediato del pozo». Incluye cinco conceptos de herramientas y sarta que ya estaban
+preparados en la copia de trabajo 1.2. El motor reconoce futuros y condicionales regulares y
+lemas verbales con pronombres unidos. El [registro de esta edición](data/glossary/glossary_v1_3.md)
+detalla las decisiones y los límites de reconocimiento por contexto.
+
+La cola revisada reúne discrepancias y una muestra de coincidencias. Su composición permite
+comprobar cambios sobre ejemplos conocidos. Las métricas históricas de evaluación corresponden
+a la edición usada en cada ensayo y no estiman el rendimiento de esta edición.
 
 ### Presentación 0.2.3
 
