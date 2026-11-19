@@ -19,12 +19,11 @@
   padding-top: 5rem;
   padding-bottom: 3rem;
 }
-/* El área que desplaza toda la página no debe dibujar un marco de foco alrededor
-   del viewport. Los controles conservan sus indicadores de foco propios. */
-[data-testid="stMain"]:focus,
-[data-testid="stMain"]:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
+/* Streamlit dibuja el marco del área de desplazamiento en ::before, debajo
+   de la cabecera. Quitamos esa capa, conservando el foco y el scroll de main
+   y los indicadores de foco propios de los controles. */
+[data-testid="stMain"]:focus-visible::before {
+  content: none !important;
 }
 h1 {font-size: 1.8rem !important; letter-spacing: -.03em; font-weight: 500 !important}
 h2 {font-size: 1.2rem !important; letter-spacing: -.015em; font-weight: 600 !important}
