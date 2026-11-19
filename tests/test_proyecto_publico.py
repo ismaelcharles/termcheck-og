@@ -25,6 +25,6 @@ def test_resultados_y_metodo_siguen_visibles_despues_de_verificar(proyecto):
         html = ''.join(m.proto.body for m in at.get('html'))
         assert '49 de 53' in html and '88 %' in html
         assert 'Cómo funciona por dentro' in html
-        assert 'no se evaluó contra un LLM usado como revisor' in html
+        assert 'no lo evalué contra un LLM usado como revisor' in html
         assert 'no estiman el rendimiento' in html
-        assert 'edición actual todavía no tiene una evaluación independiente' in html
+        assert 'Todavía no hice una evaluación independiente equivalente de la edición actual' in html

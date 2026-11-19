@@ -34,5 +34,5 @@ else:
                           key="gp_pagina", width=150) if paginas > 1 else 0
     st.html(catalogo.fichas(filtrados[indice * 6:(indice + 1) * 6]))
 with st.expander("Sobre el glosario"):
-    st.caption("La consulta y el verificador usan la misma edición. Las equivalencias son decisiones "
-               "documentadas de Ismael Charles; las preferencias pueden cambiar según el contexto o el cliente.")
+    st.caption("La consulta y el verificador usan la misma edición. Las equivalencias reflejan mis decisiones "
+               "terminológicas documentadas; las preferencias pueden cambiar según el contexto o el cliente.")

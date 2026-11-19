@@ -266,4 +266,3 @@ if DEMO:
                     "Señala qué revisar; no traduce ni corrige el estilo. Los textos no se guardan.")
         edicion = publicado(datos.GLOSARIO.parent).stem.removeprefix("glossary_").replace("_", ".")
         st.caption(f"Demo pública · Versión {VERSION} · Glosario {edicion}")
-        st.markdown("[Código, método y evaluación](https://github.com/ismaelcharles/termcheck-og)")
