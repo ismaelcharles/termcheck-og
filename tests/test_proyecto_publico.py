@@ -34,3 +34,11 @@ def test_demo_indica_beta_y_explicita_nlp(proyecto):
     assert 'NLP (procesamiento del lenguaje natural)' in html
     assert 'Anotación humana a ciegas' not in html
     assert 'Resultados históricos de 0.1 con glosario v1' not in html
+
+
+def test_metodologia_menciona_modelos_usados_para_pruebas(proyecto):
+    at = AppTest.from_file(str(RAIZ / 'app/demo.py'), default_timeout=120).run()
+    html = ''.join(m.proto.body for m in at.get('html'))
+    assert 'Fable 5.2 Max' in html
+    assert 'GPT 6.2 Astra Max' in html
+    assert 'resultados numéricos publicados se calcularon contra la anotación de referencia' in html

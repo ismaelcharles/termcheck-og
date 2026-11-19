@@ -88,6 +88,8 @@ def mostrar():
           no enfrentan a TermCheck con DeepL como traductores ni miden la calidad general de DeepL.
           Estos números corresponden a la versión 0.1 y al glosario v1, no estiman el rendimiento
           de la edición actual. La muestra es pequeña y los resultados tienen incertidumbre.</p>
+          <p>Para contrastar casos y apoyar las pruebas también usé Fable 5.2 Max y GPT 6.2 Astra Max.
+          Los resultados numéricos publicados se calcularon contra la anotación de referencia descrita arriba.</p>
           <p>En la publicación, el intervalo de confianza del 95 % es 76–94 % para la precisión
           y 82–97 % para la detección de errores.</p>
         </details>
