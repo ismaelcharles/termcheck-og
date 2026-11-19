@@ -63,3 +63,31 @@ visitantes comprueba aislamiento; no demuestra capacidad para una carga pública
 
 Referencias: [formularios y archivos de FastAPI](https://fastapi.tiangolo.com/tutorial/request-forms-and-files/),
 [formularios multipart con HTMX](https://htmx.org/attributes/hx-encoding/).
+
+## Activación del 19 de noviembre de 2026
+
+La demo pública quedó migrada en [termcheck.aval.site/demo/](https://termcheck.aval.site/demo/).
+La ruta y el proxy se conservaron; cambió el ejecutable del servicio público a Uvicorn.
+El servicio privado continúa activo con Streamlit. Se conserva una rama de recuperación
+anterior a la migración y la configuración previa del servicio.
+
+Validación: 310 pruebas aprobadas y recorrido Chromium completo en prepublicación y
+producción, incluyendo recursos bajo `/demo/`, enlaces directos, CSV exacto del glosario,
+archivos, reportes completos, temas y tres visitantes independientes. No hubo errores
+JavaScript ni desbordes en 1280 y 390 px. El motor y los datos lingüísticos no cambiaron.
+
+Medición descriptiva con Chromium en el mismo servidor y URL local, conservando una cuota
+de CPU de 50 % para el servicio. Cada ronda abrió un contexto nuevo y verificó
+«Inspect the elevator.» / «Inspeccioná el elevador.». Se separó la primera visita de las
+siguientes tres; no se midió el arranque del proceso:
+
+| Interfaz | Primera visita: formulario / verificación | Mediana de las tres siguientes: formulario / verificación |
+| --- | --- | --- |
+| Streamlit | 2.592 / 1.497 ms | 2.107 / 1.473 ms |
+| FastAPI + HTMX | 191 / 357 ms | 164 / 325 ms |
+
+La memoria del grupo del servicio al terminar fue 330 MiB para Streamlit y 285 MiB para
+FastAPI. Incluye cachés; los procesos tenían distinta antigüedad. Estos resultados describen
+una muestra breve y un único texto, con variación de carga del servidor entre corridas.
+No demuestran mejoras generales de rendimiento ni capacidad sostenida. Evidencias locales:
+`salida/web/mediciones/streamlit.json`, `fastapi.json` y `salida/web/produccion/navegador.json`.
