@@ -13,7 +13,6 @@ glosario, no ofrece el corpus y tiene límites de tamaño, porque el servidor es
 import csv
 import os
 import hashlib
-import re
 
 import streamlit as st
 
@@ -260,15 +259,11 @@ elif not pares:
         st.html('<p class="tc-empty">Pegá los dos textos o usá el ejemplo para empezar.</p>')
 
 if DEMO:
+    from proyecto_publico import mostrar as mostrar_proyecto
+    mostrar_proyecto()
     with st.expander("Acerca de TermCheck"):
         st.markdown("Compara los términos con un glosario técnico de español de Argentina. "
                     "Señala qué revisar; no traduce ni corrige el estilo. Los textos no se guardan.")
         edicion = publicado(datos.GLOSARIO.parent).stem.removeprefix("glossary_").replace("_", ".")
-        st.caption(f"Versión {VERSION} · Glosario {edicion}")
+        st.caption(f"Demo pública · Versión {VERSION} · Glosario {edicion}")
         st.markdown("[Código, método y evaluación](https://github.com/ismaelcharles/termcheck-og)")
-        readme = (RAIZ / "README.md").read_text(encoding="utf-8")
-        fila = re.search(r"^\| TermCheck \| 120 \|.*$", readme, re.M)
-        if fila:
-            columnas = [c.strip() for c in fila.group().split("|")[1:-1]]
-            st.caption(f"Demo pública · Evaluación publicada de la versión 0.1 con glosario v1: "
-                       f"precisión {columnas[6].split()[0]}, recall {columnas[7].split()[0]}, F1 {columnas[8]}.")
