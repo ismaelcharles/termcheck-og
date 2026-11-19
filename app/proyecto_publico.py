@@ -26,23 +26,26 @@ def resultados_publicados():
 def mostrar():
     datos = resultados_publicados()
     tc, base = datos["TermCheck"], datos["Baseline (texto exacto)"]
+    # Desempeño del verificador específicamente sobre los 40 casos traducidos con DeepL,
+    # tomado de la tabla «Por sistema» de la evaluación 0.1/v1.
+    deepl = {"n": 40, "errores": 23, "tp": 21, "fp": 2, "fn": 2}
     errores = tc["tp"] + tc["fn"]
     avisos = tc["tp"] + tc["fp"]
     precision = round(100 * tc["tp"] / avisos)
     st.html(f"""
     <section class="tc-project-section" aria-labelledby="tc-por-que">
       <div class="tc-project-heading">
-        <h2 id="tc-por-que">¿Por qué uso TermCheck y no solo un LLM?</h2>
-        <p>Para revisar terminología necesito un criterio que pueda consultar y volver a aplicar.
-        Diseñé TermCheck para contrastar cada término reconocido con mi glosario de español petrolero argentino:
-        cada decisión tiene una ficha detrás.</p>
+        <h2 id="tc-por-que">¿Por qué usar TermCheck además de DeepL o un LLM?</h2>
+        <p>Cuando traducís con DeepL o un LLM, podés usar TermCheck para revisar la terminología con criterios
+        explícitos. Compara cada término reconocido con un glosario de español petrolero argentino y muestra
+        la ficha que respalda cada marca.</p>
       </div>
       <div class="tc-benefits">
-        <article><h3>Mi criterio, explícito</h3><p>En mi glosario defino qué forma prefiero,
-        qué variantes acepto y cuáles conviene evitar. La herramienta también permite cargar otro glosario.</p></article>
+        <article><h3>Tu criterio, explícito</h3><p>El glosario define qué forma se prefiere,
+        qué variantes se aceptan y cuáles conviene evitar. También podés cargar tu propio glosario.</p></article>
         <article><h3>Una revisión repetible</h3><p>El mismo texto, con la misma edición del glosario
-        y del motor, recibe las mismas marcas. Así puedo repetir la revisión sin redactar un prompt cada vez.</p></article>
-        <article><h3>Resultados comprobables</h3><p>Puedo consultar el término señalado, la forma esperada
+        y del motor, recibe las mismas marcas. Así podés repetir la revisión sin redactar un prompt cada vez.</p></article>
+        <article><h3>Resultados comprobables</h3><p>Podés consultar el término señalado, la forma esperada
         y su ficha. El reporte HTML y la tabla CSV permiten revisar y compartir los hallazgos.</p></article>
       </div>
       <div class="tc-evidence">
@@ -50,14 +53,14 @@ def mostrar():
         <p class="tc-evidence-context">Versión 0.1 · Glosario v1 · Anotación humana a ciegas</p>
         <div class="tc-metrics">
           <div><strong>{tc['tp']} de {errores}</strong><span>errores detectados</span>
-            <p>De los errores que identifiqué en mi revisión, detectó el {round(100 * tc['tp'] / errores)} %.</p></div>
+            <p>De los errores identificados en la revisión humana, detectó el {round(100 * tc['tp'] / errores)} %.</p></div>
           <div><strong>{precision} %</strong><span>de los avisos eran errores reales</span>
-            <p>{tc['tp']} de sus {avisos} avisos coincidieron con mi revisión.</p></div>
+            <p>{tc['tp']} de sus {avisos} avisos coincidieron con la revisión humana.</p></div>
           <div><strong>{tc['fp']} frente a {base['fp']}</strong><span>falsas alarmas</span>
             <p>Menos avisos innecesarios que buscar solo la traducción preferida como texto exacto.</p></div>
         </div>
         <div class="tc-evidence-table"><table>
-          <caption>Comparé dos maneras de revisar los mismos {tc['n']} casos de término en traducción</caption>
+          <caption>La evaluación comparó dos maneras de revisar los mismos {tc['n']} casos de término en traducción</caption>
           <thead><tr><th scope="col">Resultado</th><th scope="col">Búsqueda exacta</th><th scope="col">TermCheck</th></tr></thead>
           <tbody>
             <tr><th scope="row">Errores detectados, de {errores}</th><td>{base['tp']}</td><td>{tc['tp']}</td></tr>
@@ -65,27 +68,39 @@ def mostrar():
             <tr><th scope="row">Errores que quedaron sin marcar</th><td>{base['fn']}</td><td>{tc['fn']}</td></tr>
           </tbody>
         </table></div>
-        <p>TermCheck redujo las falsas alarmas al reconocer variantes y plurales,
-        aunque dejó pasar más errores que la búsqueda exacta.</p>
+        <p>Al revisar las traducciones de DeepL, TermCheck encontró 21 de los 23 errores terminológicos
+        anotados y generó 2 falsas alarmas. Esta cifra mide la revisión de los términos con el glosario;
+        no compara la calidad global de las traducciones.</p>
+        <div class="tc-evidence-table"><table>
+          <caption>TermCheck revisando 40 casos traducidos con DeepL</caption>
+          <thead><tr><th scope="col">Resultado</th><th scope="col">Casos</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Errores terminológicos detectados</th><td>{deepl['tp']} de {deepl['errores']}</td></tr>
+            <tr><th scope="row">Falsas alarmas</th><td>{deepl['fp']}</td></tr>
+            <tr><th scope="row">Errores que quedaron sin marcar</th><td>{deepl['fn']}</td></tr>
+          </tbody>
+        </table></div>
         <details class="tc-project-details"><summary>Cómo leer estos resultados</summary>
           <p>La muestra reúne {tc['n']} casos: 40 unidades de término y oración traducidas por tres sistemas,
-          en 20 oraciones. No son {tc['n']} contextos distintos. Anoté las traducciones sin ver
-          qué sistema las produjo ni qué decía el verificador, con mi criterio de uso argentino.</p>
-          <p>Comparé TermCheck con una búsqueda exacta; no lo evalué contra un LLM usado como revisor.
+          en 20 oraciones. No son {tc['n']} contextos distintos. Las traducciones se anotaron sin ver
+          qué sistema las produjo ni qué decía el verificador, siguiendo el criterio de uso argentino aplicado al glosario.</p>
+          <p>La comparación fue con una búsqueda exacta; no se evaluó TermCheck frente a un LLM usado como revisor.
+          En la fila de DeepL, las cifras muestran cómo el verificador clasificó términos de esas traducciones;
+          no enfrentan a TermCheck con DeepL como traductores ni miden la calidad general de DeepL.
           Estos números corresponden a la versión 0.1 y al glosario v1, no estiman el rendimiento
           de la edición actual. La muestra es pequeña y los resultados tienen incertidumbre.</p>
           <p>En la publicación, el intervalo de confianza del 95 % es 76–94 % para la precisión
           y 82–97 % para la detección de errores.</p>
         </details>
         <p class="tc-evidence-note">Resultados históricos de 0.1 con glosario v1.
-        Todavía no hice una evaluación independiente equivalente de la edición actual.
+        La edición actual todavía no cuenta con una evaluación independiente equivalente.
         <a href="{e(FUENTE)}" target="_blank" rel="noopener">Consultar el método y los resultados completos</a>.</p>
       </div>
     </section>
     <section class="tc-project-section" aria-labelledby="tc-como-funciona">
       <div class="tc-project-heading">
         <h2 id="tc-como-funciona">Cómo funciona por dentro</h2>
-        <p>Organicé el proyecto en cuatro pasos: del texto de entrada a una marca que puedo revisar.</p>
+        <p>El proceso tiene cuatro pasos: del texto de entrada a una marca que podés revisar.</p>
       </div>
       <ol class="tc-architecture">
         <li><h3>Recibe los textos y el glosario</h3><p>La interfaz, hecha con Streamlit,
@@ -118,7 +133,7 @@ def mostrar():
         </dl>
       </details>
       <p class="tc-evidence-note">El alcance es terminológico: revisa los términos que reconoce en el glosario.
-      No encontrar avisos no garantiza que toda la traducción esté bien. Por eso mantengo la interpretación del contexto
-      y la decisión final en manos de quien revisa.</p>
+      No encontrar avisos no garantiza que toda la traducción esté bien. La interpretación del contexto
+      y la decisión final quedan en manos de quien revisa.</p>
     </section>
     """)
