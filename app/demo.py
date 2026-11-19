@@ -34,9 +34,14 @@ for clave in ("vf_en", "vf_es", "vf_modo", "vf_editor_abierto", "vf_solo", "vf_s
 vista.estilos()
 vista.cabecera(NOMBRE)
 st.html('<p class="tc-brand-description">Revisión terminológica de petróleo y gas · Inglés → español de Argentina</p>')
+if pagina.url_path == paginas[0].url_path and not st.session_state.get("recorrido_visto"):
+    from presentacion import mostrar
+    mostrar()
+st.html('<div id="herramienta" tabindex="-1"></div>')
 with st.container(horizontal=True, gap="small", key="public_nav"):
     for p, icono in zip(paginas, (":material/fact_check:", ":material/menu_book:", ":material/science:")):
         if st.button(p.title, icon=icono, key=f"nav_{p.title}",
                      type="primary" if p.url_path == pagina.url_path else "tertiary"):
+            st.session_state.recorrido_visto = True
             st.switch_page(p)
 pagina.run()

@@ -230,6 +230,7 @@ if pedir:
                 resultado = [(p, verificar(p[2], p[3], terminos, p[0], p[1])) for p in pares]
             todas = [o for _, oc in resultado for o in oc]
             st.session_state.vf_resultado = (firma, resultado, todas, inconsistencias(todas))
+            st.session_state.recorrido_visto = True
             st.session_state.vf_cerrar_editor = True
             st.rerun()
 
