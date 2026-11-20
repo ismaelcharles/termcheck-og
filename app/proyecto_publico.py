@@ -1,10 +1,14 @@
 """Método y resultados publicados, en lenguaje de consulta para la portada."""
 from pathlib import Path
+import json
 import re
 
 from html import escape as e
+from termcheck import VERSION
+from termcheck.glossary import cargar, edicion_publicada, publicado
 
-README = Path(__file__).resolve().parent.parent / "README.md"
+RAIZ = Path(__file__).resolve().parent.parent
+README = RAIZ / "README.md"
 FUENTE = "https://github.com/ismaelcharles/termcheck-og#4-resultados"
 
 
@@ -21,8 +25,29 @@ def resultados_publicados():
     return resultados
 
 
+def estado_actual():
+    """Datos publicados de la edición actual; no sustituye la evaluación histórica."""
+    comparacion = json.loads((RAIZ / "docs/cierre-comparacion-2026-11.json").read_text(encoding="utf-8"))
+    auditoria = json.loads((RAIZ / "docs/auditoria-base-validacion.json").read_text(encoding="utf-8"))
+    cobertura = json.loads((RAIZ / "docs/cobertura-1-4.json").read_text(encoding="utf-8"))
+    carpeta = RAIZ / "data/glossary"
+    return dict(version=VERSION, glosario=edicion_publicada(carpeta), conceptos=len(cargar(publicado(carpeta))),
+                antes=comparacion["resultados"]["congelado-12"]["reserva"],
+                despues=comparacion["resultados"]["actual-14"]["reserva"],
+                motor_antes=comparacion["resultados"]["congelado-12"]["version_motor"],
+                motor_despues=comparacion["resultados"]["actual-14"]["version_motor"],
+                version_comprobada=auditoria["version"],
+                referencia=comparacion["referencias"]["reserva"],
+                formas=auditoria["contrato_glosario"]["formas"],
+                controles=auditoria["controles_18"], cobertura=cobertura["resumen"])
+
+
 def contenido(interfaz="Streamlit"):
     datos = resultados_publicados()
+    actual = estado_actual()
+    antes, despues, referencia = actual["antes"], actual["despues"], actual["referencia"]
+    precision_antes = f"{100 * antes['precision']:.1f}".replace(".", ",")
+    precision_despues = f"{100 * despues['precision']:.1f}".replace(".", ",")
     tc, base = datos["TermCheck"], datos["Baseline (texto exacto)"]
     # Desempeño del verificador específicamente sobre los 40 casos traducidos con DeepL,
     # tomado de la tabla «Por sistema» de la evaluación 0.1/v1.
@@ -46,8 +71,61 @@ def contenido(interfaz="Streamlit"):
         <article><h3>Resultados comprobables</h3><p>Podés consultar el término señalado, la forma esperada
         y su ficha. El reporte HTML y la tabla CSV permiten revisar y compartir los hallazgos.</p></article>
       </div>
-      <div class="tc-evidence">
-        <h3>Qué mostró la evaluación</h3>
+      <div class="tc-evidence" aria-labelledby="tc-estado-actual">
+        <h3 id="tc-estado-actual">Estado actual de TermCheck</h3>
+        <p><strong>Motor {e(actual['version'])} · Glosario {e(actual['glosario'])} · {actual['conceptos']} conceptos</strong></p>
+        <p>La revisión funciona con reglas lingüísticas y el glosario; no usa un LLM para decidir las marcas.
+        En la versión {e(actual['version'])}, «tubería de revestimiento corta» se reconoce como variante de
+        <i lang="en">liner</i>, aunque contenga «revestimiento», que se desaconseja cuando aparece aislado.</p>
+        <details class="tc-project-details"><summary>Qué está comprobado y qué queda fuera</summary>
+          <p>Comprobé las {actual['formas']} formas declaradas en el glosario y los flujos de entrada, revisión,
+          consulta y descarga en PC y teléfono. En el corpus y las muestras públicas aparecen
+          {actual['cobertura']['conceptos_con_deteccion']} de los {actual['conceptos']} conceptos.
+          Para los otros {actual['controles']['conceptos']} preparé {actual['controles']['pares']} pares inventados,
+          con traducciones válidas y omisiones o confusiones. Son controles técnicos de IA, no traducciones
+          publicadas ni una evaluación humana independiente.</p>
+          <p>No hice pruebas con otros traductores. Esta etapa se centra en comprobaciones automatizadas y
+          revisión de IA. Lee XLIFF 1.2, XLIFF 2.0 y TMX; los formatos nativos de Trados y memoQ quedan fuera
+          del soporte anunciado.</p>
+          <p>La búsqueda dentro del segmento puede atribuir una palabra al referente equivocado. Por ejemplo,
+          «equipo» puede corresponder a otro componente y hacer que una traducción de <i lang="en">rig</i>
+          quede sin aviso. El análisis contextual con un único LLM está en estudio y sigue en pausa.</p>
+        </details>
+      </div>
+      <div class="tc-evidence" aria-labelledby="tc-comparacion-reciente">
+        <h3 id="tc-comparacion-reciente">Comparación reciente sobre ejemplos conocidos</h3>
+        <p class="tc-evidence-context">Referencia mixta humana/IA · {referencia['evaluables']} casos evaluables
+        en {referencia['oraciones']} oraciones, traducidas por tres sistemas.</p>
+        <p>Volví a revisar los mismos casos con el glosario 1.2 y con el glosario 1.4.
+        En esta muestra, las reformas del glosario redujeron las falsas alarmas:</p>
+        <div class="tc-metrics">
+          <div><strong>{antes['FP']} → {despues['FP']}</strong><span>falsas alarmas</span>
+            <p>{antes['FP'] - despues['FP']} avisos innecesarios menos según la referencia.</p></div>
+          <div><strong>{antes['FN']} → {despues['FN']}</strong><span>errores sin señalar</span>
+            <p>De {antes['TP'] + antes['FN']} errores de la referencia, ahora quedan {despues['FN']} sin marcar.</p></div>
+          <div><strong class="tc-metric-comparison">{precision_antes} % → {precision_despues} %</strong><span>precisión observada</span>
+            <p>Proporción de avisos que coinciden con errores de esa referencia.</p></div>
+        </div>
+        <p class="tc-evidence-context">Estas oraciones ya se usaron para ajustar el glosario. Los resultados
+        describen esos ejemplos y no estiman el rendimiento en textos nuevos.</p>
+        <details class="tc-project-details"><summary>Referencia y límites de esta comparación</summary>
+          <p>La reserva reúne {referencia['unidades']} unidades de término: {referencia['humanas']} decisiones
+          humanas y {referencia['ia']} anotaciones complementarias de GPT-6.2 Astra.
+          Se excluyeron {referencia['excluidas']} casos por alcance. La selección se hizo con el glosario 1.2;
+          no mide la cobertura completa de la edición actual.</p>
+          <p>El punto de partida usa el motor {e(actual['motor_antes'])} y el glosario 1.2; la comparación
+          usa el motor {e(actual['motor_despues'])} y el glosario 1.4. Una comprobación posterior con
+          {e(actual['version_comprobada'])} sobre los mismos textos conserva esos resultados.</p>
+          <p>
+          La mejora no es uniforme: en otra muestra pequeña revisada por IA, aceptar «equipo» como variante
+          de <i lang="en">rig</i> permite el uso válido, pero también deja pasar un error de atribución contextual.
+          No retiré la variante porque está aceptada para el encargo.</p>
+        </details>
+      </div>
+      <div class="tc-evidence" aria-labelledby="tc-evaluacion-historica">
+        <h3 id="tc-evaluacion-historica">Evaluación histórica · Motor 0.1 y glosario v1</h3>
+        <p class="tc-evidence-context">Revisión humana de 20 oraciones · {tc['n']} casos de término en traducción.
+        Estas cifras corresponden a esa edición, no a una evaluación independiente de la versión actual.</p>
         <div class="tc-metrics">
           <div><strong>{tc['tp']} de {errores}</strong><span>errores detectados</span>
             <p>De los errores identificados en la revisión humana, detectó el {round(100 * tc['tp'] / errores)} %.</p></div>
@@ -87,7 +165,8 @@ def contenido(interfaz="Streamlit"):
           Estos números corresponden a la versión 0.1 y al glosario v1, no estiman el rendimiento
           de la edición actual. La muestra es pequeña y los resultados tienen incertidumbre.</p>
           <p>Para contrastar casos y apoyar las pruebas también usé Fable 5.2 Max y GPT 6.2 Astra Max.
-          Los resultados numéricos publicados se calcularon contra la anotación de referencia descrita arriba.</p>
+          En esta evaluación histórica, los resultados numéricos publicados se calcularon contra la anotación de referencia
+          descrita en esta sección.</p>
           <p>En la publicación, el intervalo de confianza del 95 % es 76–94 % para la precisión
           y 82–97 % para la detección de errores.</p>
         </details>

@@ -208,9 +208,11 @@ a:focus-visible, summary:focus-visible, button:focus-visible {
 .tc-project-section h3 {font-size: 1.05rem !important; margin: 0 0 .5rem; color: var(--tc-text)}
 .tc-benefits p, .tc-architecture p {color: var(--tc-muted)}
 .tc-evidence {background: var(--tc-panel); border: 1px solid var(--tc-border); border-radius: .65rem; padding: clamp(1rem, 3vw, 1.8rem)}
+.tc-evidence + .tc-evidence {margin-top: 1.25rem}
 .tc-project-section .tc-evidence-context {font-size: .875rem; color: var(--tc-muted)}
 .tc-metrics {display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin: 1.5rem 0}
 .tc-metrics strong {display: block; font: 500 clamp(2rem, 4vw, 2.8rem)/1.1 Newsreader, Georgia, serif; color: var(--tc-accent); margin-bottom: .5rem}
+.tc-metrics .tc-metric-comparison {font-size: clamp(1.45rem, 2.6vw, 2rem)}
 .tc-metrics span {display: block; font-size: 1rem; font-weight: 600}
 .tc-metrics p {font-size: .9rem; color: var(--tc-muted)}
 .tc-evidence-table {overflow-x: auto; margin: 1.5rem 0}
