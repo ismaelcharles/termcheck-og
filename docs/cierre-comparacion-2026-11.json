@@ -1,0 +1,502 @@
+{
+  "fecha": "2026-11-20",
+  "estado": "comparacion_finalizada",
+  "version_publica": "0.2.5",
+  "glosario_publico": "1.4",
+  "pares_por_combinacion": 378,
+  "combinaciones": 5,
+  "archivos_congelados_verificados": 51,
+  "referencias": {
+    "reserva": {
+      "tipo": "mixta humana/IA",
+      "oraciones": 60,
+      "traducciones": 180,
+      "unidades": 447,
+      "evaluables": 445,
+      "excluidas": 2,
+      "humanas": 177,
+      "ia": 270
+    },
+    "nueva": {
+      "tipo": "IA Codex",
+      "segmentos": 12,
+      "unidades": 23,
+      "evaluables": 22,
+      "dudas_excluidas": 1
+    },
+    "publicas": {
+      "tipo": "comprobacion funcional sin referencia completa de calidad",
+      "segmentos": 186
+    }
+  },
+  "resultados": {
+    "congelado-12": {
+      "version_motor": "0.2.3",
+      "glosario_sha256": "76d5a39868b9eb7683e9b077c271f313cdb02c6b43f014d7035ffbeae4c18c04",
+      "reserva": {
+        "evaluables": 445,
+        "TP": 137,
+        "FP": 42,
+        "FN": 17,
+        "TN": 249,
+        "precision": 0.7653631284916201,
+        "recall": 0.8896103896103896,
+        "F1": 0.8228228228228228
+      },
+      "unidades_reserva_sin_deteccion": 15,
+      "nueva": {
+        "evaluables": 22,
+        "TP": 9,
+        "FP": 0,
+        "FN": 0,
+        "TN": 13,
+        "precision": 1.0,
+        "recall": 1.0,
+        "F1": 1.0
+      },
+      "publicas": {
+        "segmentos": 186,
+        "apariciones": 93,
+        "avisos": 18,
+        "por_muestra": {
+          "dgt": {
+            "segmentos": 73,
+            "apariciones": 8,
+            "avisos": 8
+          },
+          "dgt-control": {
+            "segmentos": 47,
+            "apariciones": 0,
+            "avisos": 0
+          },
+          "directiva": {
+            "segmentos": 48,
+            "apariciones": 3,
+            "avisos": 3
+          },
+          "ifc-offshore": {
+            "segmentos": 16,
+            "apariciones": 69,
+            "avisos": 7
+          },
+          "ifc-onshore": {
+            "segmentos": 2,
+            "apariciones": 13,
+            "avisos": 0
+          }
+        }
+      }
+    },
+    "actual-12": {
+      "version_motor": "0.2.5",
+      "glosario_sha256": "76d5a39868b9eb7683e9b077c271f313cdb02c6b43f014d7035ffbeae4c18c04",
+      "reserva": {
+        "evaluables": 445,
+        "TP": 137,
+        "FP": 42,
+        "FN": 17,
+        "TN": 249,
+        "precision": 0.7653631284916201,
+        "recall": 0.8896103896103896,
+        "F1": 0.8228228228228228
+      },
+      "unidades_reserva_sin_deteccion": 15,
+      "nueva": {
+        "evaluables": 22,
+        "TP": 9,
+        "FP": 0,
+        "FN": 0,
+        "TN": 13,
+        "precision": 1.0,
+        "recall": 1.0,
+        "F1": 1.0
+      },
+      "publicas": {
+        "segmentos": 186,
+        "apariciones": 82,
+        "avisos": 6,
+        "por_muestra": {
+          "dgt": {
+            "segmentos": 73,
+            "apariciones": 0,
+            "avisos": 0
+          },
+          "dgt-control": {
+            "segmentos": 47,
+            "apariciones": 0,
+            "avisos": 0
+          },
+          "directiva": {
+            "segmentos": 48,
+            "apariciones": 1,
+            "avisos": 0
+          },
+          "ifc-offshore": {
+            "segmentos": 16,
+            "apariciones": 68,
+            "avisos": 6
+          },
+          "ifc-onshore": {
+            "segmentos": 2,
+            "apariciones": 13,
+            "avisos": 0
+          }
+        }
+      }
+    },
+    "anterior-13": {
+      "version_motor": "0.2.4",
+      "glosario_sha256": "8c4e54c821236896dcb1a8ca9646ac10391cab6dd3192d35737cc31e0a91d127",
+      "reserva": {
+        "evaluables": 445,
+        "TP": 139,
+        "FP": 13,
+        "FN": 15,
+        "TN": 278,
+        "precision": 0.9144736842105263,
+        "recall": 0.9025974025974026,
+        "F1": 0.9084967320261438
+      },
+      "unidades_reserva_sin_deteccion": 15,
+      "nueva": {
+        "evaluables": 22,
+        "TP": 8,
+        "FP": 0,
+        "FN": 1,
+        "TN": 13,
+        "precision": 1.0,
+        "recall": 0.8888888888888888,
+        "F1": 0.9411764705882353
+      },
+      "publicas": {
+        "segmentos": 186,
+        "apariciones": 93,
+        "avisos": 18,
+        "por_muestra": {
+          "dgt": {
+            "segmentos": 73,
+            "apariciones": 8,
+            "avisos": 8
+          },
+          "dgt-control": {
+            "segmentos": 47,
+            "apariciones": 0,
+            "avisos": 0
+          },
+          "directiva": {
+            "segmentos": 48,
+            "apariciones": 3,
+            "avisos": 3
+          },
+          "ifc-offshore": {
+            "segmentos": 16,
+            "apariciones": 69,
+            "avisos": 7
+          },
+          "ifc-onshore": {
+            "segmentos": 2,
+            "apariciones": 13,
+            "avisos": 0
+          }
+        }
+      }
+    },
+    "actual-13": {
+      "version_motor": "0.2.5",
+      "glosario_sha256": "8c4e54c821236896dcb1a8ca9646ac10391cab6dd3192d35737cc31e0a91d127",
+      "reserva": {
+        "evaluables": 445,
+        "TP": 139,
+        "FP": 13,
+        "FN": 15,
+        "TN": 278,
+        "precision": 0.9144736842105263,
+        "recall": 0.9025974025974026,
+        "F1": 0.9084967320261438
+      },
+      "unidades_reserva_sin_deteccion": 15,
+      "nueva": {
+        "evaluables": 22,
+        "TP": 8,
+        "FP": 0,
+        "FN": 1,
+        "TN": 13,
+        "precision": 1.0,
+        "recall": 0.8888888888888888,
+        "F1": 0.9411764705882353
+      },
+      "publicas": {
+        "segmentos": 186,
+        "apariciones": 82,
+        "avisos": 6,
+        "por_muestra": {
+          "dgt": {
+            "segmentos": 73,
+            "apariciones": 0,
+            "avisos": 0
+          },
+          "dgt-control": {
+            "segmentos": 47,
+            "apariciones": 0,
+            "avisos": 0
+          },
+          "directiva": {
+            "segmentos": 48,
+            "apariciones": 1,
+            "avisos": 0
+          },
+          "ifc-offshore": {
+            "segmentos": 16,
+            "apariciones": 68,
+            "avisos": 6
+          },
+          "ifc-onshore": {
+            "segmentos": 2,
+            "apariciones": 13,
+            "avisos": 0
+          }
+        }
+      }
+    },
+    "actual-14": {
+      "version_motor": "0.2.5",
+      "glosario_sha256": "94361832f327ad9fa53802dfed4eee0e18d2f249b02d636780e35762be91c358",
+      "reserva": {
+        "evaluables": 445,
+        "TP": 139,
+        "FP": 13,
+        "FN": 15,
+        "TN": 278,
+        "precision": 0.9144736842105263,
+        "recall": 0.9025974025974026,
+        "F1": 0.9084967320261438
+      },
+      "unidades_reserva_sin_deteccion": 15,
+      "nueva": {
+        "evaluables": 22,
+        "TP": 8,
+        "FP": 0,
+        "FN": 1,
+        "TN": 13,
+        "precision": 1.0,
+        "recall": 0.8888888888888888,
+        "F1": 0.9411764705882353
+      },
+      "publicas": {
+        "segmentos": 186,
+        "apariciones": 82,
+        "avisos": 5,
+        "por_muestra": {
+          "dgt": {
+            "segmentos": 73,
+            "apariciones": 0,
+            "avisos": 0
+          },
+          "dgt-control": {
+            "segmentos": 47,
+            "apariciones": 0,
+            "avisos": 0
+          },
+          "directiva": {
+            "segmentos": 48,
+            "apariciones": 1,
+            "avisos": 0
+          },
+          "ifc-offshore": {
+            "segmentos": 16,
+            "apariciones": 68,
+            "avisos": 5
+          },
+          "ifc-onshore": {
+            "segmentos": 2,
+            "apariciones": 13,
+            "avisos": 0
+          }
+        }
+      }
+    }
+  },
+  "cambios": {
+    "acumulada": {
+      "antes": "congelado-12",
+      "despues": "actual-14",
+      "reserva_delta": {
+        "TP": 2,
+        "FP": -29,
+        "FN": -2,
+        "TN": 29,
+        "precision": 0.1491105557189062,
+        "recall": 0.012987012987012991,
+        "F1": 0.08567390920332096
+      },
+      "publicas_delta_avisos": -13,
+      "nueva_delta": {
+        "TP": -1,
+        "FP": 0,
+        "FN": 1,
+        "TN": 0
+      }
+    },
+    "motor_con_glosario_12": {
+      "antes": "congelado-12",
+      "despues": "actual-12",
+      "reserva_delta": {
+        "TP": 0,
+        "FP": 0,
+        "FN": 0,
+        "TN": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "F1": 0.0
+      },
+      "publicas_delta_avisos": -12,
+      "nueva_delta": {
+        "TP": 0,
+        "FP": 0,
+        "FN": 0,
+        "TN": 0
+      }
+    },
+    "glosario_con_motor_actual": {
+      "antes": "actual-12",
+      "despues": "actual-14",
+      "reserva_delta": {
+        "TP": 2,
+        "FP": -29,
+        "FN": -2,
+        "TN": 29,
+        "precision": 0.1491105557189062,
+        "recall": 0.012987012987012991,
+        "F1": 0.08567390920332096
+      },
+      "publicas_delta_avisos": -1,
+      "nueva_delta": {
+        "TP": -1,
+        "FP": 0,
+        "FN": 1,
+        "TN": 0
+      }
+    },
+    "motor_reciente": {
+      "antes": "anterior-13",
+      "despues": "actual-13",
+      "reserva_delta": {
+        "TP": 0,
+        "FP": 0,
+        "FN": 0,
+        "TN": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "F1": 0.0
+      },
+      "publicas_delta_avisos": -12,
+      "nueva_delta": {
+        "TP": 0,
+        "FP": 0,
+        "FN": 0,
+        "TN": 0
+      }
+    },
+    "glosario_reciente": {
+      "antes": "actual-13",
+      "despues": "actual-14",
+      "reserva_delta": {
+        "TP": 0,
+        "FP": 0,
+        "FN": 0,
+        "TN": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "F1": 0.0
+      },
+      "publicas_delta_avisos": -1,
+      "nueva_delta": {
+        "TP": 0,
+        "FP": 0,
+        "FN": 0,
+        "TN": 0
+      }
+    }
+  },
+  "mejora_acumulada": {
+    "falsas_alarmas_antes": 42,
+    "falsas_alarmas_actuales": 13,
+    "reduccion_falsas_alarmas": 0.6904761904761905,
+    "errores_omitidos_antes": 17,
+    "errores_omitidos_actuales": 15
+  },
+  "huellas": {
+    "entradas": "356a2ee05f447654e60bcd135c56eb9afb44b9c90928d44f78a4f49fa8f6142c",
+    "referencia_reserva": "4ce8ba3b3b8674ae10b5e110e66c92f9a328c934c2a02f76daa5ffc885fd2001",
+    "referencia_ia_nueva": "c855b640444cf0632fea5b67b092ddac98616e6795606ddeaf269f47f437a23e",
+    "codigo": {
+      "congelado-12": {
+        "__init__.py": "1a11b7dcac8ff505e434bbf1bb9ea8b63b5fdc555583dbaa9a46bfb958af789d",
+        "checker.py": "31712ad98dd90373366e66e76d211a40873477b5c4ca52571d7f2f40e78b769d",
+        "consistency.py": "18dee8a69957223f98e5645ea075b2d681c81b2322bf7f46854024a41bcf22ec",
+        "etiquetas.py": "ed7f02b816a2cc33a12389d1f82122fcaab1e34ede0cd7321479ff5edd28c437",
+        "formatos.py": "89a96cd24a48eacde2346eae5cdd3963c32ad4b4f81b90304886bf6f6d2a30fb",
+        "glossary.py": "52e975c0aa921c164b8c7feaaf3c9c98e3622c01039b4cfc7c34c2c82bd42344",
+        "matcher.py": "bbbcbee882a9bfc61373727839fe46b62532efa6a6f735722746d23f7f2cfee7",
+        "normalize.py": "62e247393fd1e87fb6236ecc0debda8294965bf888b16fb6b5d52d5bbf9be812",
+        "report.py": "eb0b96535947e854c61922303cb78c8b6efb9bd094940ec566abb2743c859bc3"
+      },
+      "actual-12": {
+        "__init__.py": "2dc2f60735edf47fa9d2d979927994c4f751c5933d3ff15fe2cee295d36ce632",
+        "checker.py": "31712ad98dd90373366e66e76d211a40873477b5c4ca52571d7f2f40e78b769d",
+        "consistency.py": "18dee8a69957223f98e5645ea075b2d681c81b2322bf7f46854024a41bcf22ec",
+        "ejemplos.py": "88e1ec7f26a811bdb76e2e0a07c50b9ea31517b1320e003711352f1bbc05806b",
+        "etiquetas.py": "ed7f02b816a2cc33a12389d1f82122fcaab1e34ede0cd7321479ff5edd28c437",
+        "formatos.py": "627b3bfcb0f7c1f717bf11ea70cee5c35e30bf05a2b13e90706bb2835d93d031",
+        "glossary.py": "01761c4e8d14cdcd3d93a12d3794291aad78aa1d777c337a583e93a854529146",
+        "matcher.py": "5c5bbcda0ad032d96217a53eab9ecefa8ec9820583872c2526109bf34431aad0",
+        "normalize.py": "62e247393fd1e87fb6236ecc0debda8294965bf888b16fb6b5d52d5bbf9be812",
+        "report.py": "eb0b96535947e854c61922303cb78c8b6efb9bd094940ec566abb2743c859bc3"
+      },
+      "anterior-13": {
+        "__init__.py": "e4fc93440dbe0106bb358fc4446f2c61c35d2946ac90fdc1769f840cab7ec553",
+        "checker.py": "31712ad98dd90373366e66e76d211a40873477b5c4ca52571d7f2f40e78b769d",
+        "consistency.py": "18dee8a69957223f98e5645ea075b2d681c81b2322bf7f46854024a41bcf22ec",
+        "ejemplos.py": "88e1ec7f26a811bdb76e2e0a07c50b9ea31517b1320e003711352f1bbc05806b",
+        "etiquetas.py": "ed7f02b816a2cc33a12389d1f82122fcaab1e34ede0cd7321479ff5edd28c437",
+        "formatos.py": "89a96cd24a48eacde2346eae5cdd3963c32ad4b4f81b90304886bf6f6d2a30fb",
+        "glossary.py": "35922f8158bffed2db8a871800d00fd79490cdd2887dbe9d846ebb9e1b76e586",
+        "matcher.py": "474d32a95126bf42a0169db704e2ae922b3c9cc1e5e28098a3cba0af3510cedd",
+        "normalize.py": "62e247393fd1e87fb6236ecc0debda8294965bf888b16fb6b5d52d5bbf9be812",
+        "report.py": "eb0b96535947e854c61922303cb78c8b6efb9bd094940ec566abb2743c859bc3"
+      },
+      "actual-13": {
+        "__init__.py": "2dc2f60735edf47fa9d2d979927994c4f751c5933d3ff15fe2cee295d36ce632",
+        "checker.py": "31712ad98dd90373366e66e76d211a40873477b5c4ca52571d7f2f40e78b769d",
+        "consistency.py": "18dee8a69957223f98e5645ea075b2d681c81b2322bf7f46854024a41bcf22ec",
+        "ejemplos.py": "88e1ec7f26a811bdb76e2e0a07c50b9ea31517b1320e003711352f1bbc05806b",
+        "etiquetas.py": "ed7f02b816a2cc33a12389d1f82122fcaab1e34ede0cd7321479ff5edd28c437",
+        "formatos.py": "627b3bfcb0f7c1f717bf11ea70cee5c35e30bf05a2b13e90706bb2835d93d031",
+        "glossary.py": "01761c4e8d14cdcd3d93a12d3794291aad78aa1d777c337a583e93a854529146",
+        "matcher.py": "5c5bbcda0ad032d96217a53eab9ecefa8ec9820583872c2526109bf34431aad0",
+        "normalize.py": "62e247393fd1e87fb6236ecc0debda8294965bf888b16fb6b5d52d5bbf9be812",
+        "report.py": "eb0b96535947e854c61922303cb78c8b6efb9bd094940ec566abb2743c859bc3"
+      },
+      "actual-14": {
+        "__init__.py": "2dc2f60735edf47fa9d2d979927994c4f751c5933d3ff15fe2cee295d36ce632",
+        "checker.py": "31712ad98dd90373366e66e76d211a40873477b5c4ca52571d7f2f40e78b769d",
+        "consistency.py": "18dee8a69957223f98e5645ea075b2d681c81b2322bf7f46854024a41bcf22ec",
+        "ejemplos.py": "88e1ec7f26a811bdb76e2e0a07c50b9ea31517b1320e003711352f1bbc05806b",
+        "etiquetas.py": "ed7f02b816a2cc33a12389d1f82122fcaab1e34ede0cd7321479ff5edd28c437",
+        "formatos.py": "627b3bfcb0f7c1f717bf11ea70cee5c35e30bf05a2b13e90706bb2835d93d031",
+        "glossary.py": "01761c4e8d14cdcd3d93a12d3794291aad78aa1d777c337a583e93a854529146",
+        "matcher.py": "5c5bbcda0ad032d96217a53eab9ecefa8ec9820583872c2526109bf34431aad0",
+        "normalize.py": "62e247393fd1e87fb6236ecc0debda8294965bf888b16fb6b5d52d5bbf9be812",
+        "report.py": "eb0b96535947e854c61922303cb78c8b6efb9bd094940ec566abb2743c859bc3"
+      }
+    }
+  },
+  "limites": [
+    "Comparación descriptiva en muestras conocidas; no mide generalización ni atribuye causalidad a cada cambio antiguo.",
+    "Reserva con referencia mixta y muestra nueva con referencia IA; no equivalen a referencia humana independiente.",
+    "La selección de términos de la reserva usa glosario 1.2; no mide cobertura completa de 1.4.",
+    "Los conteos de avisos públicos no son precisión ni recall.",
+    "Los cuatro juicios de registro revisables y la duda de la muestra nueva mantienen sus límites previos.",
+    "Desde la última publicación no cambió el motor ni el glosario: esta sesión agrega comprobaciones y documentación."
+  ]
+}

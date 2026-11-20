@@ -439,6 +439,10 @@ Las fuentes de cada término, lo que se excluyó por copyright y el método de c
 
 ## 9. Próximos pasos
 
+El [cierre de pruebas del 20 de noviembre](docs/cierre-2026-11.md) compara cinco combinaciones de motor y
+glosario sobre las mismas muestras: confirma mejoras acumuladas y conserva un retroceso contextual de
+«equipo». Son resultados descriptivos con referencia mixta o de IA, no una nueva evaluación humana independiente.
+
 - Ampliar las pruebas de traducciones públicas y revisar los avisos contextuales pendientes del
   [registro de pruebas](docs/pruebas-traducciones-publicas.md). La confusión de `case/cases` con `casing`
   y el aviso por «control de un pozo» se corrigieron en 0.2.5.
@@ -449,4 +453,9 @@ Las fuentes de cada término, lo que se excluyó por copyright y el método de c
 - Más formas prohibidas en el glosario, cada una con un error real que la respalde.
 - Probar la lectura de XLIFF y TMX con exportaciones reales de Trados y memoQ. Hoy lee XLIFF 1.2, XLIFF 2.0 y TMX
   según la norma, probados con archivos armados a mano y un TMX público original de DGT. No lee `.sdlxliff` ni `.mqxliff`.
+  La [revisión de muestras públicas de esas herramientas](docs/pruebas-archivos-cat.md) comprobó rechazo por idioma
+  y auxiliares de extracción; sigue faltando una exportación original inglés–español para cerrar la prueba.
 - Probar la herramienta con traductores que hagan post-edición técnica.
+- Explorar la alineación contextual entre cada aparición inglesa y su traducción antes de clasificar.
+  La propuesta de usar un único LLM para ese paso queda postergada; primero habrá que medir su aporte y
+  su fidelidad al glosario. Las restricciones léxicas probadas para «equipo» se descartaron por falsas alarmas.
