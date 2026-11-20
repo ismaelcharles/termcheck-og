@@ -11,10 +11,11 @@ def mostrar(resultado, todas, advertencias, glosario="", terminos=()):
         with st.popover("Descargar"):
             segmentos = {p[0]: p[2] for p, _ in resultado}
             traducciones = [{"seg_id": p[0], "system": p[1], "target_es": p[3]} for p, _ in resultado]
+            contextos = {(p[0], p[1]): (p[2], p[3]) for p, _ in resultado}
             st.download_button("Reporte HTML", report.a_html(segmentos, traducciones, todas, advertencias,
                                                               glosario=glosario),
                                "termcheck.html", "text/html", on_click="ignore", width="stretch")
-            st.download_button("Tabla CSV", report.a_csv_texto(todas), "termcheck.csv", "text/csv",
+            st.download_button("Tabla CSV", report.a_csv_texto(todas, contextos), "termcheck.csv", "text/csv",
                                on_click="ignore", width="stretch")
     # Cuenta apariciones, como el CSV, aunque los detalles iguales se agrupen en la pantalla.
     con_terminos = sum(bool(oc) for _, oc in resultado)

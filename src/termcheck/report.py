@@ -8,7 +8,7 @@ from termcheck import VERSION
 from termcheck.etiquetas import ETIQUETAS, INCONSISTENTE, NOMBRES, orden
 
 COLUMNAS = ["seg_id", "system", "term_id", "term_en", "label", "es_found", "start", "end", "es_expected",
-            "suggestion"]
+            "suggestion", "source_en", "target_es"]
 COLORES = {c: (("var(--tc-error-bg, #F6DCD6)", "var(--tc-error, #9C3324)") if e.nivel == "error" else
                ("var(--tc-warning-bg, #F5E8C8)", "var(--tc-warning, #7A5300)") if e.nivel == "aviso" else ("transparent", "inherit"))
            for c, e in ETIQUETAS.items()}
@@ -47,23 +47,30 @@ CSS = """
 """
 
 
-def filas(ocurrencias):
-    return [{c: getattr(o, c) for c in COLUMNAS} for o in ocurrencias]
+def filas(ocurrencias, contextos=None):
+    """Filas por aparición; contextos asocia (seg_id, system) al par de textos original/traducción."""
+    contextos = contextos or {}
+    resultado = []
+    for o in ocurrencias:
+        fila = {c: getattr(o, c) for c in COLUMNAS if c not in ("source_en", "target_es")}
+        fila["source_en"], fila["target_es"] = contextos.get((o.seg_id, o.system), ("", ""))
+        resultado.append(fila)
+    return resultado
 
 
-def escribir_csv(ocurrencias, ruta):
+def escribir_csv(ocurrencias, ruta, contextos=None):
     with open(ruta, "w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=COLUMNAS, lineterminator="\n")
         w.writeheader()
-        w.writerows(filas(ocurrencias))
+        w.writerows(filas(ocurrencias, contextos))
 
 
-def a_csv_texto(ocurrencias):
+def a_csv_texto(ocurrencias, contextos=None):
     import io
     buf = io.StringIO()
     w = csv.DictWriter(buf, fieldnames=COLUMNAS, lineterminator="\n")
     w.writeheader()
-    w.writerows(filas(ocurrencias))
+    w.writerows(filas(ocurrencias, contextos))
     return buf.getvalue()
 
 

@@ -24,15 +24,19 @@ COLUMNAS_DEL_PLAN = ["seg_id", "system", "term_id", "term_en", "label", "es_foun
 def test_csv_tiene_las_columnas_del_plan_y_una_fila_por_aparicion(tmp_path):
     oc = verificar("Move the rig to the wellhead.", "Mueva la plataforma de perforación a la boca de pozo.",
                    GLOSARIO, "S1", "mt")
-    filas = list(csv.DictReader(io.StringIO(a_csv_texto(oc))))
+    es = "Mueva la plataforma de perforación a la boca de pozo."
+    contextos = {("S1", "mt"): ("Move the rig to the wellhead.", es)}
+    filas = list(csv.DictReader(io.StringIO(a_csv_texto(oc, contextos))))
     assert list(filas[0])[:len(COLUMNAS_DEL_PLAN)] == COLUMNAS_DEL_PLAN
     assert [(f["term_id"], f["label"], f["es_found"]) for f in filas] == [
         ("G1", "PROHIBIDO", "plataforma de perforación"), ("G3", "OK", "boca de pozo")]
     # start y end dicen dónde está la forma en la traducción
-    es = "Mueva la plataforma de perforación a la boca de pozo."
     assert es[int(filas[0]["start"]):int(filas[0]["end"])] == "plataforma de perforación"
-    escribir_csv(oc, tmp_path / "r.csv")
-    assert (tmp_path / "r.csv").read_text(encoding="utf-8") == a_csv_texto(oc)
+    assert filas[0]["source_en"] == filas[1]["source_en"] == "Move the rig to the wellhead."
+    assert filas[0]["target_es"] == filas[1]["target_es"] == es
+    assert filas[0]["target_es"][int(filas[0]["start"]):int(filas[0]["end"])] == filas[0]["es_found"]
+    escribir_csv(oc, tmp_path / "r.csv", contextos)
+    assert (tmp_path / "r.csv").read_text(encoding="utf-8") == a_csv_texto(oc, contextos)
 
 
 def test_html_escapa_el_texto():
@@ -117,6 +121,16 @@ def test_reporte_agrupa_repeticiones_sin_perder_las_filas_csv():
     pieza = bloque_segmento("Move the rig and stop the rig.", "Mueva el equipo y detenga el equipo.", oc)
     assert "rig, 2 veces" in pieza
     assert len(list(csv.DictReader(io.StringIO(a_csv_texto(oc))))) == 2
+
+
+def test_csv_asocia_contextos_por_segmento_y_sistema():
+    pares = [("S1", "mt-a", "Move the rig.", "Mueva el equipo."),
+             ("S1", "mt-b", "Move the rig.", "Mueva la plataforma de perforación.")]
+    ocurrencias = [o for seg, system, en, es in pares for o in verificar(en, es, GLOSARIO, seg, system)]
+    contextos = {(seg, system): (en, es) for seg, system, en, es in pares}
+    filas = list(csv.DictReader(io.StringIO(a_csv_texto(ocurrencias, contextos))))
+    assert [(f["system"], f["target_es"]) for f in filas] == [
+        ("mt-a", "Mueva el equipo."), ("mt-b", "Mueva la plataforma de perforación.")]
 
 
 def test_filtro_muestra_solo_los_detalles_para_revisar():
