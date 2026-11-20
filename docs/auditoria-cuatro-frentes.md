@@ -41,6 +41,9 @@ material. La suite completa da 412 pruebas aprobadas; 51 pertenecen al prototipo
 usan respuestas controladas, por lo que no cuentan como validación de un modelo. En previsualización,
 Chromium comprobó ocho verificaciones por texto, la carga de los ocho segmentos del material, descarga
 de HTML/CSV y tamaños de PC/teléfono. El CSV coincide con la CLI en todos los campos de resultados.
+El mismo recorrido específico pasó en producción tras activar 0.2.6; ambos servicios están saludables.
+El [registro agregado](auditoria-base-validacion.json) conserva la versión, commit, huellas y estados
+pendientes. El glosario y los 51 archivos congelados permanecen intactos.
 
 ## Cobertura: alcance observado, separado del rendimiento
 

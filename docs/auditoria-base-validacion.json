@@ -1,0 +1,55 @@
+{
+  "fecha": "2026-11-20",
+  "version": "0.2.6",
+  "glosario": "1.4",
+  "commit_codigo": "4897c80bd61378d710ba89f859dd66e3fb0e65ee",
+  "sha256_checker": "6425225c478767ce2a12fdc918f982ce96ac8b2775c5b16ecb4337e3f461638e",
+  "sha256_glosario": "94361832f327ad9fa53802dfed4eee0e18d2f249b02d636780e35762be91c358",
+  "pruebas": {
+    "suite_total": 412,
+    "prototipo_llm_local_con_respuestas_controladas": 51,
+    "resto_proyecto": 361,
+    "regresiones_prohibidas_contenidas": 14,
+    "pruebas_material_y_cotejo_cat": 7
+  },
+  "contrato_glosario": {
+    "formas": 266,
+    "fallos_antes": 1,
+    "fallos_despues": 0
+  },
+  "comparacion_previa": {
+    "pares": 378,
+    "segmentos_con_cambios": 0
+  },
+  "navegador_previsualizacion": {
+    "ok": true,
+    "version": "0.2.6",
+    "casos_texto": 8,
+    "segmentos_archivo": 8,
+    "avisos_archivo": 2,
+    "descargas": true,
+    "errors": []
+  },
+  "navegador_produccion": {
+    "ok": true,
+    "version": "0.2.6",
+    "casos_texto": 8,
+    "segmentos_archivo": 8,
+    "avisos_archivo": 2,
+    "descargas": true,
+    "errors": []
+  },
+  "csv_produccion_equivalente_cli": true,
+  "glosario_y_51_archivos_congelados_intactos": true,
+  "frentes": {
+    "validacion_uso": "pendiente: sin sesiones externas",
+    "contexto": "parcial: falsa prohibida corregida; atribución de referentes pendiente",
+    "cobertura": "auditada: 86 conceptos observados, 18 sin contexto en estas muestras",
+    "archivos_cat": "pendiente: exportaciones originales EN–ES de Trados y memoQ"
+  },
+  "llm": {
+    "estado": "pausado_por_decision_del_autor",
+    "inferencias_ejecutadas": 0,
+    "integrado_en_web": false
+  }
+}
