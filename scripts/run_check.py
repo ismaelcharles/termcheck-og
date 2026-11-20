@@ -101,7 +101,9 @@ def main():
 
     salida = Path(a.out)
     salida.parent.mkdir(parents=True, exist_ok=True)
-    escribir_csv(ocurrencias, salida.with_suffix(".csv"))
+    contextos = {(f["seg_id"], f["system"]): (segmentos[f["seg_id"]], f["target_es"])
+                 for f in traducciones}
+    escribir_csv(ocurrencias, salida.with_suffix(".csv"), contextos)
     referencia = ruta_glosario.name + " · SHA-256 " + hashlib.sha256(bytes_glosario).hexdigest()
     salida.with_suffix(".html").write_text(a_html(segmentos, traducciones, ocurrencias, advertencias,
                                                 glosario=referencia),

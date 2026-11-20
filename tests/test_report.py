@@ -90,6 +90,9 @@ def test_run_check_con_src_y_tgt(tmp_path):
     with open(tmp_path / "rep.csv", encoding="utf-8", newline="") as f:
         filas = list(csv.DictReader(f))
     assert [(f["seg_id"], f["label"]) for f in filas] == [("L0001", "VARIANTE"), ("L0002", "PROHIBIDO")]
+    assert [(f["source_en"], f["target_es"]) for f in filas] == [
+        ("Move the rig.", "Mueva el equipo."),
+        ("Stop the rig.", "Detenga la plataforma de perforación.")]
     assert "<mark" in (tmp_path / "rep.html").read_text(encoding="utf-8")
 
 
@@ -131,6 +134,14 @@ def test_csv_asocia_contextos_por_segmento_y_sistema():
     filas = list(csv.DictReader(io.StringIO(a_csv_texto(ocurrencias, contextos))))
     assert [(f["system"], f["target_es"]) for f in filas] == [
         ("mt-a", "Mueva el equipo."), ("mt-b", "Mueva la plataforma de perforación.")]
+    html = a_html({"S1": pares[0][2]},
+                  [{"seg_id": seg, "system": system, "target_es": es} for seg, system, _, es in pares],
+                  ocurrencias)
+    import re
+    from html import unescape
+    texto_html = unescape(re.sub(r"<[^>]+>", "", html))
+    assert "Mueva el equipo." in texto_html and "Mueva la plataforma de perforación." in texto_html
+    assert 'tc-variante' in html and 'tc-prohibido' in html
 
 
 def test_filtro_muestra_solo_los_detalles_para_revisar():
