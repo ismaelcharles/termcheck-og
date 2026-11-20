@@ -2,4 +2,4 @@
 
 # El nombre del proyecto vive solo acá: para cambiarlo, se cambia esta línea.
 NOMBRE = "TermCheck O&G"
-VERSION = "0.2.5"
+VERSION = "0.2.6"

@@ -12,7 +12,8 @@ Pasos:
 2. Para cada aparición, buscar en la traducción la preferida, las válidas, las prohibidas y las formas en inglés.
    Una forma de varias palabras también vale si va coordinada con otra y comparten el principio: «pozo de
    petróleo o gas» por «pozo de gas» (matcher.buscar_coordinada, desde la versión 0.2).
-3. Etiquetar con esta prioridad: PROHIBIDO > OK > VARIANTE > SIN_TRADUCIR > NO_ENCONTRADO.
+3. Una prohibida que es parte estricta de una forma completa admitida del mismo término no compite con ella.
+   Las demás coincidencias se etiquetan con prioridad PROHIBIDO > OK > VARIANTE > SIN_TRADUCIR > NO_ENCONTRADO.
    Lo que en la traducción ya usó un término no lo puede usar otro (así «pozo» dentro de «boca de pozo» no vale
    dos veces). Se resuelven primero los términos más largos.
    De las formas libres se toma la más larga y, a igual largo, la que está más a la izquierda. Hay una excepción:
@@ -63,6 +64,18 @@ def _formas_es(t):
     aceptadas = {normalizar(f) for f in [t.es_preferred] + t.es_allowed}
     formas += [("SIN_TRADUCIR", f) for f in t.en if normalizar(f) not in aceptadas]
     return [(label, f, f if es_sigla(f) else None) for label, f in formas if f]
+
+
+def _tramos_es(t, palabras_es):
+    """Coincidencias por etiqueta, con los tokens propios de cada tramo."""
+    tramos = {label: [] for label in PRIORIDAD}
+    for label, forma, sigla in _formas_es(t):
+        palabras_forma = analizar_forma(forma, "es")
+        tramos[label] += [(a, b, forma, b-a, frozenset(range(a, b)))
+                          for a, b in buscar(palabras_es, palabras_forma, "es", sigla)]
+        tramos[label] += [(a, b, forma, len(palabras_forma), frozenset(propias))
+                          for a, b, propias in buscar_coordinada(palabras_es, palabras_forma)]
+    return tramos
 
 
 def detectar(palabras_en, terminos):
@@ -169,19 +182,20 @@ def verificar(texto_en, texto_es, terminos, seg_id="", system=""):
     for k in orden:
         i, j, t = apariciones[k]
         encontrado = None
+        por_etiqueta = _tramos_es(t, palabras_es)
+        # «Revestimiento» aislado puede ser prohibido para liner, aunque la variante completa
+        # «tubería de revestimiento corta» esté admitida. La excepción es por aparición y tokens:
+        # no elimina otras prohibidas separadas ni formas ya reservadas para otro término.
+        admitidos = [tramo for label in ("OK", "VARIANTE") for tramo in por_etiqueta[label]
+                     if not usadas & tramo[4]]
+        por_etiqueta["PROHIBIDO"] = [p for p in por_etiqueta["PROHIBIDO"]
+                                      if not any(a[0] <= p[0] and p[1] <= a[1] and p[4] < a[4]
+                                                 for a in admitidos)]
         for label in PRIORIDAD:
             # Un tramo es (a, b, forma, largo, propias): la forma ocupa palabras_es[a:b], tiene «largo» palabras y
             # «propias» son las que usa solo ella. En una coincidencia seguida son todas; en una coordinada
             # («pozo de petróleo o gas»), las del final: el principio lo comparte con la otra alternativa.
-            tramos = []
-            for lab, forma, sigla in _formas_es(t):
-                if lab != label:
-                    continue
-                palabras_forma = analizar_forma(forma, "es")
-                tramos += [(a, b, forma, b - a, frozenset(range(a, b)))
-                           for a, b in buscar(palabras_es, palabras_forma, "es", sigla)]
-                tramos += [(a, b, forma, len(palabras_forma), frozenset(propias))
-                           for a, b, propias in buscar_coordinada(palabras_es, palabras_forma)]
+            tramos = por_etiqueta[label]
             # Solo los tramos libres; de dos que se pisan queda el más largo
             libres = []
             for tramo in sorted(tramos, key=lambda x: (-x[3], x[0])):

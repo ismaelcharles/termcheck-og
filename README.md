@@ -8,7 +8,7 @@ Recibe el texto en inglés, su traducción y un glosario bilingüe. Señala form
 términos en inglés que no se aceptan como préstamos y equivalencias que no pudo encontrar. La persona que revisa
 decide cada caso en contexto. No traduce ni corrige estilo.
 
-**Versión pública: 0.2.5 · Glosario: 1.4 · 104 términos.** Se puede usar el glosario incluido o uno propio con las
+**Versión pública: 0.2.6 · Glosario: 1.4 · 104 términos.** Se puede usar el glosario incluido o uno propio con las
 preferencias del cliente. La evaluación histórica se conserva con su código y su glosario identificados.
 
 ## 1. El problema
@@ -99,6 +99,9 @@ esté bien; cuando no hay términos reconocidos, la app lo informa expresamente.
 | `SIN_TRADUCIR` | El término quedó en inglés y el glosario no lo acepta como préstamo | Sí |
 | `NO_ENCONTRADO` | El término está en el inglés y ninguna forma conocida aparece en la traducción | Sí |
 | `INCONSISTENTE` | En el mismo documento, el término se tradujo de más de una manera | Advertencia |
+
+Una prohibida contenida enteramente en una forma completa admitida del mismo concepto no cuenta como
+aparición aislada. Si aparece por separado, conserva su prioridad y su aviso.
 
 Los casos difíciles (plural y género, tildes, «as well as», términos que se pisan, préstamos aceptados, siglas,
 variantes de escritura en inglés, guiones, formas coordinadas) están cubiertos con pruebas automáticas en
@@ -326,6 +329,13 @@ puede referirse a la gestión de residuos en el mismo segmento. Mantengo «pozo 
 y «pozo de eliminación» como desaconsejada para el encargo. El [registro de la edición](data/glossary/glossary_v1_4.md)
 documenta las fuentes técnicas consultadas y los límites. Los otros 102 conceptos y la edición 1.3 se conservan.
 
+### Coherencia de formas aceptadas en 0.2.6
+
+«Tubería de revestimiento corta» ya no se marca por contener «revestimiento», desaconsejado cuando aparece
+aislado para liner. La excepción requiere una forma completa admitida del mismo concepto; una prohibida
+separada conserva el aviso. El glosario no cambia. La [auditoría de base](docs/auditoria-cuatro-frentes.md)
+detalla la corrección, la exposición observada de 86 de los 104 conceptos y las pruebas externas pendientes.
+
 ## 5. Validación
 
 No hubo entrevistas ni pruebas con traductores. El plan original preveía mostrarle la herramienta a entre 3 y 5
@@ -351,6 +361,8 @@ mixta con anotaciones de GPT-6.2 Astra. Nadie más lo usó con textos propios.
 - **Glosario chico y centrado en sustantivos.** La edición actual tiene 104 conceptos y admite algunas variantes
   verbales explícitas. En el glosario histórico de 99 términos, 20 no aparecían en ninguna oración del corpus.
   La revisión de la reserva tampoco constituye una evaluación completa de la cobertura de la edición actual.
+  La [auditoría de exposición vigente](docs/auditoria-cuatro-frentes.md) encuentra 86 conceptos en el corpus
+  y las muestras públicas disponibles; identifica los otros 18 y separa esa exposición de una medida de recall.
 - **El corpus son textos del gobierno de EE. UU.** (OSHA y reglamentos federales). Es inglés de normas y de
   seguridad, no documentación operativa de una empresa.
 - **`NO_ENCONTRADO` no distingue causas.** Puede ser un error, una omisión o un sinónimo correcto que el
@@ -457,5 +469,6 @@ glosario sobre las mismas muestras: confirma mejoras acumuladas y conserva un re
   y auxiliares de extracción; sigue faltando una exportación original inglés–español para cerrar la prueba.
 - Probar la herramienta con traductores que hagan post-edición técnica.
 - Explorar la alineación contextual entre cada aparición inglesa y su traducción antes de clasificar.
-  La propuesta de usar un único LLM para ese paso queda postergada; primero habrá que medir su aporte y
-  su fidelidad al glosario. Las restricciones léxicas probadas para «equipo» se descartaron por falsas alarmas.
+  El experimento con un único LLM queda en pausa mientras se trabaja la validación de uso, el contexto,
+  la cobertura y los archivos CAT. El prototipo local no se integró en la web ni se ejecutó con un modelo.
+  Las restricciones léxicas probadas para «equipo» se descartaron por falsas alarmas.

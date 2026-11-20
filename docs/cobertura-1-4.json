@@ -1,0 +1,1554 @@
+{
+  "resumen": {
+    "version": "0.2.6",
+    "glosario": "1.4",
+    "conceptos": 104,
+    "segmentos_por_grupo": {
+      "corpus": 120,
+      "directiva": 48,
+      "dgt": 73,
+      "dgt-control": 47,
+      "ifc-offshore": 16,
+      "ifc-onshore": 2
+    },
+    "segmentos_totales": 306,
+    "contextos_unicos": 302,
+    "conceptos_con_deteccion": 86,
+    "conceptos_sin_deteccion": [
+      "T001",
+      "T005",
+      "T013",
+      "T023",
+      "T028",
+      "T029",
+      "T033",
+      "T046",
+      "T048",
+      "T050",
+      "T060",
+      "T061",
+      "T067",
+      "T072",
+      "T075",
+      "T084",
+      "T090",
+      "T092"
+    ],
+    "conceptos_con_candidato_literal": 86,
+    "conceptos_sin_referencia_humana_historica": [
+      "T001",
+      "T005",
+      "T007",
+      "T013",
+      "T015",
+      "T016",
+      "T020",
+      "T022",
+      "T023",
+      "T027",
+      "T028",
+      "T029",
+      "T033",
+      "T035",
+      "T039",
+      "T042",
+      "T046",
+      "T048",
+      "T050",
+      "T053",
+      "T055",
+      "T058",
+      "T060",
+      "T061",
+      "T065",
+      "T067",
+      "T070",
+      "T071",
+      "T072",
+      "T075",
+      "T076",
+      "T077",
+      "T078",
+      "T080",
+      "T082",
+      "T083",
+      "T084",
+      "T085",
+      "T086",
+      "T087",
+      "T089",
+      "T090",
+      "T092",
+      "T093",
+      "T096",
+      "T100",
+      "T101",
+      "T102",
+      "T103",
+      "T104"
+    ],
+    "formas_controladas": 266,
+    "fallos_formas": 0,
+    "limites": [
+      "Exposición observada, no recall ni validación de calidad.",
+      "El candidato literal no distingue categoría, conceptos anidados ni todos los plurales.",
+      "El control de formas es coherencia declarativa del glosario, no evidencia de uso real.",
+      "La referencia humana histórica corresponde a su glosario y criterio históricos."
+    ]
+  },
+  "conceptos": [
+    {
+      "term_id": "T001",
+      "en": "scraper|pig",
+      "area": "producción",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T002",
+      "en": "blowout",
+      "area": "control de pozo",
+      "contextos_detectados_unicos": 9,
+      "contextos_candidatos_literales_unicos": 13,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 4,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4,
+        "ifc-offshore": 4,
+        "ifc-onshore": 1
+      }
+    },
+    {
+      "term_id": "T003",
+      "en": "blowout preventer|BOP",
+      "area": "control de pozo",
+      "contextos_detectados_unicos": 10,
+      "contextos_candidatos_literales_unicos": 11,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 4,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 7,
+        "ifc-offshore": 2,
+        "ifc-onshore": 1
+      }
+    },
+    {
+      "term_id": "T004",
+      "en": "annulus",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T005",
+      "en": "cased hole",
+      "area": "terminación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T006",
+      "en": "christmas tree",
+      "area": "producción",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T007",
+      "en": "completion",
+      "area": "terminación",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 6,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T008",
+      "en": "derrick",
+      "area": "perforación",
+      "contextos_detectados_unicos": 8,
+      "contextos_candidatos_literales_unicos": 8,
+      "contextos_humanos_historicos": 2,
+      "decisiones_humanas_historicas": 6,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 8
+      }
+    },
+    {
+      "term_id": "T009",
+      "en": "drawworks",
+      "area": "perforación",
+      "contextos_detectados_unicos": 5,
+      "contextos_candidatos_literales_unicos": 5,
+      "contextos_humanos_historicos": 2,
+      "decisiones_humanas_historicas": 6,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 5
+      }
+    },
+    {
+      "term_id": "T010",
+      "en": "drilling fluid|drilling mud",
+      "area": "perforación",
+      "contextos_detectados_unicos": 14,
+      "contextos_candidatos_literales_unicos": 14,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 5,
+        "ifc-offshore": 8,
+        "ifc-onshore": 1
+      }
+    },
+    {
+      "term_id": "T011",
+      "en": "drilling rig|rig",
+      "area": "perforación",
+      "contextos_detectados_unicos": 13,
+      "contextos_candidatos_literales_unicos": 13,
+      "contextos_humanos_historicos": 2,
+      "decisiones_humanas_historicas": 6,
+      "formas_controladas": 4,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 12,
+        "ifc-offshore": 1
+      }
+    },
+    {
+      "term_id": "T012",
+      "en": "flowline|flow line",
+      "area": "producción",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T013",
+      "en": "hook",
+      "area": "perforación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T014",
+      "en": "tubing|production tubing",
+      "area": "terminación",
+      "contextos_detectados_unicos": 10,
+      "contextos_candidatos_literales_unicos": 12,
+      "contextos_humanos_historicos": 2,
+      "decisiones_humanas_historicas": 6,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 10
+      }
+    },
+    {
+      "term_id": "T015",
+      "en": "shale",
+      "area": "geología",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T016",
+      "en": "shale shaker",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T017",
+      "en": "swivel",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 5,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T018",
+      "en": "wellbore|well bore",
+      "area": "general",
+      "contextos_detectados_unicos": 8,
+      "contextos_candidatos_literales_unicos": 8,
+      "contextos_humanos_historicos": 2,
+      "decisiones_humanas_historicas": 6,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4,
+        "ifc-offshore": 3,
+        "ifc-onshore": 1
+      }
+    },
+    {
+      "term_id": "T019",
+      "en": "wellhead|well head",
+      "area": "producción",
+      "contextos_detectados_unicos": 10,
+      "contextos_candidatos_literales_unicos": 10,
+      "contextos_humanos_historicos": 3,
+      "decisiones_humanas_historicas": 9,
+      "formas_controladas": 5,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 8,
+        "ifc-offshore": 1,
+        "ifc-onshore": 1
+      }
+    },
+    {
+      "term_id": "T020",
+      "en": "cement bond log|CBL",
+      "area": "terminación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "ifc-offshore": 1
+      }
+    },
+    {
+      "term_id": "T021",
+      "en": "casing string",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 7,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T022",
+      "en": "total depth|TD",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T023",
+      "en": "true vertical depth|TVD",
+      "area": "perforación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T024",
+      "en": "measured depth|MD",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T025",
+      "en": "crown block",
+      "area": "perforación",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T026",
+      "en": "traveling block",
+      "area": "perforación",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 5,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T027",
+      "en": "produced water",
+      "area": "producción",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T028",
+      "en": "gas migration",
+      "area": "terminación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T029",
+      "en": "balanced plug",
+      "area": "terminación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T030",
+      "en": "drill bit",
+      "area": "perforación",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1,
+        "ifc-offshore": 1
+      }
+    },
+    {
+      "term_id": "T031",
+      "en": "casing",
+      "area": "perforación",
+      "contextos_detectados_unicos": 19,
+      "contextos_candidatos_literales_unicos": 21,
+      "contextos_humanos_historicos": 6,
+      "decisiones_humanas_historicas": 18,
+      "formas_controladas": 8,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 18,
+        "ifc-offshore": 1
+      }
+    },
+    {
+      "term_id": "T032",
+      "en": "choke manifold",
+      "area": "control de pozo",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 5,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T033",
+      "en": "desilter",
+      "area": "perforación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T034",
+      "en": "drill collar",
+      "area": "perforación",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 4,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T035",
+      "en": "drill pipe",
+      "area": "perforación",
+      "contextos_detectados_unicos": 5,
+      "contextos_candidatos_literales_unicos": 5,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 7,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4,
+        "ifc-offshore": 1
+      }
+    },
+    {
+      "term_id": "T036",
+      "en": "gas lift",
+      "area": "producción",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T037",
+      "en": "kelly",
+      "area": "perforación",
+      "contextos_detectados_unicos": 10,
+      "contextos_candidatos_literales_unicos": 10,
+      "contextos_humanos_historicos": 4,
+      "decisiones_humanas_historicas": 12,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 10
+      }
+    },
+    {
+      "term_id": "T038",
+      "en": "kick",
+      "area": "control de pozo",
+      "contextos_detectados_unicos": 8,
+      "contextos_candidatos_literales_unicos": 8,
+      "contextos_humanos_historicos": 2,
+      "decisiones_humanas_historicas": 6,
+      "formas_controladas": 6,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 7,
+        "ifc-offshore": 1
+      }
+    },
+    {
+      "term_id": "T039",
+      "en": "open hole",
+      "area": "perforación",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T040",
+      "en": "packer",
+      "area": "terminación",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T041",
+      "en": "perforating|perforation|perforations",
+      "area": "terminación",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T042",
+      "en": "proppant",
+      "area": "terminación",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 4,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T043",
+      "en": "top drive",
+      "area": "perforación",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T044",
+      "en": "liner",
+      "area": "terminación",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 2,
+      "decisiones_humanas_historicas": 6,
+      "formas_controladas": 6,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T045",
+      "en": "liner hanger",
+      "area": "terminación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 5,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T046",
+      "en": "sliding sleeve",
+      "area": "terminación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T047",
+      "en": "flowback",
+      "area": "terminación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 6,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T048",
+      "en": "well kill",
+      "area": "control de pozo",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T049",
+      "en": "tank battery",
+      "area": "producción",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T050",
+      "en": "multiwell pad|multi-well pad",
+      "area": "terminación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T051",
+      "en": "BOP stack",
+      "area": "control de pozo",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 5,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1,
+        "ifc-offshore": 1
+      }
+    },
+    {
+      "term_id": "T052",
+      "en": "blind ram",
+      "area": "control de pozo",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 5,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T053",
+      "en": "pipe ram",
+      "area": "control de pozo",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1,
+        "ifc-offshore": 1
+      }
+    },
+    {
+      "term_id": "T054",
+      "en": "choke line",
+      "area": "control de pozo",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T055",
+      "en": "surface casing",
+      "area": "perforación",
+      "contextos_detectados_unicos": 3,
+      "contextos_candidatos_literales_unicos": 3,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 9,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 3
+      }
+    },
+    {
+      "term_id": "T056",
+      "en": "intermediate casing",
+      "area": "perforación",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 6,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T057",
+      "en": "casing shoe",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 8,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T058",
+      "en": "hydraulic fracturing|fracturing|fracking",
+      "area": "terminación",
+      "contextos_detectados_unicos": 7,
+      "contextos_candidatos_literales_unicos": 7,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 4,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 7
+      }
+    },
+    {
+      "term_id": "T059",
+      "en": "doghouse",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T060",
+      "en": "rotary hose",
+      "area": "perforación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T061",
+      "en": "standpipe",
+      "area": "perforación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 4,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T062",
+      "en": "heater treater",
+      "area": "producción",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 5,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T063",
+      "en": "disposal well",
+      "area": "producción",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1,
+        "ifc-offshore": 1
+      }
+    },
+    {
+      "term_id": "T064",
+      "en": "cementing",
+      "area": "terminación",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T065",
+      "en": "degasser",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T066",
+      "en": "derrickman",
+      "area": "perforación",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T067",
+      "en": "desander",
+      "area": "perforación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T068",
+      "en": "driller",
+      "area": "perforación",
+      "contextos_detectados_unicos": 6,
+      "contextos_candidatos_literales_unicos": 6,
+      "contextos_humanos_historicos": 3,
+      "decisiones_humanas_historicas": 9,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 6
+      }
+    },
+    {
+      "term_id": "T069",
+      "en": "fishing",
+      "area": "intervención de pozos",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 3,
+      "decisiones_humanas_historicas": 9,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T070",
+      "en": "lost circulation",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T071",
+      "en": "mast",
+      "area": "perforación",
+      "contextos_detectados_unicos": 6,
+      "contextos_candidatos_literales_unicos": 6,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 6
+      }
+    },
+    {
+      "term_id": "T072",
+      "en": "mud pit",
+      "area": "perforación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T073",
+      "en": "separator",
+      "area": "producción",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T074",
+      "en": "sucker rod",
+      "area": "producción",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T075",
+      "en": "weight indicator",
+      "area": "perforación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T076",
+      "en": "completion fluid",
+      "area": "terminación",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "ifc-offshore": 1,
+        "ifc-onshore": 1
+      }
+    },
+    {
+      "term_id": "T077",
+      "en": "safety valve",
+      "area": "terminación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T078",
+      "en": "master valve",
+      "area": "producción",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T079",
+      "en": "stimulation",
+      "area": "terminación",
+      "contextos_detectados_unicos": 3,
+      "contextos_candidatos_literales_unicos": 3,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 3
+      }
+    },
+    {
+      "term_id": "T080",
+      "en": "oil well",
+      "area": "producción",
+      "contextos_detectados_unicos": 3,
+      "contextos_candidatos_literales_unicos": 3,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 3
+      }
+    },
+    {
+      "term_id": "T081",
+      "en": "gas well",
+      "area": "producción",
+      "contextos_detectados_unicos": 3,
+      "contextos_candidatos_literales_unicos": 3,
+      "contextos_humanos_historicos": 2,
+      "decisiones_humanas_historicas": 6,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 3
+      }
+    },
+    {
+      "term_id": "T082",
+      "en": "paraffin",
+      "area": "producción",
+      "contextos_detectados_unicos": 3,
+      "contextos_candidatos_literales_unicos": 3,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 3
+      }
+    },
+    {
+      "term_id": "T083",
+      "en": "hydrate",
+      "area": "producción",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1,
+        "ifc-offshore": 1
+      }
+    },
+    {
+      "term_id": "T084",
+      "en": "emulsion",
+      "area": "producción",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T085",
+      "en": "abnormal pressure",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T086",
+      "en": "accumulator",
+      "area": "control de pozo",
+      "contextos_detectados_unicos": 3,
+      "contextos_candidatos_literales_unicos": 3,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 3
+      }
+    },
+    {
+      "term_id": "T087",
+      "en": "artificial lift",
+      "area": "producción",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T088",
+      "en": "cellar",
+      "area": "perforación",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T089",
+      "en": "coiled tubing",
+      "area": "intervención de pozos",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T090",
+      "en": "electrical submersible pump|electric submersible pump|ESP",
+      "area": "producción",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T091",
+      "en": "elevator",
+      "area": "perforación",
+      "contextos_detectados_unicos": 6,
+      "contextos_candidatos_literales_unicos": 6,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 6
+      }
+    },
+    {
+      "term_id": "T092",
+      "en": "mud return line",
+      "area": "perforación",
+      "contextos_detectados_unicos": 0,
+      "contextos_candidatos_literales_unicos": 0,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {}
+    },
+    {
+      "term_id": "T093",
+      "en": "reserve pit",
+      "area": "perforación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T094",
+      "en": "rotary table",
+      "area": "perforación",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T095",
+      "en": "tongs",
+      "area": "perforación",
+      "contextos_detectados_unicos": 5,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 2,
+      "decisiones_humanas_historicas": 6,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 5
+      }
+    },
+    {
+      "term_id": "T096",
+      "en": "well control",
+      "area": "control de pozo",
+      "contextos_detectados_unicos": 12,
+      "contextos_candidatos_literales_unicos": 12,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 4,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 6,
+        "directiva": 1,
+        "ifc-offshore": 4,
+        "ifc-onshore": 1
+      }
+    },
+    {
+      "term_id": "T097",
+      "en": "wireline",
+      "area": "intervención de pozos",
+      "contextos_detectados_unicos": 6,
+      "contextos_candidatos_literales_unicos": 6,
+      "contextos_humanos_historicos": 2,
+      "decisiones_humanas_historicas": 6,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 6
+      }
+    },
+    {
+      "term_id": "T098",
+      "en": "workover",
+      "area": "intervención de pozos",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 2,
+      "decisiones_humanas_historicas": 6,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    },
+    {
+      "term_id": "T099",
+      "en": "bridge plug",
+      "area": "terminación",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 1,
+      "decisiones_humanas_historicas": 3,
+      "formas_controladas": 3,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T100",
+      "en": "fishing tool",
+      "area": "intervención de pozos",
+      "contextos_detectados_unicos": 2,
+      "contextos_candidatos_literales_unicos": 2,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 2
+      }
+    },
+    {
+      "term_id": "T101",
+      "en": "hydraulic jar",
+      "area": "intervención de pozos",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T102",
+      "en": "spear",
+      "area": "intervención de pozos",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 1,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T103",
+      "en": "overshot",
+      "area": "intervención de pozos",
+      "contextos_detectados_unicos": 1,
+      "contextos_candidatos_literales_unicos": 1,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 4,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 1
+      }
+    },
+    {
+      "term_id": "T104",
+      "en": "drill string|drillstring",
+      "area": "perforación",
+      "contextos_detectados_unicos": 4,
+      "contextos_candidatos_literales_unicos": 4,
+      "contextos_humanos_historicos": 0,
+      "decisiones_humanas_historicas": 0,
+      "formas_controladas": 2,
+      "fallos_formas": 0,
+      "por_grupo": {
+        "corpus": 4
+      }
+    }
+  ],
+  "sha256_insumos": {
+    "data/glossary/glossary_v1_4.csv": "94361832f327ad9fa53802dfed4eee0e18d2f249b02d636780e35762be91c358",
+    "data/corpus/segments.tsv": "19e07eea343906b6a602740087e4d0756f3c0945a7c81b52c116516401cc4873",
+    "data/annotations/gold.csv": "5064e6eb15b35a4c4df62fb5046358e3fd9f251d45d418a5e644a269dff47eb8",
+    "salida/prueba-publica/directiva-art2.xlf": "bbc1908dc8d9f2d9f11b7034e02f2ed6293c1b95436241ec501ca56d95f8fca1",
+    "salida/prueba-publica/E2006C0069.tmx": "a3cca87cc80e5780864621de09eecebe907adeb993113a1ddf98aae4cb45fe08",
+    "salida/prueba-publica/E2006G0001.tmx": "d427371bb3863d511bd426b84b26845b8817e2f89188249a9b6718179e5b8af1",
+    "salida/prueba-publica/ampliacion/ifc-offshore-pares.json": "890e1841c4354955df94eaee470c61b3235a44142c6502ef43a46b99296ba8a1",
+    "salida/prueba-publica/ampliacion/ifc-onshore-pares.json": "fe35e6e395ce585b9ba86f0089ad07af8fc0c9d75b71e16ce22c6d7cc33969ac"
+  }
+}
