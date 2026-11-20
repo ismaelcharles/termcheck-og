@@ -471,6 +471,8 @@ glosario sobre las mismas muestras: confirma mejoras acumuladas y conserva un re
   El experimento con un único LLM queda en pausa hasta decidir dónde y cómo incorporarlo después de la
   revisión técnica de base. El prototipo local no se integró en la web ni se ejecutó con un modelo.
   Las restricciones léxicas probadas para «equipo» se descartaron por falsas alarmas.
+- Revisar las posiciones de los avisos con signos, tildes y términos repetidos; comprobar que los tramos
+  señalados en pantalla, HTML y CSV coincidan exactamente.
 
 El soporte de archivos de esta etapa queda limitado a XLIFF 1.2, XLIFF 2.0 y TMX. No se anuncia soporte
 de `.sdlxliff`, `.mqxliff` ni paquetes de proyecto. La [revisión de muestras CAT](docs/pruebas-archivos-cat.md)
