@@ -6,11 +6,12 @@
   "sha256_checker": "6425225c478767ce2a12fdc918f982ce96ac8b2775c5b16ecb4337e3f461638e",
   "sha256_glosario": "94361832f327ad9fa53802dfed4eee0e18d2f249b02d636780e35762be91c358",
   "pruebas": {
-    "suite_total": 412,
+    "suite_total": 449,
     "prototipo_llm_local_con_respuestas_controladas": 51,
-    "resto_proyecto": 361,
+    "resto_proyecto": 398,
     "regresiones_prohibidas_contenidas": 14,
-    "pruebas_material_y_cotejo_cat": 7
+    "pruebas_material_y_cotejo_cat": 7,
+    "controles_contextuales_18": 37
   },
   "contrato_glosario": {
     "formas": 266,
@@ -42,14 +43,25 @@
   "csv_produccion_equivalente_cli": true,
   "glosario_y_51_archivos_congelados_intactos": true,
   "frentes": {
-    "validacion_uso": "pendiente: sin sesiones externas",
+    "validacion_uso": "Comprobación técnica de flujos realizada; pruebas con personas fuera de alcance",
     "contexto": "parcial: falsa prohibida corregida; atribución de referentes pendiente",
-    "cobertura": "auditada: 86 conceptos observados, 18 sin contexto en estas muestras",
-    "archivos_cat": "pendiente: exportaciones originales EN–ES de Trados y memoQ"
+    "cobertura": "104 conceptos con controles declarativos; 18 conceptos antes ausentes con 36 pares dirigidos; exposición natural86/104",
+    "archivos_cat": "Compatibilidad estándar comprobada; exportaciones específicas y dialectos nativos fuera de esta etapa"
   },
   "llm": {
     "estado": "pausado_por_decision_del_autor",
     "inferencias_ejecutadas": 0,
     "integrado_en_web": false
+  },
+  "alcance_acordado": "Revisión técnica automatizada e IA; sin otros traductores y sin buscar exportaciones adicionales",
+  "controles_18": {
+    "tipo": "Inventados por IA, no traducciones publicadas ni referencia humana independiente",
+    "dataset": "data/checks/cobertura_18_v1_4.json",
+    "dataset_sha256": "8acfe3603811aadb2ea00a9e244daed7e744a6398942dded81895d6756e1971a",
+    "conceptos": 18,
+    "pares": 36,
+    "apariciones_totales_reporte": 38,
+    "validas_sin_aviso": 18,
+    "errores_marcados": 18
   }
 }

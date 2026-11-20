@@ -3,18 +3,22 @@
 20 de noviembre de 2026. Motor 0.2.6; glosario 1.4, 104 conceptos. El LLM queda en pausa por decisión
 del autor: no se elige modelo, no se hacen llamadas ni se integra el prototipo en la web.
 
+**Alcance actualizado por el autor:** no se incorporarán otros traductores ni se continuará buscando
+exportaciones originales de Trados/memoQ como condición para avanzar. Se cierra la revisión que puede
+realizarse con pruebas automatizadas y trabajo de IA, conservando las limitaciones como tales.
+
 ## Estado y condiciones de cierre
 
-| Frente | Comprobación realizada | Qué falta para cerrarlo |
+| Frente | Comprobación realizada | Estado dentro del alcance acordado |
 |---|---|---|
-| Validación de uso | Material y registro preparados para una sesión externa | Una sesión real con un traductor, registrar tareas, bloqueos y comprensión del alcance; resolver los bloqueos graves encontrados |
+| Flujo de uso | Recorridos automatizados en navegador, entrada, revisión, catálogo, descargas y PC/teléfono | Comprobación técnica realizada; no se presenta como estudio con usuarios |
 | Contexto | Corregida la contradicción entre una variante completa aceptada y una prohibida contenida | La atribución entre referentes y las repeticiones siguen limitadas; no se declara resuelto el caso de equipo |
-| Cobertura | Auditados 104 conceptos y 266 formas; exposición medida en 306 segmentos | Obtener y revisar contextos para los 18 conceptos ausentes; la coherencia de formas no valida su uso en textos nuevos |
-| Archivos CAT | Siete originales públicos ya comprobados para otros idiomas; material y cotejador EN–ES preparados | Una exportación original EN–ES desde Trados y otra desde memoQ, con pasos, versión y archivo conservados |
+| Cobertura | Auditados 104 conceptos y 266 formas; 36 controles dirigidos para los 18 ausentes en las muestras naturales | Control técnico completado; exposición natural permanece en 86/104 y no equivale a recall |
+| Archivos CAT | Pruebas de los formatos estándar y siete originales públicos de otros idiomas | Se conserva el alcance XLIFF 1.2/2.0 y TMX; dialectos nativos sin habilitar y búsqueda de exportaciones fuera de esta etapa |
 
-**No se dan por cerrados los cuatro frentes por haber preparado pruebas.** Los estados separan evidencia
-obtenida de participación y archivos todavía necesarios. Una sesión de uso tampoco sustituye una evaluación
-humana independiente de precisión y recall.
+El cierre es técnico y acotado: no afirma que todos los problemas de contexto estén resueltos ni que la
+herramienta tenga validación humana independiente. El caso de equipo se conserva como limitación
+reproducible para evaluar, más adelante, una intervención contextual.
 
 ## Contexto: corrección concreta de una falsa alarma
 
@@ -37,7 +41,8 @@ y 0.2.6 permanecen idénticas. El caso de atribución de equipo continúa abiert
 léxicas descartadas registradas en el [informe anterior](prueba-nueva-2026-11.md).
 
 Pasaron las 14 regresiones específicas de esta corrección y las siete pruebas de preparación/cotejo del
-material. La suite completa da 412 pruebas aprobadas; 51 pertenecen al prototipo LLM local en pausa y
+material. Antes de añadir los controles dirigidos de los 18 conceptos, la suite daba 412 pruebas aprobadas;
+51 pertenecen al prototipo LLM local en pausa y
 usan respuestas controladas, por lo que no cuentan como validación de un modelo. En previsualización,
 Chromium comprobó ocho verificaciones por texto, la carga de los ocho segmentos del material, descarga
 de HTML/CSV y tamaños de PC/teléfono. El CSV coincide con la CLI en todos los campos de resultados.
@@ -93,21 +98,36 @@ Reproducción, con las muestras privadas de trabajo disponibles:
 
 Sin `--muestras-publicas`, el script informa solo la exposición en el corpus distribuido en el repositorio.
 No se agregaron términos ni equivalencias para inflar la cobertura. Los 18 ausentes quedan identificados
-para conseguir evidencia; las frases de control no se presentan como contextos reales.
+en las muestras naturales; las frases de control no se presentan como contextos reales.
 
-## Validación de uso: material listo, cero sesiones registradas
+### Controles autónomos para los 18 conceptos
+
+`data/checks/cobertura_18_v1_4.json` fija 18 contextos inventados por IA, con una traducción válida y otra
+que omite el término o lo reemplaza por un concepto distinto. Son 36 pares y 18 conceptos, no traducciones
+publicadas ni nuevas decisiones sobre el glosario. Las formas válidas proceden de la edición 1.4; no se
+clasifica un sinónimo como error solamente por estar ausente del glosario.
+
+Los 36 controles comprueban detección en el inglés, marcado de la omisión/confusión, conservación de
+la forma admitida y posiciones del texto. Una prueba adicional comprueba que los conceptos correspondan
+exactamente a los 18 huecos identificados. No se reemplazan el corpus ni las métricas históricas; el
+inventario de exposición natural sigue siendo 86 de 104. Los 104 conceptos quedan cubiertos por controles
+declarativos y los 18 huecos cuentan además con estos controles contextuales dirigidos.
+
+Los 36 pares pasan: 18 traducciones válidas sin aviso y 18 omisiones/confusiones señaladas para el concepto
+objetivo. El reporte completo tiene 38 apariciones porque dos pares también mencionan annulus; esas dos
+apariciones acompañantes se reconocen correctamente. El resultado se informa como control dirigido,
+sin convertirlo en una nueva estimación de precisión o recall. La suite local completa pasa 449 pruebas:
+398 corresponden al proyecto publicado y 51 al prototipo local en pausa, con respuestas controladas.
+
+## Material externo archivado, fuera del alcance actual
 
 `scripts/preparar_prueba_uso.py` genera ocho pares inventados, un XLIFF 1.2, archivos de texto/TSV,
 un registro vacío de observación y una planilla para la revisión previa. El ZIP no contiene respuestas
 esperadas ni participantes ficticios. Se prueba con la demo pública, sin documentos de clientes.
 
-La sesión propuesta dura 15–20 minutos. La persona revisa los pares antes de ver resultados, pega texto,
-sube el archivo, consulta una ficha, descarga el reporte y explica el alcance de un segmento sin avisos.
-Quien observa registra si completa cada tarea sin ayuda, cuánto tarda y dónde se bloquea.
-
-Para declarar realizada una primera prueba exploratoria se necesita una persona externa con perfil de
-traducción y sus registros reales. Con una sesión no se generaliza a todos los traductores; una segunda
-sesión independiente ayuda a contrastar los problemas. No se presenta este material como validación ya hecha.
+El protocolo anterior queda archivado: por la decisión de alcance no se pedirán participantes ni sesiones.
+El material se usó para comprobar técnicamente carga y descargas. No hay registros externos ni se
+presenta una simulación automática como una prueba con personas.
 
 ```bash
 .venv/bin/python scripts/preparar_prueba_uso.py --out salida/prueba-uso
@@ -116,29 +136,15 @@ sesión independiente ayuda a contrastar los problemas. No se presenta este mate
 El material preparado en esta sesión está en `salida/auditoria-base-20261120/material-externo/`.
 No se envió a participantes desde el proyecto y no hay sesiones registradas.
 
-## Archivos CAT: cómo obtener y verificar la evidencia que falta
+## Archivos CAT: compatibilidad declarada, sin esperar nuevas exportaciones
 
-El XLIFF del material es un control creado localmente, no una exportación del proveedor. Permite que
-una persona con Trados o memoQ lo importe y exporte una memoria TMX EN–ES desde la herramienta,
-conservando los ocho pares. Debe registrar herramienta, versión, fecha y pasos; el original no se edita.
+El XLIFF del material es un control creado localmente, no una exportación del proveedor. La comprobación
+positiva de XLIFF 1.2/2.0 y TMX usa los controles estándar y los originales públicos de DGT ya probados.
+Los siete archivos de otros pares se conservaron sin alterar sus idiomas y no se presentan como pruebas EN–ES.
 
-El script `scripts/comprobar_exportacion_cat.py` exige un TMX, comprueba el generador declarado en la
-cabecera, compara los pares con la referencia independientemente del orden y contrasta la extracción
-con una lectura DOM separada. Registra huella, unidades perdidas/adicionales y destinos vacíos, sin
-modificar el original. Una cabecera coincidente no certifica por sí sola la procedencia: hacen falta
-los pasos de la exportación y el archivo obtenido. Sus pruebas automáticas usan TMX inventados y se
-identifican como tales; no cierran la prueba real.
-
-```bash
-.venv/bin/python scripts/comprobar_exportacion_cat.py \
-  --archivo EXPORTACION_ORIGINAL.tmx --referencia salida/prueba-uso/referencia.tsv \
-  --herramienta memoq --version VERSION_REAL --out salida/prueba-uso/resultado-memoq.json
-```
-
-Para Trados se usa `--herramienta trados`. Los nombres en mayúsculas son marcadores a reemplazar.
-Después de verificar el TMX, falta cargar ese mismo original en la demo y cotejar su reporte con la CLI.
-No se habilitan `.sdlxliff`, `.mqxliff` ni paquetes de proyecto por este procedimiento. Los controles
-anteriores y sus límites se conservan en el [informe de muestras CAT](pruebas-archivos-cat.md).
+El cotejador preparado queda archivado como utilidad opcional. No se continuará buscando ni solicitando
+exportaciones para esta etapa. `.sdlxliff`, `.mqxliff` y paquetes de proyecto permanecen fuera del soporte
+anunciado. Los controles anteriores y sus límites se conservan en el [informe de muestras CAT](pruebas-archivos-cat.md).
 
 ## Separación de la línea base y del LLM
 

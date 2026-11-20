@@ -1,0 +1,25 @@
+{
+  "tipo": "controles_tecnicos_inventados_por_IA",
+  "glosario": "1.4",
+  "referencia": "Criterios y formas del glosario vigente; no anotación humana ni traducciones publicadas",
+  "casos": [
+    {"id":"C18-01","term_id":"T001","en":"The pig was recovered from the pipeline.","es_valido":"El chancho se recuperó de la línea.","es_error":"Se inspeccionó la línea.","error":"OMISION"},
+    {"id":"C18-02","term_id":"T005","en":"The cased hole was logged after the inspection.","es_valido":"El pozo entubado se perfiló después de la inspección.","es_error":"El pozo abierto se perfiló después de la inspección.","error":"CONCEPTO_DISTINTO"},
+    {"id":"C18-03","term_id":"T013","en":"The hook was inspected at the end of the shift.","es_valido":"El gancho se inspeccionó al finalizar el turno.","es_error":"Se registró la inspección al finalizar el turno.","error":"OMISION"},
+    {"id":"C18-04","term_id":"T023","en":"The report lists the true vertical depth separately.","es_valido":"El informe indica la profundidad vertical verdadera por separado.","es_error":"El informe indica la profundidad medida por separado.","error":"CONCEPTO_DISTINTO"},
+    {"id":"C18-05","term_id":"T028","en":"The crew recorded gas migration in the annulus.","es_valido":"La cuadrilla registró migración de gas en el espacio anular.","es_error":"La cuadrilla inspeccionó el espacio anular.","error":"OMISION"},
+    {"id":"C18-06","term_id":"T029","en":"The balanced plug was tested after placement.","es_valido":"El tapón balanceado se ensayó después de colocarlo.","es_error":"El tapón puente se ensayó después de colocarlo.","error":"CONCEPTO_DISTINTO"},
+    {"id":"C18-07","term_id":"T033","en":"The desilter was inspected after the pump stopped.","es_valido":"El desarcillador se inspeccionó después de detener la bomba.","es_error":"Se detuvo la bomba para realizar la inspección.","error":"OMISION"},
+    {"id":"C18-08","term_id":"T046","en":"The sliding sleeve was checked during the inspection.","es_valido":"La camisa deslizante se revisó durante la inspección.","es_error":"Se registró el resultado de la inspección.","error":"OMISION"},
+    {"id":"C18-09","term_id":"T048","en":"The well kill was completed before the inspection.","es_valido":"El ahogo del pozo se completó antes de la inspección.","es_error":"La inspección se realizó al finalizar el turno.","error":"OMISION"},
+    {"id":"C18-10","term_id":"T050","en":"Several crews arrived at the multi-well pad.","es_valido":"Varias cuadrillas llegaron a la locación multipozo.","es_error":"Varias cuadrillas llegaron al pozo individual.","error":"CONCEPTO_DISTINTO"},
+    {"id":"C18-11","term_id":"T060","en":"The rotary hose was replaced during maintenance.","es_valido":"La manguera de inyección se reemplazó durante el mantenimiento.","es_error":"Se registraron los trabajos de mantenimiento.","error":"OMISION"},
+    {"id":"C18-12","term_id":"T061","en":"The standpipe was inspected after the pressure test.","es_valido":"La tubería vertical se inspeccionó después de la prueba de presión.","es_error":"La tubería horizontal se inspeccionó después de la prueba de presión.","error":"CONCEPTO_DISTINTO"},
+    {"id":"C18-13","term_id":"T067","en":"The desander was removed for maintenance.","es_valido":"El desarenador se retiró para mantenimiento.","es_error":"El desgasificador se retiró para mantenimiento.","error":"CONCEPTO_DISTINTO"},
+    {"id":"C18-14","term_id":"T072","en":"The mud pit was cleaned after the shift.","es_valido":"La pileta de lodo se limpió después del turno.","es_error":"El tanque de combustible se limpió después del turno.","error":"CONCEPTO_DISTINTO"},
+    {"id":"C18-15","term_id":"T075","en":"The weight indicator showed a stable reading.","es_valido":"El indicador de peso mostró una lectura estable.","es_error":"El medidor de presión mostró una lectura estable.","error":"CONCEPTO_DISTINTO"},
+    {"id":"C18-16","term_id":"T084","en":"An emulsion was found in the sample.","es_valido":"Se encontró una emulsión en la muestra.","es_error":"Se analizó la muestra.","error":"OMISION"},
+    {"id":"C18-17","term_id":"T090","en":"The electrical submersible pump was removed for maintenance.","es_valido":"La bomba electrosumergible se retiró para mantenimiento.","es_error":"La bomba de superficie se retiró para mantenimiento.","error":"CONCEPTO_DISTINTO"},
+    {"id":"C18-18","term_id":"T092","en":"The mud return line was inspected before the next shift.","es_valido":"La línea de retorno del lodo se inspeccionó antes del siguiente turno.","es_error":"La línea de inyección se inspeccionó antes del siguiente turno.","error":"CONCEPTO_DISTINTO"}
+  ]
+}

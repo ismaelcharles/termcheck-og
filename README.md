@@ -334,13 +334,18 @@ documenta las fuentes técnicas consultadas y los límites. Los otros 102 concep
 «Tubería de revestimiento corta» ya no se marca por contener «revestimiento», desaconsejado cuando aparece
 aislado para liner. La excepción requiere una forma completa admitida del mismo concepto; una prohibida
 separada conserva el aviso. El glosario no cambia. La [auditoría de base](docs/auditoria-cuatro-frentes.md)
-detalla la corrección, la exposición observada de 86 de los 104 conceptos y las pruebas externas pendientes.
+detalla la corrección, la exposición natural observada de 86 de los 104 conceptos y los controles dirigidos
+añadidos para los otros 18, dentro del alcance de revisión autónoma acordado.
 
 ## 5. Validación
 
 No hubo entrevistas ni pruebas con traductores. El plan original preveía mostrarle la herramienta a entre 3 y 5
 personas; eso no se hizo. La evaluación histórica usa mi anotación; la reserva de 60 oraciones usa una referencia
 mixta con anotaciones de GPT-6.2 Astra. Nadie más lo usó con textos propios.
+
+La etapa actual se limita a comprobaciones técnicas automatizadas y revisión de IA. No se incorporarán otros
+traductores ni se esperarán exportaciones de herramientas CAT para avanzar. Ese alcance no convierte las
+referencias de IA en validación humana independiente.
 
 ## 6. Limitaciones
 
@@ -458,17 +463,15 @@ glosario sobre las mismas muestras: confirma mejoras acumuladas y conserva un re
 - Ampliar las pruebas de traducciones públicas y revisar los avisos contextuales pendientes del
   [registro de pruebas](docs/pruebas-traducciones-publicas.md). La confusión de `case/cases` con `casing`
   y el aviso por «control de un pozo» se corrigieron en 0.2.5.
-- Medir la edición actual en contextos nuevos, con una referencia humana fijada antes de consultar sus resultados.
-- Revisar humanamente las 270 anotaciones complementarias de Astra si se busca una referencia íntegramente humana
-  para la reserva; eso no devuelve a esas oraciones su independencia respecto de los cambios ya hechos.
-- Un segundo anotador humano sobre una parte de la prueba, para medir el acuerdo entre personas.
+- Mantener separados los resultados históricos, las referencias mixtas y los controles inventados por IA.
+  Los [18 conceptos sin contexto en las muestras naturales](docs/auditoria-cuatro-frentes.md) tienen ahora
+  36 controles técnicos adicionales: una traducción válida y una omisión o confusión por concepto.
 - Más formas prohibidas en el glosario, cada una con un error real que la respalde.
-- Probar la lectura de XLIFF y TMX con exportaciones reales de Trados y memoQ. Hoy lee XLIFF 1.2, XLIFF 2.0 y TMX
-  según la norma, probados con archivos armados a mano y un TMX público original de DGT. No lee `.sdlxliff` ni `.mqxliff`.
-  La [revisión de muestras públicas de esas herramientas](docs/pruebas-archivos-cat.md) comprobó rechazo por idioma
-  y auxiliares de extracción; sigue faltando una exportación original inglés–español para cerrar la prueba.
-- Probar la herramienta con traductores que hagan post-edición técnica.
 - Explorar la alineación contextual entre cada aparición inglesa y su traducción antes de clasificar.
-  El experimento con un único LLM queda en pausa mientras se trabaja la validación de uso, el contexto,
-  la cobertura y los archivos CAT. El prototipo local no se integró en la web ni se ejecutó con un modelo.
+  El experimento con un único LLM queda en pausa hasta decidir dónde y cómo incorporarlo después de la
+  revisión técnica de base. El prototipo local no se integró en la web ni se ejecutó con un modelo.
   Las restricciones léxicas probadas para «equipo» se descartaron por falsas alarmas.
+
+El soporte de archivos de esta etapa queda limitado a XLIFF 1.2, XLIFF 2.0 y TMX. No se anuncia soporte
+de `.sdlxliff`, `.mqxliff` ni paquetes de proyecto. La [revisión de muestras CAT](docs/pruebas-archivos-cat.md)
+conserva las pruebas realizadas y sus límites; conseguir nuevas exportaciones ya no es una tarea bloqueante.

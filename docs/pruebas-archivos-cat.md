@@ -2,6 +2,11 @@
 
 20 de noviembre de 2026. TermCheck 0.2.5; glosario 1.4 sin cambios.
 
+Actualización de alcance: el autor decidió no dedicar más trabajo a conseguir exportaciones originales.
+La falta de una muestra EN–ES de Trados/memoQ se conserva como límite de la comprobación, pero deja de
+ser una tarea o condición para avanzar. Se mantiene el soporte estándar anunciado; no se habilitan
+dialectos nativos. El alcance vigente figura en la [auditoría de base](auditoria-cuatro-frentes.md).
+
 ## Resultado y alcance
 
 Se conservaron y comprobaron siete originales públicos: tres SDLXLIFF del repositorio oficial de RWS,
