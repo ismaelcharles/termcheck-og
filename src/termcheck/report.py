@@ -48,7 +48,11 @@ CSS = """
 
 
 def filas(ocurrencias, contextos=None):
-    """Filas por aparición; contextos asocia (seg_id, system) al par de textos original/traducción."""
+    """Filas por aparición; contextos asocia (seg_id, system) al par de textos original/traducción.
+
+    start/end son índices de caracteres Unicode de target_es original, desde cero y con fin exclusivo.
+    No son bytes ni unidades UTF-16. (-1, -1) indica que no se encontró una forma española.
+    """
     contextos = contextos or {}
     resultado = []
     for o in ocurrencias:
@@ -90,7 +94,11 @@ def resaltar(texto, tramos):
             piezas[-1] = (piezas[-1][0], b, label, titulo)
         else:
             piezas.append((a, b, label, titulo))
-    return "".join(f'<mark class="tc-{c.lower()}" title="{e(t)}">{e(texto[a:b])}</mark>' if c else e(texto[a:b])
+    # HTML normaliza CRLF/CR literales a LF. La entidad conserva el texto y sus índices en el DOM.
+    def escapar_tramo(a, b):
+        return e(texto[a:b]).replace("\r", "&#13;")
+
+    return "".join(f'<mark class="tc-{c.lower()}" title="{e(t)}">{escapar_tramo(a, b)}</mark>' if c else escapar_tramo(a, b)
                    for a, b, c, t in piezas)
 
 

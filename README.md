@@ -91,6 +91,14 @@ esté bien; cuando no hay términos reconocidos, la app lo informa expresamente.
 4. **Clasificar** cada aparición con una etiqueta.
 5. **Reportar.** Un HTML con los términos resaltados por color y un CSV con una fila por aparición.
 
+En el CSV, `start` y `end` delimitan el fragmento de `target_es`: se cuenta desde cero y el final queda
+fuera del tramo (`target_es[start:end]` en Python). Se cuentan caracteres Unicode del texto original,
+incluidos espacios y marcas combinantes; no bytes ni unidades UTF-16. `-1, -1` significa que no se encontró
+una forma y no hay tramo español resaltado. El CSV conserva una fila por aparición aunque la pantalla
+agrupe detalles iguales. Streamlit normaliza los saltos `CRLF`/`CR` a `LF` al mostrar el texto; los índices
+del CSV se aplican a su contexto original, no al texto del DOM. La [revisión de posiciones](docs/posiciones-reportes.md)
+documenta los controles y el límite de correspondencia contextual cuando un término se repite.
+
 | Etiqueta | Qué significa | Se marca para revisar |
 |---|---|---|
 | `OK` | Aparece la traducción preferida | No |
@@ -460,6 +468,11 @@ El [cierre de pruebas del 20 de noviembre](docs/cierre-2026-11.md) compara cinco
 glosario sobre las mismas muestras: confirma mejoras acumuladas y conserva un retroceso contextual de
 «equipo». Son resultados descriptivos con referencia mixta o de IA, no una nueva evaluación humana independiente.
 
+La [segunda revisión de posiciones](docs/posiciones-reportes.md), del 24 de noviembre, pasa 23 controles
+y una comprobación en Chromium. El HTML descargado conserva los retornos de carro mediante entidades.
+La correspondencia semántica entre menciones repetidas
+continúa dentro del trabajo de alineación contextual.
+
 - Ampliar las pruebas de traducciones públicas y revisar los avisos contextuales pendientes del
   [registro de pruebas](docs/pruebas-traducciones-publicas.md). La confusión de `case/cases` con `casing`
   y el aviso por «control de un pozo» se corrigieron en 0.2.5.
@@ -471,8 +484,6 @@ glosario sobre las mismas muestras: confirma mejoras acumuladas y conserva un re
   El experimento con un único LLM queda en pausa hasta decidir dónde y cómo incorporarlo después de la
   revisión técnica de base. El prototipo local no se integró en la web ni se ejecutó con un modelo.
   Las restricciones léxicas probadas para «equipo» se descartaron por falsas alarmas.
-- Revisar las posiciones de los avisos con signos, tildes y términos repetidos; comprobar que los tramos
-  señalados en pantalla, HTML y CSV coincidan exactamente.
 
 El soporte de archivos de esta etapa queda limitado a XLIFF 1.2, XLIFF 2.0 y TMX. No se anuncia soporte
 de `.sdlxliff`, `.mqxliff` ni paquetes de proyecto. La [revisión de muestras CAT](docs/pruebas-archivos-cat.md)
